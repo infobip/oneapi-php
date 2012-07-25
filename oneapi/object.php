@@ -24,6 +24,9 @@ class Conversions {
         else
             $array = json_decode($json, true);
 
+        if(!is_array($array))
+            $array = array();
+
         Logs::debug($array);
 
         $conversionRules = Models::getConversionRules(get_class($model));
