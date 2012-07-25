@@ -139,6 +139,7 @@ class AbstractOneApiClient {
 
         curl_close($ch);
 
+        Logs::debug('Response code ', $code);
         Logs::debug('isSuccess:', $isSuccess);
         Logs::debug('Result:', $result);
 
@@ -396,14 +397,15 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
 	 * @param notifyURL (mandatory) URL to receive roaming status asynchronously
 	 * @return MessageStatus
 	 */
-	public function retrieveRoamingStatusAsync($address, $notifyURL=null) {
-        $restUrl = $this->getRestUrl('/1/terminalstatus/queries');
+    // TODO(TK) notifyURL
+	public function retrieveRoamingStatusAsync($address, $notifyURL) {
+        $restUrl = $this->getRestUrl('/1/terminalstatus/queries/roamingStatus');
 
         $params = array(
 			'address' => $address,
         );
 
-        // TODO(TK)
+        // TODO(TK) Add these parameters when ready:
         if(false)
             $params['includeExtendedData'] = true;
         if(false)
@@ -416,8 +418,10 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
-        return null;
-        #return new MoSubscriptions($content, $isSuccess);
+        if($notifyURL)
+            return Conversions::createFromJSON('GenericObject', null, !$isSuccess);
+        else
+            return null; // TODO(TK)
     }
 
 }

@@ -5,6 +5,6 @@ require_once 'oneapi/models.php';
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
-$response = $client->retrieveRoamingStatusAsync(DESTINATION_ADDRESS);
+$response = $client->retrieveRoamingStatusAsync(DESTINATION_ADDRESS, NOTIFY_URL);
 
 Logs::printLogs();
