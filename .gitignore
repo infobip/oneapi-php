@@ -1,0 +1,10 @@
+*.swp
+*.swo
+*.tar
+*.zip
+*.gz
+*.bz2
+tags
+tmp*
+nbproject/
+nbproject/*
