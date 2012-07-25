@@ -1,5 +1,6 @@
 <?
 
+require_once 'oneapi/dbg.php';
 require_once 'oneapi/models.php';
 require_once 'oneapi/Utils.class.php';
 require_once 'oneapi/Logs.class.php';
@@ -85,8 +86,7 @@ class AbstractOneApiClient {
     }
 
     protected function executeRequest(
-        $httpMethod, $url, 
-        $queryParams = null, $requestHeaders = null, 
+        $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
         $contentType = "application/x-www-form-urlencoded; charset=utf-8"
     ) {
         if ($queryParams == null)
@@ -94,13 +94,17 @@ class AbstractOneApiClient {
         if ($requestHeaders == null)
             $requestHeaders = Array();
 
-        Logs::debug('Executing ', $httpMethod, ' to ', $url);
-
         $sendHeaders = Array(
             'Content-Type: ' . $contentType
         );
         foreach ($requestHeaders as $key => $value) {
             $sendHeaders[] = $key . ': ' . $value;
+        }
+
+
+        if($httpMethod === 'GET') {
+            if(sizeof($queryParams) > 0)
+                $url .= '?' . http_build_query($queryParams, null, '&');
         }
 
         $opts = array(
@@ -112,14 +116,11 @@ class AbstractOneApiClient {
             CURLOPT_MAXREDIRS => 3,
             CURLOPT_USERAGENT => 'infobip-api',
             CURLOPT_CUSTOMREQUEST => $httpMethod,
-            CURLOPT_URL => (
-            $httpMethod === 'GET' ?
-                    $url . (
-                    sizeof($queryParams) > 0 ?
-                            ('?' . http_build_query($queryParams, null, '&')) : ''
-                    ) : $url
-            ),
+            CURLOPT_URL => $url,
         );
+
+        Logs::debug('Executing ', $httpMethod, ' to ', $url);
+
         if (sizeof($queryParams) > 0 && ($httpMethod == 'POST' || $httpMethod == 'PUT')) {
             $httpBody = http_build_query($queryParams, null, '&');
             Logs::debug('Http body:', $httpBody);
@@ -383,6 +384,40 @@ class SmsClient extends AbstractOneApiClient {
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
         return Conversions::createFromJSON('DeliveryReceiptSubscriptions', $content, !$isSuccess);
+    }
+
+}
+
+class DataConnectionProfileClient extends AbstractOneApiClient {
+	
+	/**
+	 * Retrieve asynchronously the customer’s roaming status for a single network-connected mobile device  (HLR)
+	 * @param address (mandatory) mobile device number being queried
+	 * @param notifyURL (mandatory) URL to receive roaming status asynchronously
+	 * @return MessageStatus
+	 */
+	public function retrieveRoamingStatusAsync($address, $notifyURL=null) {
+        $restUrl = $this->getRestUrl('/1/terminalstatus/queries');
+
+        $params = array(
+			'address' => $address,
+        );
+
+        // TODO(TK)
+        if(false)
+            $params['includeExtendedData'] = true;
+        if(false)
+			$params['clientCorrelator'] = true;
+        if(false)
+			$params['callbackData'] = true;
+
+        if($notifyURL)
+			$params['notifyURL'] = $notifyURL;
+
+        list($isSuccess, $content) = $this->executeGET($restUrl, $params);
+
+        return null;
+        #return new MoSubscriptions($content, $isSuccess);
     }
 
 }
