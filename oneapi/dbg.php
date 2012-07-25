@@ -33,7 +33,7 @@ function __dbg($vars) {
                 if($lineNumber - 6 <= $i && $i < $lineNumber + 5) {
                     echo trim($i . ':' . $lines[$i]);
                     if($i == $lineNumber - 1)
-                        echo " <----- HERE YOU ARE !\n";
+                        echo "\n     ^-------------------------------------------------------------------------------- HERE YOU ARE !\n";
                     else
                         echo "\n";
                 }
