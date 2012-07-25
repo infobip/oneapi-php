@@ -7,4 +7,6 @@ $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
 $response = $client->retrieveRoamingStatusAsync(DESTINATION_ADDRESS, NOTIFY_URL);
 
-Logs::printLogs();
+echo 'Hlr is now sent, the result will be pushed to ', NOTIFY_URL, "\n";
+
+//Logs::printLogs();
