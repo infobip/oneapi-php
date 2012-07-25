@@ -4,13 +4,42 @@ require_once 'oneapi/models.php';
 require_once 'oneapi/Utils.class.php';
 require_once 'oneapi/Logs.class.php';
 
+/**
+ * Utility handler class to store username/password.
+ */
+class OneApiConfigurator {
+
+    private static $username;
+    private static $password;
+
+    public static function setCredentials($username, $password) {
+        self::$username = $username;
+        self::$password = $password;
+    }
+
+    public static function getUsername() {
+        return self::$username;
+    }
+
+    public static function getPassword() {
+        return self::$password;
+    }
+
+}
+
 class AbstractClient {
 
     public static $DEFAULT_BASE_URL = 'http://api.parseco.com';
 
     public $smsAuthentication = null;
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
+
+        if(!$username)
+            $username = OneApiConfigurator::getUsername();
+        if(!$password)
+            $password = OneApiConfigurator::getPassword();
+
         $this->smsAuthentication = new SmsAuthentication(
                         Array('username' => $username, 'password' => $password)
         );
@@ -177,7 +206,7 @@ class AbstractClient {
 
 class SmsClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
@@ -360,7 +389,7 @@ class SmsClient extends AbstractClient {
 
 class CaptchaClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
@@ -383,7 +412,7 @@ class CaptchaClient extends AbstractClient {
 
 class CountryClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
@@ -404,7 +433,7 @@ class CountryClient extends AbstractClient {
 
 class CustomerProfilerClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
@@ -539,7 +568,7 @@ class CustomerProfilerClient extends AbstractClient {
 
 class TimeZoneClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
@@ -560,7 +589,7 @@ class TimeZoneClient extends AbstractClient {
 
 class EncodingClient extends AbstractClient {
 
-    public function __construct($username, $password, $baseUrl = null) {
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
 
