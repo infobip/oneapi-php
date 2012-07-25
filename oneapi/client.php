@@ -27,7 +27,7 @@ class OneApiConfigurator {
 
 }
 
-class AbstractClient {
+class AbstractOneApiClient {
 
     public static $DEFAULT_BASE_URL = 'http://api.parseco.com';
 
@@ -204,7 +204,7 @@ class AbstractClient {
 
 }
 
-class SmsClient extends AbstractClient {
+class SmsClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -387,7 +387,7 @@ class SmsClient extends AbstractClient {
 
 }
 
-class CaptchaClient extends AbstractClient {
+class CaptchaClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -410,7 +410,7 @@ class CaptchaClient extends AbstractClient {
 
 }
 
-class CountryClient extends AbstractClient {
+class CountryClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -431,7 +431,7 @@ class CountryClient extends AbstractClient {
 
 }
 
-class CustomerProfilerClient extends AbstractClient {
+class CustomerProfilerClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -566,7 +566,7 @@ class CustomerProfilerClient extends AbstractClient {
 
 }
 
-class TimeZoneClient extends AbstractClient {
+class TimeZoneClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -587,7 +587,7 @@ class TimeZoneClient extends AbstractClient {
 
 }
 
-class EncodingClient extends AbstractClient {
+class EncodingClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
