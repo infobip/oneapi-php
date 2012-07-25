@@ -12,19 +12,19 @@ class SmsException extends AbstractObject {
 
 }
 
+function __convert_sms_exception_from_json($object, $json) {
+    $exception = Utils::getArrayValue(
+            $json,'requestError.serviceException',
+            Utils::getArrayValue($json,'requestError.policyException',null)
+    );
+    if($exception) {                    
+            $object->messageId = Utils::getArrayValue($exception,'messageId','');
+            $object->text = Utils::getArrayValue($exception,'text','');
+            $object->variables = Utils::getArrayValue($exception,'variables',Array());
+    }
+}
+
 Models::register(
         'SmsException',
-        new ObjectConversionRule(function($object, $json) {
-                $exception = Utils::getArrayValue(
-                        $json,'requestError.serviceException',
-                        Utils::getArrayValue($json,'requestError.policyException',null)
-                );
-                if($exception) {                    
-                        $object->messageId = Utils::getArrayValue($exception,'messageId','');
-                        $object->text = Utils::getArrayValue($exception,'text','');
-                        $object->variables = Utils::getArrayValue($exception,'variables',Array());
-                }
-        })
+        new ObjectConversionRule('__convert_sms_exception_from_json')
 );
-
-?>

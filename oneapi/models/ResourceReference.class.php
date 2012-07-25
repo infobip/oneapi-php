@@ -19,15 +19,7 @@ class ResourceReference extends AbstractObject {
 
 Models::register(
     'ResourceReference',
-    new ObjectConversionRule(function($object, $json) {
-        $resourceURL = Utils::getArrayValue($json,'resourceReference.resourceURL',null);
-        if($resourceURL) {
-            $parts = explode('/', $resourceURL);
-            $object->clientCorrelator = sizeof($parts) > 0 ? $parts[sizeof($parts) - 1] : '';
-        } else {
-            $object->clientCorrelator = '';
-        }
-    })
+    new SubscriptionIdFieldConversionRule('clientCorrelator', 'resourceReference.resourceURL')
 );
 
 ?>

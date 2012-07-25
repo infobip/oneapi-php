@@ -15,12 +15,6 @@ class DeliveryInfoList extends AbstractObject {
 
 Models::register(
     'DeliveryInfoList',
-    new ObjectConversionRule(function($object, $json) {
-        $deliveryInfoJsons = Utils::getArrayValue($json, 'deliveryInfoList.deliveryInfo');
-        $object->deliveryInfo = array();
-        foreach($deliveryInfoJsons as $part) {
-            $object->deliveryInfo[] = Conversions::createFromJSON('DeliveryInfo', $part, false);
-        }
-    })
+    new ObjectArrayConversionRule('DeliveryInfo', 'deliveryInfo', 'deliveryInfoList.deliveryInfo')
 );
 

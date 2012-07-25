@@ -12,14 +12,7 @@ class MoSubscriptions extends AbstractObject {
 
 Models::register(
         'MoSubscriptions',
-        new ObjectConversionRule(function($object, $jsonData) {
-                $subscriptions = Utils::getArrayValue($jsonData, 'subscriptions', array());
-                $object->subscriptions = array();
-                foreach($subscriptions as $subscription) {
-                    $object->subscriptions[] = new MoSubscription($subscription, true);
-                }
-            }
-        )
+        new ObjectArrayConversionRule('MoSubscription', 'subscriptions')
 );
 
 ?>

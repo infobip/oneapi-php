@@ -41,32 +41,34 @@ class SmsAuthentication extends AbstractObject {
     }
 }
 
+function __convert_ib_auth_from_json($object, $json) {
+    $data = Utils::getArrayValue($json,'login',Utils::getArrayValue($json,'signup',''));
+    
+    if(Utils::getArrayValue($data,'ibAuthCookie','') !== '') {
+        $object->authType = SmsAuthentication::AUTH_TYPE_IBSSO;
+        $object->username = '';
+        $object->password = '';            
+        $object->ibssoToken = Utils::getArrayValue($data,'ibAuthCookie','');
+        $object->userVerified = Utils::getArrayValue($data,'verified','false') === 'true';            
+        $object->accessToken = '';
+        $object->authenticated = $object->ibssoToken !== '';
+        
+    } else if(Utils::getArrayValue($json,'username','') !== '') {
+        $object->authType = SmsAuthentication::AUTH_TYPE_BASIC;
+        $object->username = Utils::getArrayValue($json,'username','');
+        $object->password = Utils::getArrayValue($json,'password','');
+        $object->ibssoToken = '';
+        $object->authenticated = true;
+        $object->userVerified = true; // kako znamo da je verificiran? ne prolazi login proces 
+    } else {
+        $object->authenticated = false;
+        $object->userVerified = false;            
+    }
+}
+
 Models::register(
     'SmsAuthentication',
-    new ObjectConversionRule(function($object, $json) {
-        $data = Utils::getArrayValue($json,'login',Utils::getArrayValue($json,'signup',''));
-        
-        if(Utils::getArrayValue($data,'ibAuthCookie','') !== '') {
-            $object->authType = SmsAuthentication::AUTH_TYPE_IBSSO;
-            $object->username = '';
-            $object->password = '';            
-            $object->ibssoToken = Utils::getArrayValue($data,'ibAuthCookie','');
-            $object->userVerified = Utils::getArrayValue($data,'verified','false') === 'true';            
-            $object->accessToken = '';
-            $object->authenticated = $object->ibssoToken !== '';
-            
-        } else if(Utils::getArrayValue($json,'username','') !== '') {
-            $object->authType = SmsAuthentication::AUTH_TYPE_BASIC;
-            $object->username = Utils::getArrayValue($json,'username','');
-            $object->password = Utils::getArrayValue($json,'password','');
-            $object->ibssoToken = '';
-            $object->authenticated = true;
-            $object->userVerified = true; // kako znamo da je verificiran? ne prolazi login proces 
-        } else {
-            $object->authenticated = false;
-            $object->userVerified = false;            
-        }
-    })
+    new ObjectConversionRule('__convert_ib_auth_from_json')
 );
 
 ?>

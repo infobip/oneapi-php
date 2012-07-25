@@ -28,7 +28,7 @@ if($argv) {
     print_r($handle);
     while (false !== ($entry = readdir($handle))) {
         if(preg_match('/^.*\.php$/', $entry)) {
-            $files[] = $entry;
+            $files[] = 'tests/' . $entry;
         }
     }
 }

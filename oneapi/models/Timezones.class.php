@@ -11,13 +11,7 @@ class Timezones extends AbstractObject {
 
 Models::register(
         'Timezones',
-        new ObjectConversionRule(function($object, $jsonData) {
-                $arrTimezones = Utils::getArrayValue($jsonData, 'timeZones', array());
-                foreach($arrTimezones as $arrTzone) {
-                    $object->timezones[] = new Timezone($arrTzone, true);
-                }
-            }
-        )
+        new ObjectArrayConversionRule('Timezone', 'timeZones')
 );
 
 

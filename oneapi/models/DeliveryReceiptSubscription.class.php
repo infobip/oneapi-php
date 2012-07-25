@@ -15,11 +15,5 @@ class DeliveryReceiptSubscription extends AbstractObject {
 
 Models::register(
         'DeliveryReceiptSubscription',
-        new ObjectConversionRule(function($object, $json) {
-            $url = Utils::getArrayValue($json, 'deliveryReceiptSubscription.resourceURL', null);
-            $parts = explode('/', $url);
-            if($url && sizeof($parts) > 0) {
-                $object->subscriptionId = $parts[sizeof($parts) - 1];
-            }
-        })
+        new SubFieldConversionRule('subscriptionId', 'deliveryReceiptSubscription.resourceURL')
 );

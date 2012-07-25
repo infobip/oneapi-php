@@ -17,15 +17,7 @@ class Encodings extends AbstractObject {
 
 Models::register(
         'Encodings',
-        new ObjectConversionRule(function($object, $jsonData) {
-                $arrEncodings = Utils::getArrayValue($jsonData, 'encodings', array());
-                Logs::debug("ENC:" . print_r($jsonData,true));
-                foreach($arrEncodings as $arrVal) {
-                    $arrEncoding = Array('name' => $arrVal);
-                    $object->encodings[] = new Encoding($arrEncoding, true);
-                }
-            }
-        )
+        new ObjectArrayConversionRule('Encoding', 'encodings')
 );
         
 

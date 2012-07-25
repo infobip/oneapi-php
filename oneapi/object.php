@@ -1,5 +1,6 @@
 <?php
 
+require_once 'oneapi/dbg.php';
 require_once 'oneapi/Logs.class.php';
 require_once 'oneapi/Utils.class.php';
 
@@ -169,6 +170,59 @@ class SubObjectConversionRule extends ObjectConversionRule {
 }
 
 /**
+ * Used when the JSON have a URL and we need to store only the last part of the url in a String variable.
+ */
+class SubscriptionIdFieldConversionRule extends ObjectConversionRule {
+
+    private $objectFieldName;
+    private $jsonFieldName;
+
+    public function __construct($objectFieldName, $jsonFieldName) {
+        $this->objectFieldName = $objectFieldName;
+        $this->jsonFieldName = $jsonFieldName;
+    }
+
+    public function convertFromJson($object, $json) {
+        $value = Utils::getArrayValue($json, $this->jsonFieldName);
+
+        // Value is an url, the last part is the subscription id:
+        $parts = explode('/', $value);
+        if($value && sizeof($parts) > 0)
+            $value = $parts[sizeof($parts) - 1];
+
+        $fieldName = $this->objectFieldName;
+        $object->$fieldName = $value;
+    }
+
+    public function convertToJson($object, $json) {
+        // TODO(TK)
+    }
+
+}
+
+class SubFieldConversionRule extends ObjectConversionRule {
+
+    private $objectFieldName;
+    private $jsonFieldName;
+
+    public function __construct($objectFieldName, $jsonFieldName) {
+        $this->objectFieldName = $objectFieldName;
+        $this->jsonFieldName = $jsonFieldName;
+    }
+
+    public function convertFromJson($object, $json) {
+        $value = Utils::getArrayValue($json, $this->jsonFieldName);
+        $fieldName = $this->objectFieldName;
+        $object->$fieldName = $value;
+    }
+
+    public function convertToJson($object, $json) {
+        // TODO(TK)
+    }
+
+}
+
+/**
  * Used when an object contains an array of sub-objects.
  */
 class ObjectArrayConversionRule extends ObjectConversionRule {
@@ -209,14 +263,6 @@ class ObjectArrayConversionRule extends ObjectConversionRule {
 
     public function convertToJson($object, $json) {
         // TODO(TK)
-    }
-
-}
-
-class BooleanConversionRule extends FieldConversionRule {
-
-    public function __construct($field) {
-        parent::__construct($field, function($value) { return $value == 'true'; }, function($value) { return $value ? 'true' : 'false'; });
     }
 
 }
