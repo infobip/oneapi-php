@@ -26,8 +26,6 @@ class Conversions {
         if(!is_array($array))
             $array = array();
 
-        Logs::debug($array);
-
         $conversionRules = Models::getConversionRules(get_class($model));
 
         $className = get_class($model);
@@ -144,8 +142,8 @@ class SubObjectConversionRule extends ObjectConversionRule {
     private $jsonFieldName;
 
     public function __construct($className, $objectFieldName, $jsonFieldName=null) {
-        assert($className);
-        assert($objectFieldName);
+        assert(@strlen($className) > 0);
+        assert(@strlen($objectFieldName) > 0);
 
         $this->className = $className;
         $this->objectFieldName = $objectFieldName;

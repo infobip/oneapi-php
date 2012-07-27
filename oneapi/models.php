@@ -15,6 +15,12 @@ require_once 'oneapi/models/SubscribeToDeliveryNotificationsRequest.class.php';
 require_once 'oneapi/models/DeliveryReceiptSubscription.class.php';
 require_once 'oneapi/models/DeliveryReceiptSubscriptions.class.php';
 
+// HLR
+require_once 'oneapi/models/TerminalRoamingStatusList.class.php';
+require_once 'oneapi/models/TerminalRoamingStatus.class.php';
+require_once 'oneapi/models/ServingMccMnc.class.php';
+require_once 'oneapi/models/TerminalRoamingExtendedData.class.php';
+
 require_once 'oneapi/models/Captcha.class.php';
 require_once 'oneapi/models/Country.class.php';
 require_once 'oneapi/models/Countries.class.php';
