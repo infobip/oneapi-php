@@ -1,6 +1,5 @@
 <?php
 
-require_once 'oneapi/dbg.php';
 require_once 'oneapi/Logs.class.php';
 require_once 'oneapi/Utils.class.php';
 
