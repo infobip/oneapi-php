@@ -1,6 +1,7 @@
 <?
 
 require_once 'oneapi/models.php';
+require_once 'oneapi/object.php';
 require_once 'oneapi/Utils.class.php';
 require_once 'oneapi/Logs.class.php';
 
