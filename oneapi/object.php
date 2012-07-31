@@ -1,5 +1,7 @@
 <?php
 
+#require_once 'yapd/dbg.php';
+
 require_once 'oneapi/Logs.class.php';
 require_once 'oneapi/Utils.class.php';
 

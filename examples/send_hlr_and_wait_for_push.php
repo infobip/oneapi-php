@@ -6,6 +6,9 @@ $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
 $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
 
-echo 'HLR result:', $response, "\n";
+if(!$response->isSuccess()) {
+    echo 'Error:', $response->exception, "\n";
+    Logs::printLogs();
+}
 
-//Logs::printLogs();
+echo $response;

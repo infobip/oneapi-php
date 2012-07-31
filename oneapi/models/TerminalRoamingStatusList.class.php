@@ -1,5 +1,6 @@
 <?php
 
+// TODO: Remove this object and use only TerminalRoamingStatus !
 class TerminalRoamingStatusList extends AbstractObject {
 
     public $terminalRoamingStatus;

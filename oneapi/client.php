@@ -204,6 +204,10 @@ class AbstractOneApiClient {
         return($rez);
     }
 
+    protected function createFromJSON($className, $json, $isError) {
+        return Conversions::createFromJSON($className, $json, $isError);
+    }
+
 }
 
 class SmsClient extends AbstractOneApiClient {
@@ -263,33 +267,8 @@ class SmsClient extends AbstractOneApiClient {
                 $this->getRestUrl($restPath, $params)
         );
 
-        return Conversions::createFromJSON('DeliveryInfoList', $content, !$isSuccess);
+        return $this->createFromJSON('DeliveryInfoList', $content, !$isSuccess);
     }
-
-    /* Test this one:
-      public function sendHlr($hlr) {
-      $clientCorrelator = $hlr->clientCorrelator;
-      if(!$clientCorrelator)
-      $clientCorrelator = randomAlphanumericString();
-
-      $params = array(
-      'address' => $hlr->address,
-      'notifyURL' => $hlr->notifyURL,
-      );
-
-      if($hlr->notifyURL)
-      $params['notifyURL'] = $hlr->notifyURL;
-
-      list($isSuccess, $content) = $this->executeGET(
-      '/1/terminalstatus/queries/roamingStatus',
-      $params
-      );
-
-      print_r($content);
-
-      return new HlrSendResult($content, $isSuccess);
-      }
-     */
 
     /**
      * Get the list of mobile originated subscriptions for the current user.
@@ -307,7 +286,7 @@ class SmsClient extends AbstractOneApiClient {
     public function subscribeToInboundMessagesNotifications($moSubscription) {
         $restUrl = $this->getRestUrl('/1/smsmessaging/inbound/subscriptions');
 
-        $params = Conversions::convertToJSON($moSubscription);
+        $params = $this->convertToJSON($moSubscription);
 
         list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
@@ -340,7 +319,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
-        return Conversions::createFromJSON('InboundSmsMessages', $content, !$isSuccess);
+        return $this->createFromJSON('InboundSmsMessages', $content, !$isSuccess);
     }
 
 	/**
@@ -360,7 +339,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
-        return Conversions::createFromJSON('DeliveryReceiptSubscription', $content, !$isSuccess);
+        return $this->createFromJSON('DeliveryReceiptSubscription', $content, !$isSuccess);
     }
 
 	/**
@@ -372,7 +351,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeDELETE($restUrl);
 
-        return Conversions::createFromJSON('GenericObject', null, !$isSuccess);
+        return $this->createFromJSON('GenericObject', null, !$isSuccess);
     }
 
 	/**
@@ -384,7 +363,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
-        return Conversions::createFromJSON('DeliveryReceiptSubscriptions', $content, !$isSuccess);
+        return $this->createFromJSON('DeliveryReceiptSubscriptions', $content, !$isSuccess);
     }
 
 }
@@ -393,12 +372,8 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
 	
 	/**
 	 * Retrieve asynchronously the customer’s roaming status for a single network-connected mobile device  (HLR)
-	 * @param address (mandatory) mobile device number being queried
-	 * @param notifyURL (mandatory) URL to receive roaming status asynchronously
-	 * @return MessageStatus
 	 */
-    // TODO(TK) notifyURL
-	public function retrieveRoamingStatusAsync($address, $notifyURL) {
+	public function retrieveRoamingStatus($address, $notifyURL=null) {
         $restUrl = $this->getRestUrl('/1/terminalstatus/queries/roamingStatus');
 
         $params = array(
@@ -419,9 +394,9 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
         if($notifyURL)
-            return Conversions::createFromJSON('GenericObject', null, !$isSuccess);
+            return $this->createFromJSON('GenericObject', null, !$isSuccess);
         else
-            return null; // TODO(TK)
+            return $this->createFromJSON('TerminalRoamingStatus', $content['roaming'], !$isSuccess);
     }
 
 }
