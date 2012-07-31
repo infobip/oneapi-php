@@ -339,12 +339,12 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
-        return $this->createFromJSON('DeliveryReceiptSubscription', $content, !$isSuccess);
+        return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
     }
 
 	/**
 	 * Stop subscribing to delivery status notifications for all your sent SMS  
-	 * @param subscriptionId (mandatory) contains the subscriptionId of a previously created SMS delivery receipt subscription
+	 * @param subscriptionId (mandatory) contains the subscriptionId of a previously created SMS delivery report subscription
 	 */
 	public function cancelDeliveryNotificationsSubscription($subscriptionId) {
         $restUrl = $this->getRestUrl('/1/smsmessaging/outbound/subscriptions/' . $subscriptionId);
@@ -363,7 +363,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
-        return $this->createFromJSON('DeliveryReceiptSubscriptions', $content, !$isSuccess);
+        return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
     }
 
 }

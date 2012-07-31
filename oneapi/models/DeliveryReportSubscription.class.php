@@ -1,13 +1,11 @@
 <?php
 
+// Example:
+// {"deliveryReceiptSubscription":{"callbackReference":{"callbackData":null,"notifyURL":"http://192.168.10.111/save_requests"},"resourceURL":"http://api.parseco.com/1/smsmessaging/outbound/subscriptions/q1id6ksfc8"}}
+
 class DeliveryReportSubscription extends AbstractObject {
 
     public $subscriptionId;
-    public $senderAddress;
-    public $notifyURL;
-    public $criteria;
-    public $callbackData;
-    public $clientCorrelator;
 
     public function __construct() {
         parent::__construct();
@@ -15,4 +13,7 @@ class DeliveryReportSubscription extends AbstractObject {
 
 }
 
-Models::register('DeliveryReportSubscription');
+Models::register(
+        'DeliveryReportSubscription',
+        new SubFieldConversionRule('subscriptionId', 'deliveryReceiptSubscription.resourceURL')
+);

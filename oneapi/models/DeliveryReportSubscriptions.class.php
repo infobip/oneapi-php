@@ -1,6 +1,6 @@
 <?php
 
-class DeliveryReceiptSubscriptions extends AbstractObject {
+class DeliveryReportSubscriptions extends AbstractObject {
 
     public $subscriptionId;
 
@@ -11,6 +11,6 @@ class DeliveryReceiptSubscriptions extends AbstractObject {
 }
 
 Models::register(
-        'DeliveryReceiptSubscriptions',
+        'DeliveryReportSubscriptions',
         new ObjectArrayConversionRule('DeliveryReportSubscription', 'deliveryReceiptSubscriptions')
 );

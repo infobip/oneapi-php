@@ -12,8 +12,8 @@ require_once 'oneapi/models/DeliveryInfoList.class.php';
 // Delivery reports:
 require_once 'oneapi/models/DeliveryReportSubscription.class.php';
 require_once 'oneapi/models/SubscribeToDeliveryNotificationsRequest.class.php';
-require_once 'oneapi/models/DeliveryReceiptSubscription.class.php';
-require_once 'oneapi/models/DeliveryReceiptSubscriptions.class.php';
+require_once 'oneapi/models/DeliveryReportSubscription.class.php';
+require_once 'oneapi/models/DeliveryReportSubscriptions.class.php';
 
 // HLR
 require_once 'oneapi/models/TerminalRoamingStatusList.class.php';
