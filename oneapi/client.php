@@ -125,7 +125,7 @@ class AbstractOneApiClient {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 3,
-            CURLOPT_USERAGENT => 'infobip-api',
+            CURLOPT_USERAGENT => 'OneApi client',
             CURLOPT_CUSTOMREQUEST => $httpMethod,
             CURLOPT_URL => $url,
         );
