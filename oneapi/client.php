@@ -54,7 +54,7 @@ class AbstractOneApiClient {
     // Util methods:
     // ----------------------------------------------------------------------------------------------------
 
-    protected function getClientCorrelator($clientCorrelator=null) {
+    protected function getOrCreateClientCorrelator($clientCorrelator=null) {
         if($clientCorrelator)
             return $clientCorrelator;
 
@@ -222,7 +222,7 @@ class SmsClient extends AbstractOneApiClient {
     public function sendSMS($message) {
         $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
 
-        $clientCorrelator = $this->getClientCorrelator($message->clientCorrelator);
+        $clientCorrelator = $this->getOrCreateClientCorrelator($message->clientCorrelator);
 
         $params = array(
             'senderAddress' => $message->senderAddress,
@@ -257,7 +257,7 @@ class SmsClient extends AbstractOneApiClient {
         else
             $clientCorrelator = $clientCorrelator;
 
-        $clientCorrelator = $this->getClientCorrelator($clientCorrelator);
+        $clientCorrelator = $this->getOrCreateClientCorrelator($clientCorrelator);
 
         $params = array();
         if($clientCorrelator)
@@ -328,7 +328,7 @@ class SmsClient extends AbstractOneApiClient {
 	public function subscribeToDeliveryStatusNotifications($subscribeToDeliveryNotificationsRequest) {
         $restUrl = $this->getRestUrl('/1/smsmessaging/outbound/'.$subscribeToDeliveryNotificationsRequest->senderAddress.'/subscriptions');
 
-        $clientCorrelator = $this->getClientCorrelator($subscribeToDeliveryNotificationsRequest->clientCorrelator);
+        $clientCorrelator = $this->getOrCreateClientCorrelator($subscribeToDeliveryNotificationsRequest->clientCorrelator);
 
         $params = array(
             'notifyURL' => $subscribeToDeliveryNotificationsRequest->notifyURL,
