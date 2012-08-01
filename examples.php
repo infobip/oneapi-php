@@ -20,3 +20,4 @@ define('MO_NOTIFY_URL', '');
 //require_once 'examples/send_hlr_and_wait_for_push.php';
 //require_once 'examples/send_hlr.php';
 //require_once 'examples/get_customer_profile.php';
+require_once 'examples/check_client_valid.php';

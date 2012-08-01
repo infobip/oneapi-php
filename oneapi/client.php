@@ -54,6 +54,17 @@ class AbstractOneApiClient {
     // Util methods:
     // ----------------------------------------------------------------------------------------------------
 
+    /**
+     * Check if the authorization (username/password) is valid.
+     */
+    public function isValid() {
+        $restUrl = $this->getRestUrl('/1/customerProfile');
+
+        list($isSuccess, $content) = $this->executeGET($restUrl);
+
+        return (boolean) $isSuccess;
+    }
+
     protected function getOrCreateClientCorrelator($clientCorrelator=null) {
         if($clientCorrelator)
             return $clientCorrelator;
