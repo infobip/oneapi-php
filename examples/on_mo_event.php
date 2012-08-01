@@ -1,11 +1,8 @@
 <?
 
-require_once 'oneapi/Logs.class.php';
-require_once 'oneapi/models.php';
+require_once 'oneapi/client.php';
 
-$requestBody = file_get_contents("php://input");
-
-$inboundMessages = Conversions::createFromJSON('InboundSmsMessages', $requestBody);
+$inboundMessages = SmsClient::unserializeInboundMessage();
 
 // Usually you will process this inbound message here, save it and (eventually) respond with another message.
 
