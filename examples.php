@@ -18,4 +18,5 @@ define('MO_NOTIFY_URL', '');
 //require_once 'examples/subscribe_trigger_mo_and_unsubscribe_to_mo_events.php';
 //require_once 'examples/subscribe_trigger_mo_and_retrieve_mo_message.php';
 //require_once 'examples/send_hlr_and_wait_for_push.php';
-require_once 'examples/send_hlr.php';
+//require_once 'examples/send_hlr.php';
+//require_once 'examples/get_customer_profile.php';

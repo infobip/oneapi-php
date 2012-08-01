@@ -1,6 +1,7 @@
 <?php
 
 class CustomerProfile extends AbstractObject {
+
     public $id;
     public $username;
     public $forename;
@@ -19,8 +20,8 @@ class CustomerProfile extends AbstractObject {
     public $primaryLanguageId;
     public $secondaryLanguageId;
     
-    public function __construct($array=null, $success=true) {
-        parent::__construct($array, $success);
+    public function __construct() {
+        parent::__construct();
     }
 
 }

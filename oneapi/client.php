@@ -226,6 +226,7 @@ class SmsClient extends AbstractOneApiClient {
     // ----------------------------------------------------------------------------------------------------
     // Rest methods:
     // ----------------------------------------------------------------------------------------------------    
+
     public function sendSMS($message) {
         $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
 
@@ -546,14 +547,13 @@ class CustomerProfilerClient extends AbstractOneApiClient {
     /**
      * Get customer profile for the current user or user with given user id.
      */
-    // TODO(TK)
     public function getCustomerProfile($id = null) {
         $restUrl = $this->getRestUrl(
                 $id == null ? '/1/customerProfile' : '/1/customerProfile/{id}', Array('id' => $id)
         );
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
-        return new CustomerProfile($content, $isSuccess);
+        return $this->createFromJSON('CustomerProfile', $content, !$isSuccess);
     }
 
     /**
