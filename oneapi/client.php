@@ -216,6 +216,13 @@ class SmsClient extends AbstractOneApiClient {
         parent::__construct($username, $password, $baseUrl);
     }
 
+    public static function unserializeInboundMessage($json=null) {
+        if($json === null)
+            $json = file_get_contents("php://input");
+
+        $inboundMessages = Conversions::createFromJSON('InboundSmsMessages', $json);
+    }
+
     // ----------------------------------------------------------------------------------------------------
     // Rest methods:
     // ----------------------------------------------------------------------------------------------------    
