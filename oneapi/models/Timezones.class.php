@@ -1,4 +1,5 @@
 <?php
+
 class Timezones extends AbstractObject {
 
     public $timezones;

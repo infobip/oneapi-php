@@ -1,4 +1,4 @@
-<?
+<?php
 
 require_once 'oneapi/object.php';
 require_once 'oneapi/models/SmsException.class.php';

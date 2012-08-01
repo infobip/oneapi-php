@@ -1,4 +1,4 @@
-<?
+<?php
 
 class SubscribeToDeliveryNotificationsRequest extends AbstractObject {
 

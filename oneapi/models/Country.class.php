@@ -1,6 +1,5 @@
 <?php
 
-
 class Country  extends AbstractObject {
     public $id;
     public $code;
