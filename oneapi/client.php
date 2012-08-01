@@ -30,7 +30,7 @@ class OneApiConfigurator {
 
 class AbstractOneApiClient {
 
-    public static $DEFAULT_BASE_URL = 'http://api.parseco.com';
+    public static $DEFAULT_BASE_URL = 'https://api.parseco.com';
 
     public $smsAuthentication = null;
 

@@ -28,6 +28,12 @@ class Conversions {
         if(!is_array($array))
             $array = array();
 
+        if($isError) {
+            $exception = self::createFromJSON('SmsException', $json, false);
+            $model->exception = $exception;
+            return $model;
+        }
+
         $conversionRules = Models::getConversionRules(get_class($model));
 
         $className = get_class($model);
