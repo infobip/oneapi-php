@@ -2,7 +2,7 @@
 
 class AccountBalance extends AbstractObject {
 
-	public $totalCash;
+	public $balance;
 
 	public $currency;
 
