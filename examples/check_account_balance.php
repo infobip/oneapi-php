@@ -6,4 +6,4 @@ $customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
 
 $accountBalance = $customerProfileClient->getAccountBalance();
 
-echo 'accountBalance=', $accountBalance;
+echo 'accountBalance=', $accountBalance->balance;

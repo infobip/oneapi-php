@@ -497,7 +497,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restPath);
         
-        return null;
+        return $this->createFromJSON('AccountBalance', $content, !$isSuccess);
     }
 
     // TODO(TK)

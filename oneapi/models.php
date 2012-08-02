@@ -21,6 +21,11 @@ require_once 'oneapi/models/TerminalRoamingStatus.class.php';
 require_once 'oneapi/models/ServingMccMnc.class.php';
 require_once 'oneapi/models/TerminalRoamingExtendedData.class.php';
 
+// Customer profiler:
+require_once 'oneapi/models/AccountBalance.class.php';
+require_once 'oneapi/models/Currenty.class.php';
+
+// TODO:
 require_once 'oneapi/models/Captcha.class.php';
 require_once 'oneapi/models/Country.class.php';
 require_once 'oneapi/models/Countries.class.php';
