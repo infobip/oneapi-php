@@ -146,6 +146,10 @@ class AbstractOneApiClient {
         $result = curl_exec($ch);
 
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if(curl_errno($ch) != 0)
+            throw new Exception(curl_error($ch));
+
         $isSuccess = 200 <= $code && $code < 300;
 
         curl_close($ch);
