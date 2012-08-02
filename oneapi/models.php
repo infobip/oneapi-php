@@ -23,7 +23,7 @@ require_once 'oneapi/models/TerminalRoamingExtendedData.class.php';
 
 // Customer profiler:
 require_once 'oneapi/models/AccountBalance.class.php';
-require_once 'oneapi/models/Currenty.class.php';
+require_once 'oneapi/models/Currency.class.php';
 
 // TODO:
 require_once 'oneapi/models/Captcha.class.php';
