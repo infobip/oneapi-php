@@ -2,9 +2,9 @@
 
 include 'oneapi/client.php';
 
-$customerProfilerClient = new CustomerProfilerClient(USERNAME, PASSWORD);
+$customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
 
-$customerProfile = $customerProfilerClient->getCustomerProfile();
+$customerProfile = $customerProfileClient->getCustomerProfile();
 
 if(!$customerProfile->isSuccess()) {
     echo $customerProfile->exception;

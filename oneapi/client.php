@@ -464,7 +464,7 @@ class CountryClient extends AbstractOneApiClient {
 
 }
 
-class CustomerProfilerClient extends AbstractOneApiClient {
+class CustomerProfileClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
@@ -488,10 +488,17 @@ class CustomerProfilerClient extends AbstractOneApiClient {
         return $this->smsAuthentication;
     }
 
+    public function getAccountBalance() {
+        $restPath = $this->getRestUrl('/1/customerProfile/balance');
+
+        list($isSuccess, $content) = $this->executeGET($restPath);
+        
+        return null;
+    }
+
     // TODO(TK)
     public function logout() {
         $restPath = '/1/customerProfile/logout';
-
 
         list($isSuccess, $content) = $this->executePOST($this->getRestUrl($restPath));
         $this->smsAuthentication = new SmsAuthentication(Array(), $isSuccess);
