@@ -187,14 +187,6 @@ class AbstractOneApiClient {
         return array($isSuccess, $result);
     }
 
-    protected function authenticateRequest() {
-        if (!$this->oneApiAuthentication || !$this->oneApiAuthentication->authenticated) {
-            $this->login();
-        }
-
-        Logs::debug('Authentication IBSSO');
-    }
-
     protected function getRestUrl($restPath = null, $vars = null) {
         $rurl = $this->baseUrl;
         if ($restPath && $restPath !== '') {
