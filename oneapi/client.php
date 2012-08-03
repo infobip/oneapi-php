@@ -1,5 +1,7 @@
 <?php
 
+require_once 'yapd/dbg.php';
+
 require_once 'oneapi/models.php';
 require_once 'oneapi/object.php';
 require_once 'oneapi/Utils.class.php';
@@ -34,20 +36,43 @@ class AbstractOneApiClient {
 
     public $smsAuthentication = null;
 
-    public function __construct($username = null, $password = null, $baseUrl = null) {
+    private $username;
+    private $password;
 
+    public function __construct($username = null, $password = null, $baseUrl = null) {
         if(!$username)
             $username = OneApiConfigurator::getUsername();
         if(!$password)
             $password = OneApiConfigurator::getPassword();
 
-        $this->smsAuthentication = new SmsAuthentication(
-                        Array('username' => $username, 'password' => $password)
-        );
+        $this->username = $username;
+        $this->password = $password;
+
         $this->baseUrl = $baseUrl ? $baseUrl : self::$DEFAULT_BASE_URL;
 
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
+    }
+
+    public function login() {
+        $restPath = '/1/customerProfile/login';
+
+        list($isSuccess, $content) = $this->executePOST(
+                $this->getRestUrl($restPath), Array(
+                    'username' => $this->username,
+                    'password' => $this->password
+                )
+        );
+
+        return $this->fillSmsAuthentication($content, $isSuccess);
+    }
+
+    protected function fillSmsAuthentication($content, $isSuccess) {
+        $this->smsAuthentication = Conversions::createFromJSON('SmsAuthentication', $content, !$isSuccess);
+        $this->smsAuthentication->username = $this->username;
+        $this->smsAuthentication->password = $this->password;
+        $this->smsAuthentication->authenticated = @strlen($this->smsAuthentication->ibssoToken) > 0;
+        return $this->smsAuthentication;
     }
 
     // ----------------------------------------------------------------------------------------------------
@@ -96,10 +121,10 @@ class AbstractOneApiClient {
         return array($isSuccess, json_decode($result, true));
     }
 
-    protected function executeRequest(
+    private function executeRequest(
         $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
-        $contentType = "application/x-www-form-urlencoded; charset=utf-8"
-    ) {
+        $contentType = "application/x-www-form-urlencoded; charset=utf-8")
+    {
         if ($queryParams == null)
             $queryParams = Array();
         if ($requestHeaders == null)
@@ -112,6 +137,8 @@ class AbstractOneApiClient {
             $sendHeaders[] = $key . ': ' . $value;
         }
 
+        if($this->smsAuthentication && $this->smsAuthentication->ibssoToken)
+            $sendHeaders[] = 'Authorization: IBSSO ' . $this->smsAuthentication->ibssoToken;
 
         if($httpMethod === 'GET') {
             if(sizeof($queryParams) > 0)
@@ -128,6 +155,7 @@ class AbstractOneApiClient {
             CURLOPT_USERAGENT => 'OneApi client',
             CURLOPT_CUSTOMREQUEST => $httpMethod,
             CURLOPT_URL => $url,
+            CURLOPT_HTTPHEADER => $sendHeaders,
         );
 
         Logs::debug('Executing ', $httpMethod, ' to ', $url);
@@ -137,12 +165,10 @@ class AbstractOneApiClient {
             Logs::debug('Http body:', $httpBody);
             $opts[CURLOPT_POSTFIELDS] = $httpBody;
         }
-        $opts[CURLOPT_HTTPHEADER] = $sendHeaders;
-
-        $this->authenticateRequest($opts);
 
         $ch = curl_init();
         curl_setopt_array($ch, $opts);
+
         $result = curl_exec($ch);
 
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -161,23 +187,12 @@ class AbstractOneApiClient {
         return array($isSuccess, $result);
     }
 
-    protected function authenticateRequest(&$curlOpts) {
-        if ($this->smsAuthentication === null || !$this->smsAuthentication->isAuthenticated()) {
-            return;
+    protected function authenticateRequest() {
+        if (!$this->smsAuthentication || !$this->smsAuthentication->authenticated) {
+            $this->login();
         }
 
-        if ($this->smsAuthentication->authType === SmsAuthentication::AUTH_TYPE_BASIC) {
-            Logs::debug('Authentication BASIC');
-            $curlOpts[CURLOPT_USERPWD] =
-                    $this->smsAuthentication->username . ':' . $this->smsAuthentication->password
-            ;
-        } else if ($this->smsAuthentication->authType === SmsAuthentication::AUTH_TYPE_IBSSO) {
-            Logs::debug('Authentication IBSSO');
-            $curlOpts[CURLOPT_HTTPHEADER][] =
-                    'Authorization:' .
-                    ' IBSSO ' . $this->smsAuthentication->ibssoToken
-            ;
-        }
+        Logs::debug('Authentication IBSSO');
     }
 
     protected function getRestUrl($restPath = null, $vars = null) {
@@ -474,24 +489,6 @@ class CustomerProfileClient extends AbstractOneApiClient {
         parent::__construct($username, $password, $baseUrl);
     }
 
-    // TODO(TK)
-    public function login($username, $password) {
-        $restPath = '/1/customerProfile/login';
-
-        // reset current auth
-        $this->smsAuthentication = null;
-
-        list($isSuccess, $content) = $this->executePOST(
-                $this->getRestUrl($restPath), Array(
-                    'username' => $username,
-                    'password' => $password
-                )
-        );
-        $this->smsAuthentication = new SmsAuthentication($content, $isSuccess);
-
-        return $this->smsAuthentication;
-    }
-
     public function getAccountBalance() {
         $restPath = $this->getRestUrl('/1/customerProfile/balance');
 
@@ -500,14 +497,13 @@ class CustomerProfileClient extends AbstractOneApiClient {
         return $this->createFromJSON('AccountBalance', $content, !$isSuccess);
     }
 
-    // TODO(TK)
     public function logout() {
         $restPath = '/1/customerProfile/logout';
 
         list($isSuccess, $content) = $this->executePOST($this->getRestUrl($restPath));
-        $this->smsAuthentication = new SmsAuthentication(Array(), $isSuccess);
+        $this->smsAuthentication = null;
         
-        return $this->smsAuthentication;
+        return $isSuccess;
     }
 
     // TODO(TK)
@@ -533,8 +529,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
     public function signup($customerProfile, $password, $captchaId, $captchaAnswer) {
         $restPath = '/1/customerProfile/signup';
 
-        list($isSuccess, $content) = $this->executePOST(
-                $this->getRestUrl($restPath), Array(
+        $params = array(
             'username' => $customerProfile->username,
             'forename' => $customerProfile->forename,
             'surname' => $customerProfile->surname,
@@ -546,11 +541,14 @@ class CustomerProfileClient extends AbstractOneApiClient {
             'password' => $password,
             'captchaId' => $captchaId,
             'captchaAnswer' => $captchaAnswer
-                )
         );
 
-        $this->smsAuthentication = new SmsAuthentication($content, $isSuccess);
-        return $this->smsAuthentication;
+        list($isSuccess, $content) = $this->executePOST(
+                $this->getRestUrl($restPath), 
+                $params
+        );
+
+        return $this->fillSmsAuthentication($content, $isSuccess);
     }
 
     // TODO(TK)
