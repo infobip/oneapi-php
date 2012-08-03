@@ -1,9 +1,17 @@
 <?php
 
-require_once 'oneapi/models.php';
+function __oneapi_autoloader($class) {
+    $paths = array('oneapi/models', 'oneapi/core', 'oneapi/utils');
+    foreach($paths as $path) {
+        $fileName = $path . '/' . $class . '.class.php';
+        if(is_file($fileName))
+            require_once $fileName;
+    }
+}
+
+spl_autoload_register('__oneapi_autoloader');
+
 require_once 'oneapi/object.php';
-require_once 'oneapi/Utils.class.php';
-require_once 'oneapi/Logs.class.php';
 
 /**
  * Utility handler class to store username/password.

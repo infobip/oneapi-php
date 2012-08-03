@@ -1,7 +1,5 @@
 <?php
 
-require_once 'oneapi/Utils.class.php';
-
 class InboundSmsMessages extends AbstractObject {
 
     public $inboundSMSMessage;
