@@ -4,8 +4,7 @@
  * Every client has a instance of this class that contains the basic 
  * authorization dana.
  */
-// TODO(TK): Rename to OneApiAuthentication
-class SmsAuthentication extends AbstractObject {
+class OneApiAuthentication extends AbstractObject {
 
 	//Authentication parameters
 	public $username = '';
@@ -47,7 +46,7 @@ function __convert_ib_auth_from_json($object, $json) {
 }
 
 Models::register(
-    'SmsAuthentication',
+    'OneApiAuthentication',
     new ObjectConversionRule('__convert_ib_auth_from_json')
 );
 

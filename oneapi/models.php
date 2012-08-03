@@ -38,7 +38,7 @@ require_once 'oneapi/models/Hlr.class.php';
 require_once 'oneapi/models/HlrSendResult.class.php';
 require_once 'oneapi/models/MoSubscription.class.php'; 
 require_once 'oneapi/models/MoSubscriptions.class.php';
-require_once 'oneapi/models/SmsAuthentication.class.php';
+require_once 'oneapi/models/OneApiAuthentication.class.php';
 require_once 'oneapi/models/SmsException.class.php';
 require_once 'oneapi/models/SmsMessageSubscription.class.php';
 require_once 'oneapi/models/GenericObject.class.php';
