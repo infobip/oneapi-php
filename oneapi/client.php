@@ -309,7 +309,7 @@ class SmsClient extends AbstractOneApiClient {
     public function subscribeToInboundMessagesNotifications($moSubscription) {
         $restUrl = $this->getRestUrl('/1/smsmessaging/inbound/subscriptions');
 
-        $params = $this->convertToJSON($moSubscription);
+        $params = Conversions::convertToJSON($moSubscription);
 
         list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
