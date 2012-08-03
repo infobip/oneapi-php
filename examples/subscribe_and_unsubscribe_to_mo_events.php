@@ -10,6 +10,7 @@ require_once 'oneapi/client.php';
 require_once 'oneapi/models.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
+$smsClient->login();
 
 // Get all current subscriptions:
 $moSubscriptions = $smsClient->retrieveInboundMessagesSubscriptions();

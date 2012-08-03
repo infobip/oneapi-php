@@ -3,6 +3,7 @@
 require_once 'oneapi/client.php';
 
 $customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
+$customerProfileClient->login();
 
 $customerProfileClient->login();
 

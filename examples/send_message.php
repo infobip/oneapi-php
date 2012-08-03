@@ -10,6 +10,7 @@
 require_once 'oneapi/client.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
+$smsClient->login();
 
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;

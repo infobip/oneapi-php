@@ -3,6 +3,7 @@
 include 'oneapi/client.php';
 
 $customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
+$customerProfileClient->login();
 
 $customerProfile = $customerProfileClient->getCustomerProfile();
 
