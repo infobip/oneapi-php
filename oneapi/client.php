@@ -1,7 +1,5 @@
 <?php
 
-require_once 'yapd/dbg.php';
-
 require_once 'oneapi/models.php';
 require_once 'oneapi/object.php';
 require_once 'oneapi/Utils.class.php';
