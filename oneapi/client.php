@@ -1,6 +1,6 @@
 <?php
 
-require_once 'yapd/dbg.php';
+//require_once 'yapd/dbg.php';
 
 require_once 'oneapi/models.php';
 require_once 'oneapi/object.php';
@@ -31,6 +31,8 @@ class OneApiConfigurator {
 }
 
 class AbstractOneApiClient {
+
+    const VERSION = '0.01';
 
     public static $DEFAULT_BASE_URL = 'https://api.parseco.com';
 
@@ -132,7 +134,7 @@ class AbstractOneApiClient {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 3,
-            CURLOPT_USERAGENT => 'OneApi client',
+            CURLOPT_USERAGENT => 'OneApi-php-' . self::VERSION,
             CURLOPT_CUSTOMREQUEST => $httpMethod,
             CURLOPT_URL => $url,
         );
