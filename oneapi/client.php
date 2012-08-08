@@ -1,5 +1,7 @@
 <?php
 
+//require_once 'yapd/dbg.php';
+
 require_once 'oneapi/models.php';
 require_once 'oneapi/object.php';
 require_once 'oneapi/Utils.class.php';
@@ -30,12 +32,16 @@ class OneApiConfigurator {
 
 class AbstractOneApiClient {
 
+    const VERSION = '0.01';
+
     public static $DEFAULT_BASE_URL = 'https://api.parseco.com';
 
     public $oneApiAuthentication = null;
 
     private $username;
     private $password;
+
+    public $throwException = true;
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
         if(!$username)
@@ -50,6 +56,10 @@ class AbstractOneApiClient {
 
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
+
+        # If true -- an exception will be thrown on error, otherwise, you have 
+        # to check the is_success and exception methods on resulting objects.
+        $this->throwException = true;
     }
 
     public function login() {
@@ -150,7 +160,7 @@ class AbstractOneApiClient {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 3,
-            CURLOPT_USERAGENT => 'OneApi client',
+            CURLOPT_USERAGENT => 'OneApi-php-' . self::VERSION,
             CURLOPT_CUSTOMREQUEST => $httpMethod,
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => $sendHeaders,
@@ -225,7 +235,14 @@ class AbstractOneApiClient {
     }
 
     protected function createFromJSON($className, $json, $isError) {
-        return Conversions::createFromJSON($className, $json, $isError);
+        $result = Conversions::createFromJSON($className, $json, $isError);
+
+        if($this->throwException && !$result->isSuccess()) {
+            $message = $result->exception->messageId . ': ' . $result->exception->text . ' [' . implode(',', $result->exception->variables) . ']';
+            throw new Exception($message);
+        }
+
+        return $result;
     }
 
 }
