@@ -7,6 +7,8 @@ require_once 'oneapi/client.php';
 $requestBody = file_get_contents("php://input");
 echo 'OK';
 
+# example:on-roaming-status
 $result = Conversions::createFromJSON('TerminalRoamingStatusList', $requestBody);
+# ----------------------------------------------------------------------------------------------------
 
 // Process $result here
