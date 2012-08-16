@@ -261,6 +261,24 @@ class SmsClient extends AbstractOneApiClient {
         parent::__construct($username, $password, $baseUrl);
     }
 
+    // ----------------------------------------------------------------------------------------------------
+    // Static methods used for http push events from the server:
+    // ----------------------------------------------------------------------------------------------------    
+
+    public static function unserializeDeliveryStatus($json) {
+        if($json === null)
+            $json = file_get_contents("php://input");
+
+        return Conversions::createFromJSON('DeliveryInfo', @$json['deliveryInfoNotification']);
+    }
+
+    public static function unserializeRoamingStatus($json=null) {
+        if($json === null)
+            $json = file_get_contents("php://input");
+
+        return Conversions::createFromJSON('TerminalRoamingStatusList', $requestBody);
+    }
+
     public static function unserializeInboundMessage($json=null) {
         if($json === null)
             $json = file_get_contents("php://input");

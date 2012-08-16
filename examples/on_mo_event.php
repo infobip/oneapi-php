@@ -2,7 +2,9 @@
 
 require_once 'oneapi/client.php';
 
+# example:on-mo
 $inboundMessages = SmsClient::unserializeInboundMessage();
+# ----------------------------------------------------------------------------------------------------
 
 // Usually you will process this inbound message here, save it and (eventually) respond with another message.
 
