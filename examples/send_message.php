@@ -9,28 +9,35 @@
 
 require_once 'oneapi/client.php';
 
+# example:initialize-sms-client
 $smsClient = new SmsClient(USERNAME, PASSWORD);
-$smsClient->login();
+# ----------------------------------------------------------------------------------------------------
 
+# example:login-sms-client
+$smsClient->login();
+# ----------------------------------------------------------------------------------------------------
+
+# example:prepare-message-without-notify-url
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;
 $smsMessage->address = DESTINATION_ADDRESS;
 $smsMessage->message = 'Test message';
+# ----------------------------------------------------------------------------------------------------
 
+# example:send-message
 $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
+$clientCorrelator = $smsMessageSendResult->clientCorrelator;
+# ----------------------------------------------------------------------------------------------------
 
-echo 'Success:', $smsMessageSendResult->isSuccess(), "\n";
 echo 'Response:', $smsMessageSendResult, "\n";
-if( ! $smsMessageSendResult->isSuccess()) {
-    return;
-}
 
 $deliveryStatus = null;
 
 for($i = 0; $i < 4; $i++) {
+    # example:query-for-delivery-status
     $smsMessageStatus = $smsClient->queryDeliveryStatus($smsMessageSendResult);
-
     $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
+    # ----------------------------------------------------------------------------------------------------
 
     echo 'Success:', $smsMessageStatus->isSuccess(), "\n";
     echo 'Status:', $deliveryStatus, "\n";
