@@ -272,13 +272,6 @@ class SmsClient extends AbstractOneApiClient {
         return Conversions::createFromJSON('DeliveryInfoNotification', $json);
     }
 
-    public static function unserializeRoamingStatus($json=null) {
-        if($json === null)
-            $json = file_get_contents("php://input");
-
-        return Conversions::createFromJSON('TerminalRoamingStatusNotification', $json);
-    }
-
     public static function unserializeInboundMessages($json=null) {
         if($json === null)
             $json = file_get_contents("php://input");
@@ -441,6 +434,17 @@ class SmsClient extends AbstractOneApiClient {
 
 class DataConnectionProfileClient extends AbstractOneApiClient {
 	
+    public function __construct($username = null, $password = null, $baseUrl = null) {
+        parent::__construct($username, $password, $baseUrl);
+    }
+
+    public static function unserializeRoamingStatus($json=null) {
+        if($json === null)
+            $json = file_get_contents("php://input");
+
+        return Conversions::createFromJSON('TerminalRoamingStatusNotification', $json);
+    }
+
 	/**
 	 * Retrieve asynchronously the customer’s roaming status for a single network-connected mobile device  (HLR)
 	 */

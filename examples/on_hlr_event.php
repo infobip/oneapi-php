@@ -5,7 +5,7 @@
 require_once 'oneapi/client.php';
 
 # example:on-roaming-status
-$result = SmsClient::unserializeRoamingStatus();
+$result = DataConnectionProfileClient::unserializeRoamingStatus();
 # ----------------------------------------------------------------------------------------------------
 
 // Process $result here
