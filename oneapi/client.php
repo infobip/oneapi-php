@@ -269,7 +269,7 @@ class SmsClient extends AbstractOneApiClient {
         if($json === null)
             $json = file_get_contents("php://input");
 
-        return Conversions::createFromJSON('DeliveryInfo', @$json['deliveryInfoNotification']);
+        return Conversions::createFromJSON('DeliveryInfoNotification', $json);
     }
 
     public static function unserializeRoamingStatus($json=null) {
