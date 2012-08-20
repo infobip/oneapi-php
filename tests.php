@@ -25,7 +25,6 @@ if($argv) {
     // Otherwise run all found in tests/
     $path = dirname(__FILE__).'/tests';
     $handle = opendir($path);
-    print_r($handle);
     while (false !== ($entry = readdir($handle))) {
         if(preg_match('/^.*\.php$/', $entry)) {
             $files[] = 'tests/' . $entry;
@@ -34,7 +33,9 @@ if($argv) {
 }
 
 foreach($files as $file) {
+    echo "\n", $file, ":\n";
     require_once $file;
+    echo "--------------------------------------------------\n";
 }
 
 /*

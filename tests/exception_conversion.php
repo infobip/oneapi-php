@@ -1,7 +1,6 @@
 <?php
 
-require_once 'oneapi/object.php';
-require_once 'oneapi/models/SmsException.class.php';
+require_once 'oneapi/client.php';
 
 $json = '{"requestError":{"serviceException":{"text":"Request URI missing required component(s): ","messageId":"SVC0002","variables":[""]},"policyException":null}}';
 

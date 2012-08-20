@@ -1,6 +1,6 @@
 <?php
 
-require_once 'oneapi/object.php';
+require_once 'oneapi/client.php';
 
 class Person extends AbstractObject {
 
