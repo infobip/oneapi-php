@@ -6,7 +6,7 @@
 class Conversions {
 
     /** Create new model instance from JSON. */
-    public static function createFromJSON($className, $json, $isError) {
+    public static function createFromJSON($className, $json, $isError=false) {
         if(!$className) {
             throw new Exception('Invalid className:'.$className);
         }
