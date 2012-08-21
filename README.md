@@ -79,7 +79,7 @@ Similar to the previous example, but this time you must set the notification url
 
 When the roaming status notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
-    $result = SmsClient::unserializeRoamingStatus();
+    $result = DataConnectionProfileClient::unserializeRoamingStatus();
 
 
 Retrieve inbound messages example
