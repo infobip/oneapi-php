@@ -10,7 +10,6 @@
 require_once 'oneapi/client.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
-
 $smsClient->login();
 
 # example:prepare-message-with-notify-url

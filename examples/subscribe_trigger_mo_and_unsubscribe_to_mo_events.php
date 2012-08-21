@@ -3,6 +3,7 @@
 require_once 'oneapi/client.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
+$smsClient->login();
 
 // Keyword to be used for MO messages:
 $criteria = 'test' . rand(10000000, 100000000);
