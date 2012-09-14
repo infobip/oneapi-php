@@ -26,6 +26,7 @@ $smsMessage->message = 'Test message';
 
 # example:send-message
 $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
+// The client correlator is a unique identifier of this api call:
 $clientCorrelator = $smsMessageSendResult->clientCorrelator;
 # ----------------------------------------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ $deliveryStatus = null;
 
 for($i = 0; $i < 4; $i++) {
     # example:query-for-delivery-status
+    // You can use $clientCorrelator or $smsMessageSendResult as an method call argument here:
     $smsMessageStatus = $smsClient->queryDeliveryStatus($smsMessageSendResult);
     $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
     # ----------------------------------------------------------------------------------------------------
