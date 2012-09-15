@@ -265,7 +265,7 @@ class SmsClient extends AbstractOneApiClient {
     // Static methods used for http push events from the server:
     // ----------------------------------------------------------------------------------------------------    
 
-    public static function unserializeDeliveryStatus($json) {
+    public static function unserializeDeliveryStatus($json=null) {
         if($json === null)
             $json = file_get_contents("php://input");
 
