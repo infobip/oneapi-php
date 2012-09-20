@@ -1,9 +1,11 @@
 <?php
 
+define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+
 function __oneapi_autoloader($class) {
     $paths = array('oneapi/models', 'oneapi/core', 'oneapi/utils');
     foreach($paths as $path) {
-        $fileName = $path . '/' . $class . '.class.php';
+        $fileName = __ONEAPI_LIBRARY_PATH__ . $path . '/' . $class . '.class.php';
         if(is_file($fileName))
             require_once $fileName;
     }
@@ -13,7 +15,7 @@ spl_autoload_register('__oneapi_autoloader');
 
 //require_once 'yapd/dbg.php';
 
-require_once 'oneapi/object.php';
+require_once __ONEAPI_LIBRARY_PATH__ . 'oneapi/object.php';
 
 /**
  * Utility handler class to store username/password.
