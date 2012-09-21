@@ -1,7 +1,5 @@
 <?php
 
-require_once 'yapd/dbg.php';
-
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
 function __oneapi_autoloader($class) {

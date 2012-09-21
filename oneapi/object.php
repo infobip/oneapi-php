@@ -1,7 +1,5 @@
 <?php
 
-#require_once 'yapd/dbg.php';
-
 /** JSON <-> model conversion utilities */
 class Conversions {
 
