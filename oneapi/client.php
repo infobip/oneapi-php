@@ -1,5 +1,7 @@
 <?php
 
+require_once 'yapd/dbg.php';
+
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
 function __oneapi_autoloader($class) {
@@ -299,9 +301,9 @@ class SmsClient extends AbstractOneApiClient {
         );
 
         if ($message->notifyURL)
-            $params['notifyUrl'] = $notifyUrl;
+            $params['notifyURL'] = $message->notifyURL;
         if ($message->callbackData)
-            $params['callbackData'] = $callbackData;
+            $params['callbackData'] = $message->callbackData;
 
         list($isSuccess, $content) = $this->executePOST(
                 $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params
