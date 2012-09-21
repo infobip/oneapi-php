@@ -1,6 +1,6 @@
 <?php
 
-#require_once 'yapd/dbg.php';
+require_once 'yapd/dbg.php';
 
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
@@ -309,7 +309,7 @@ class SmsClient extends AbstractOneApiClient {
                 $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params
         );
 
-        return new ResourceReference($content, $isSuccess);
+        return $this->createFromJSON('ResourceReference', $content, !$isSuccess);
     }
 
     /**
