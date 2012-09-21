@@ -1,6 +1,6 @@
 <?php
 
-require_once 'yapd/dbg.php';
+#require_once 'yapd/dbg.php';
 
 require_once 'oneapi/client.php';
 

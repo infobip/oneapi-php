@@ -1,6 +1,6 @@
 <?php
 
-require_once 'yapd/dbg.php';
+#require_once 'yapd/dbg.php';
 
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
