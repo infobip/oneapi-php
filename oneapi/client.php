@@ -72,6 +72,12 @@ class AbstractOneApiClient {
         $this->throwException = true;
     }
 
+    public function setAPIurl($baseUrl=NULL) {
+        $this->baseUrl = $baseUrl ? $baseUrl : self::$DEFAULT_BASE_URL;
+        if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
+            $this->baseUrl .= '/';
+    }
+    
     public function login() {
         $restPath = '/1/customerProfile/login';
 
