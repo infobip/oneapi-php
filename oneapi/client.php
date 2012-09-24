@@ -145,9 +145,31 @@ class AbstractOneApiClient {
         return array($isSuccess, json_decode($result, true));
     }
 
+    /**
+     * Like http_build_query but works for {'a': ['b', 'c']} the result is
+     * a=b&a=c
+     */
+    private function buildQuery($array) {
+        $result = '';
+        foreach($array as $key => $value) {
+            if($result)
+                $result .= '&';
+            if(is_array($value)) {
+                foreach($value as $subValue) {
+                    if($result)
+                        $result .= '&';
+                    $result .= urlencode($key) . '=' . urlencode($subValue);
+                }
+            } else {
+                $result .= urlencode($key) . '=' . urlencode($value);
+            }
+        }
+        return $result;
+    }
+
     private function executeRequest(
-        $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
-        $contentType = "application/x-www-form-urlencoded; charset=utf-8")
+            $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
+            $contentType = "application/x-www-form-urlencoded; charset=utf-8")
     {
         if ($queryParams == null)
             $queryParams = Array();
@@ -166,7 +188,7 @@ class AbstractOneApiClient {
 
         if($httpMethod === 'GET') {
             if(sizeof($queryParams) > 0)
-                $url .= '?' . http_build_query($queryParams, null, '&');
+                $url .= '?' . $this->buildQuery($queryParams);
         }
 
         $opts = array(
@@ -185,7 +207,8 @@ class AbstractOneApiClient {
         Logs::debug('Executing ', $httpMethod, ' to ', $url);
 
         if (sizeof($queryParams) > 0 && ($httpMethod == 'POST' || $httpMethod == 'PUT')) {
-            $httpBody = http_build_query($queryParams, null, '&');
+            $httpBody = $this->buildQuery($queryParams);
+
             Logs::debug('Http body:', $httpBody);
             $opts[CURLOPT_POSTFIELDS] = $httpBody;
         }
@@ -295,6 +318,10 @@ class SmsClient extends AbstractOneApiClient {
         $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
 
         $clientCorrelator = $this->getOrCreateClientCorrelator($message->clientCorrelator);
+
+        if(is_string($message->address)) {
+            $message->address = explode(',', $message->address);
+        }
 
         $params = array(
             'senderAddress' => $message->senderAddress,
