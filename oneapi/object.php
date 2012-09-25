@@ -15,10 +15,14 @@ class Conversions {
 
     /** Fill existing model instance from JSON. */
     public static function fillFromJSON($model, $json, $isError=false) {
-        if(is_array($json))
+        if(is_array($json)) {
             $array = $json;
-        else
+        } else {
+            if (get_magic_quotes_gpc()) {
+                $json = stripslashes($json);
+            }            
             $array = json_decode($json, true);
+        }
 
         if(!is_array($array))
             $array = array();

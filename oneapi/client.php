@@ -250,7 +250,7 @@ class AbstractOneApiClient {
         return($rez);
     }
 
-    protected function createFromJSON($className, $json, $isError) {
+    protected function createFromJSON($className, $json, $isError) {        
         $result = Conversions::createFromJSON($className, $json, $isError);
 
         if($this->throwException && !$result->isSuccess()) {
