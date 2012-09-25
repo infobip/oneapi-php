@@ -183,9 +183,6 @@ class AbstractOneApiClient {
             $sendHeaders[] = $key . ': ' . $value;
         }
 
-        if($this->oneApiAuthentication && $this->oneApiAuthentication->ibssoToken)
-            $sendHeaders[] = 'Authorization: IBSSO ' . $this->oneApiAuthentication->ibssoToken;
-
         if($httpMethod === 'GET') {
             if(sizeof($queryParams) > 0)
                 $url .= '?' . $this->buildQuery($queryParams);
@@ -203,6 +200,14 @@ class AbstractOneApiClient {
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => $sendHeaders,
         );
+
+        if($this->oneApiAuthentication && $this->oneApiAuthentication->ibssoToken) {
+            // Token based authentication (one request per login request):
+            $opts[CURLOPT_HTTPHEADER][] = 'Authorization: IBSSO ' . $this->oneApiAuthentication->ibssoToken;
+        } else {
+            // Basic authorization:
+            $opts[CURLOPT_USERPWD] = $this->username . ':' . $this->password;
+        }
 
         Logs::debug('Executing ', $httpMethod, ' to ', $url);
 
