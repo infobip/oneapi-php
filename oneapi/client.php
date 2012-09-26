@@ -17,6 +17,11 @@ spl_autoload_register('__oneapi_autoloader');
 
 require_once __ONEAPI_LIBRARY_PATH__ . 'oneapi/object.php';
 
+// Check that curl is defined:
+if(!function_exists('curl_init')) {
+    die('php must be compiled/installed with curl support in order for OneApi client lib to work');
+}
+
 /**
  * Utility handler class to store username/password.
  */
