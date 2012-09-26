@@ -29,6 +29,7 @@ class OneApiConfigurator {
 
     private static $username;
     private static $password;
+    private static $charset;
 
     public static function setCredentials($username, $password) {
         self::$username = $username;
@@ -41,6 +42,17 @@ class OneApiConfigurator {
 
     public static function getPassword() {
         return self::$password;
+    }
+
+    /**
+     * May be used in case the locale charset of this script is not utf-8.
+     */
+    public static function setCharset($charset) {
+        self::$charset = $charset;
+    }
+
+    public static function getCharset() {
+        return self::$charset;
     }
 
 }
@@ -174,12 +186,21 @@ class AbstractOneApiClient {
 
     private function executeRequest(
             $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
-            $contentType = "application/x-www-form-urlencoded; charset=utf-8")
+            $contentType = "application/x-www-form-urlencoded")
     {
         if ($queryParams == null)
             $queryParams = Array();
         if ($requestHeaders == null)
             $requestHeaders = Array();
+
+        // Check if the charset is specified in the content-type:
+        if(strpos($contentType, 'charset') === false) {
+            $charset = OneApiConfigurator::getCharset();
+            if(!$charset)
+                $charset = 'utf-8';
+
+            $contentType .= '; charset=' . $charset;
+        }
 
         $sendHeaders = Array(
             'Content-Type: ' . $contentType
