@@ -349,6 +349,15 @@ class SmsClient extends AbstractOneApiClient {
     // Rest methods:
     // ----------------------------------------------------------------------------------------------------    
 
+    private function getDataCoding($charset) {
+        if(!$charset)
+            return 0;
+        else if(strtolower($charset) == 'utf-16')
+            return 8;
+
+        throw Exception('Invalid charset:' . $charset);
+    }
+
     public function sendSMS($message) {
         $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
 
@@ -361,10 +370,18 @@ class SmsClient extends AbstractOneApiClient {
         $params = array(
             'senderAddress' => $message->senderAddress,
             'address' => $message->address,
-            'message' => $message->message,
             'clientCorrelator' => $clientCorrelator,
             'senderName' => 'tel:' . $message->senderAddress,
+            'dataCoding' => $this->getDataCoding($message->charset),
         );
+
+        if($message->binary) {
+            $params['binary'] = $message->binary;
+        } else if($message->message) {
+            $params['message'] = $message->message;
+        } else {
+            $params['message'] = '';
+        }
 
         if ($message->notifyURL)
             $params['notifyURL'] = $message->notifyURL;

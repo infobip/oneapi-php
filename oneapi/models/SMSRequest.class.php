@@ -11,6 +11,12 @@ class SMSRequest extends AbstractObject {
 
 	public $message;
 
+    /** Alternative to message -- hex encoded binary body. */
+    public $binary;
+
+    /** null for default GSM7, or "UTF-16" */
+    public $charset;
+
 	public $address;
 
     /** Used later for querying about the message status. */
