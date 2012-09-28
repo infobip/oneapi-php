@@ -9,11 +9,6 @@ First initialize the messaging client using your username and password:
     $smsClient = new SmsClient(USERNAME, PASSWORD);
 
 
-Then login with the client:
-
-    $smsClient->login();
-
-
 An exception will be thrown if your username and/or password are incorrect.
 
 Prepare the message:
@@ -27,11 +22,13 @@ Prepare the message:
 Send the message:
 
     $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
+    // The client correlator is a unique identifier of this api call:
     $clientCorrelator = $smsMessageSendResult->clientCorrelator;
 
 
 Later you can query for the delivery status of the message:
 
+    // You can use $clientCorrelator or $smsMessageSendResult as an method call argument here:
     $smsMessageStatus = $smsClient->queryDeliveryStatus($smsMessageSendResult);
     $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
 
