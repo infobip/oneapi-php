@@ -383,10 +383,11 @@ class SmsClient extends AbstractOneApiClient {
     public function queryDeliveryStatus($clientCorrelatorOrResourceReference = null) {
         $restPath = '/1/smsmessaging/outbound/' . 'TODO' . '/requests/{clientCorrelator}/deliveryInfos';
 
-        if (is_object($clientCorrelatorOrResourceReference))
+        if (is_object($clientCorrelatorOrResourceReference)) {
             $clientCorrelator = $clientCorrelatorOrResourceReference->clientCorrelator;
-        else
-            $clientCorrelator = $clientCorrelator;
+        } else {
+            $clientCorrelator = (string) $clientCorrelatorOrResourceReference;
+        }
 
         $clientCorrelator = $this->getOrCreateClientCorrelator($clientCorrelator);
 
