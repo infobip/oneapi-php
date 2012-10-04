@@ -22,6 +22,9 @@ if(!function_exists('curl_init')) {
     die('php must be compiled/installed with curl support in order for OneApi client lib to work');
 }
 
+if(!defined('ONEAPI_BASE_URL'))
+    define('ONEAPI_BASE_URL', 'https://api.parseco.com');
+
 /**
  * Utility handler class to store username/password.
  */
@@ -61,8 +64,6 @@ class AbstractOneApiClient {
 
     const VERSION = '0.01';
 
-    public static $DEFAULT_BASE_URL = 'https://api.parseco.com';
-
     public $oneApiAuthentication = null;
 
     private $username;
@@ -79,7 +80,7 @@ class AbstractOneApiClient {
         $this->username = $username;
         $this->password = $password;
 
-        $this->baseUrl = $baseUrl ? $baseUrl : self::$DEFAULT_BASE_URL;
+        $this->baseUrl = $baseUrl ? $baseUrl : ONEAPI_BASE_URL;
 
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
@@ -90,7 +91,7 @@ class AbstractOneApiClient {
     }
 
     public function setAPIurl($baseUrl=NULL) {
-        $this->baseUrl = $baseUrl ? $baseUrl : self::$DEFAULT_BASE_URL;
+        $this->baseUrl = $baseUrl ? $baseUrl : ONEAPI_BASE_URL;
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
     }
