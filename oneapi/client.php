@@ -339,7 +339,10 @@ class SmsClient extends AbstractOneApiClient {
         if($json === null)
             $json = file_get_contents("php://input");
 
-        $inboundMessages = Conversions::createFromJSON('InboundSmsMessages', $json);
+        $json = json_decode($json, true);
+        $json = Utils::getArrayValue($json, 'inboundSMSMessage.0');
+
+        return Conversions::createFromJSON('InboundSmsMessage', $json);
     }
 
     // ----------------------------------------------------------------------------------------------------
