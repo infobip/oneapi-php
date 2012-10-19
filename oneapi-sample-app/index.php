@@ -10,6 +10,7 @@
             <li/> <a href='send-message-form.php'>Send message</a>
             <li/> <a href='send-roaming-status-form.php'>Check mobile phone roaming status</a>
             <li/> <a href='inbound-message.php'>Inbound message example</a>
+            <li/> <a href='ussd.php'>USSD</a>
         </ul>
     </body>
 </html>
