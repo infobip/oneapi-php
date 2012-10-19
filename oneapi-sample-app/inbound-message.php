@@ -15,7 +15,7 @@ $notifyURLExample = 'http://' . $_SERVER['HTTP_HOST'] . '/' . implode('/', $part
     <body>
         <h1>Inbound message example</h1>
         <p>
-            Use <span style="font-style:italic"><?php echo $notifyURLExample ?></span> in your parseco administation page. Be sure to <b>change the server address</b> because the URL is accessible from the internet. 
+            Use <span style="font-style:italic"><?php echo $notifyURLExample ?></span> in your parseco administation page. Be sure to <b>change the server address</b> because the URL must be accessible from the internet. 
             <br/>
             Check <b><a href='push-log-viewer.php'>here</a></b> to see all inbound push requests received.
         </p>
