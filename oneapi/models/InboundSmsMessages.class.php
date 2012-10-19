@@ -2,6 +2,7 @@
 
 class InboundSmsMessages extends AbstractObject {
 
+    # FIXME: rename to messages
     public $inboundSMSMessage;
     public $numberOfMessagesInThisBatch;
     //public $resourceURL;

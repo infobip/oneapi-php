@@ -19,5 +19,9 @@ $notifyURLExample = 'http://' . $_SERVER['HTTP_HOST'] . '/' . implode('/', $part
             <br/>
             Check <b><a href='push-log-viewer.php'>here</a></b> to see all inbound push requests received.
         </p>
+        <h1>...or...</h1>
+        <p>
+            <a href="inbound-message-check.php">Check for inbound messages</a> if you didn't set your notifyURL (because, for example, you don't have a public server hosting).
+        </p>
     </body>
 </html>
