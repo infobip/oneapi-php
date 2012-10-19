@@ -8,3 +8,5 @@ tags
 tmp*
 nbproject/
 nbproject/*
+config.php
+oneapi-sample-app/push_log/*
