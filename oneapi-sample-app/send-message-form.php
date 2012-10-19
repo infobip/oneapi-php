@@ -32,7 +32,7 @@ $notifyURLExample = 'http://' . $_SERVER['HTTP_HOST'] . '/' . implode('/', $part
                 <input type="text" name="notifyURL" value="<?php echo getFormParam('notifyURL') ?>" size="80"/><br/>
                 Use <span style="font-style:italic"><?php echo $notifyURLExample ?></span> and <b>change the server address</b> to be sure the URL is accessible from the internet. 
                 <br/>
-                Check <b><a href='push_log' target='_blank'>here</a></b> to see all push requests received.
+                Check <b><a href='push-log-viewer.php'>here</a></b> to see all push requests received.
             </fieldset>
             <br/>
             <input type="submit" value="Send message" />
