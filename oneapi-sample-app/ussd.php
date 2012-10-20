@@ -2,7 +2,7 @@
 
 require_once 'app.php';
 
-if($_REQUEST['gsm']) {
+if(array_key_exists('gsm', $_REQUEST)) {
 	$gsm = $_REQUEST['gsm'];
 	$ussdClient = new UssdClient(USERNAME, PASSWORD);
 
