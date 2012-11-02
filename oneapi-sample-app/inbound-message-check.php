@@ -18,7 +18,7 @@ $result->inboundSMSMessage
         <?php if($result->inboundSMSMessage): ?>
             <ul>
                 <?php foreach($result->inboundSMSMessage as $message): ?>
-                   <li/> Message <b><?php echo $message->senderAddress ?></b> from <b><?php echo $message->message ?></b>.
+                   <li/> Message <b><?php echo $message->message ?></b> from <b><?php echo $message->senderAddress ?></b>.
                 <?php endforeach ?>
             </ul>
         <?php else: ?>
