@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+    <modelVersion>4.0.0</modelVersion>
+  
+    <groupId>com.infobip</groupId>
+    <artifactId>oneapi-php</artifactId>
+    <version>apidoc</version>
+    <packaging>pom</packaging>
+    <name>oneapi-php</name>
+    
+    <properties>        
+        <apidoc.input.basepath>${basedir}/apidoc/input</apidoc.input.basepath>
+        <apidoc.output.basepath>${basedir}/apidoc/output</apidoc.output.basepath>
+        <apidoc.site.relativepath>site</apidoc.site.relativepath>
+        <apidoc.metadata.relativepath>metadata</apidoc.metadata.relativepath>        
+        <apidoc.NaturalDocs.script>/usr/local/NaturalDocs/NaturalDocs</apidoc.NaturalDocs.script>        
+        <apidoc.NaturalDocs.input.path>${basedir}/oneapi</apidoc.NaturalDocs.input.path>
+        <apidoc.NaturalDocs.output.path>${apidoc.output.basepath}/${apidoc.site.relativepath}</apidoc.NaturalDocs.output.path>
+        <apidoc.NaturalDocs.project.path>${apidoc.output.basepath}/${apidoc.metadata.relativepath}</apidoc.NaturalDocs.project.path>        
+    </properties>
+  
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>clean-generated-NaturalDocs</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>                        
+                    </execution>
+                </executions>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${apidoc.output.basepath}/</directory>
+                            <includes>
+                                <include>${apidoc.metadata.relativepath}/**/*</include>
+                                <include>${apidoc.site.relativepath}/**/*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions> 
+                    <execution>
+                        <id>prepare-NaturalDocs-input-if-exists</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target name="test-if-apidoc-exists">                                
+                                <available file="${apidoc.NaturalDocs.project.path}/Menu.txt"  property="docs.exist"/>
+                                <property name="docs.exist" value="false"/>
+                                <echo message="${apidoc.NaturalDocs.project.path}/Menu.txt avaliable: ${docs.exist}"/>                                
+                            </target>
+                        </configuration>                                                
+                    </execution> 
+                    <execution>
+                        <id>prepare-NaturalDocs-input-do-backup</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="backup-NaturalDocs-config-files" if="${docs.exist}" >                                                                
+                                <tstamp>
+                                    <format property="touch.time" pattern="dd-MM-yyyy_hh-mm-ss-SSS" />
+                                </tstamp>
+                                <property name="backup.dir" location="${apidoc.input.basepath}/metadata/${touch.time}"/>                                
+                                <echo message="assuming that documentation is generated, backup in ${backup.dir}"/>                                
+                                <mkdir dir="${backup.dir}"/>                                
+                                <copy file="${apidoc.NaturalDocs.project.path}/Menu.txt" tofile="${backup.dir}/Menu.txt"/>
+                                <copy file="${apidoc.NaturalDocs.project.path}/Languages.txt" tofile="${backup.dir}/Languages.txt"/>
+                                <copy file="${apidoc.NaturalDocs.project.path}/Topics.txt" tofile="${backup.dir}/Topics.txt"/>
+                            </target>
+                            
+                        </configuration>                                                
+                    </execution>
+                    <execution>
+                        <id>prepare-NaturalDocs-input-skip-backup</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>                           
+                            <target name="skip-NaturalDocs-config-files-backup" unless="${docs.exist}" >
+                                 <echo message="assuming that documentation is not generated, no backup will be attempted"/>
+                            </target>
+                        </configuration>                                                
+                    </execution>
+                </executions>               
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-NaturalDocs-output</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>${apidoc.NaturalDocs.script}</executable>
+                    <workingDirectory>${basedir}</workingDirectory>
+                    <commandlineArgs>-i ${apidoc.NaturalDocs.input.path} -o HTML ${apidoc.NaturalDocs.output.path} -p ${apidoc.NaturalDocs.project.path} -r</commandlineArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>  
+</project>

@@ -1,6 +1,7 @@
 <?php
 
 /*
+
 $fails = array();
 
 function assertFailed($param) {
