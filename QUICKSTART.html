@@ -1,6 +1,6 @@
-<html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h1>Parseco OneAPI PHP client</h1>
+<html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h1>Parseco OneAPI php client</h1>
 <h2>System overview</h2>
-<p><a href="http://OneAPI.gsma.com/">OneAPI</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface">API</a> <a href="http://en.wikipedia.org/wiki/Specification_(technical_standard)">specification</a> issued by <a href="http://en.wikipedia.org/wiki/GSMA">GSM Association</a> and it aims to expose many <a href="http://en.wikipedia.org/wiki/Mobile_network">mobile network</a> functionalities such as: <a href="http://oneapi.gsmworld.com/sms-restful-api/">SMS</a> (<a href="http://en.wikipedia.org/wiki/Short_Message_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/mms-restful-api/">MMS</a> (<a href="http://en.wikipedia.org/wiki/Multimedia_Messaging_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/payment-restful-api/">payments</a> (<a href="http://en.wikipedia.org/wiki/Mobile_payment">as a term</a>), <a href="http://OneAPI.gsmworld.com/voice-call-control-restful-api/">voice call control</a>, <a href="http://oneapi.gsmworld.com/reference-location-restful-api/">LBS</a> (<a href="http://en.wikipedia.org/wiki/Location-based_service">as a term</a>), <a href="http://OneAPI.gsma.com/data-connection-profile/">data connection profile querying</a> and <a href="http://OneAPI.gsmworld.com/device-capability-restful-api/">device capabilities querying</a>.
+<p><a href="http://OneAPI.gsma.com/">OneAPI</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface">API</a> <a href="http://en.wikipedia.org/wiki/Specification_(technical_standard)">specification</a> issued by the <a href="http://en.wikipedia.org/wiki/GSMA">GSM Association</a> and it aims to expose many <a href="http://en.wikipedia.org/wiki/Mobile_network">mobile network</a> functionalities such as: <a href="http://oneapi.gsmworld.com/sms-restful-api/">SMS</a> (<a href="http://en.wikipedia.org/wiki/Short_Message_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/mms-restful-api/">MMS</a> (<a href="http://en.wikipedia.org/wiki/Multimedia_Messaging_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/payment-restful-api/">payments</a> (<a href="http://en.wikipedia.org/wiki/Mobile_payment">as a term</a>), <a href="http://OneAPI.gsmworld.com/voice-call-control-restful-api/">voice call control</a>, <a href="http://oneapi.gsmworld.com/reference-location-restful-api/">LBS</a> (<a href="http://en.wikipedia.org/wiki/Location-based_service">as a term</a>), <a href="http://OneAPI.gsma.com/data-connection-profile/">data connection profile querying</a> and <a href="http://OneAPI.gsmworld.com/device-capability-restful-api/">device capabilities querying</a>.
 <a href="https://github.com/parseco/">Parseco</a> is OneAPI <a href="http://en.wikipedia.org/wiki/Implementation#Computer_Science">implementation</a> which exposes <a href="http://en.wikipedia.org/wiki/SMS_gateway">SMS gateway</a> and <a href="http://en.wikipedia.org/wiki/USSD_Gateway">USSD gateway</a> functionality.
 In order to use Parseco OneAPI and gain access to our gateways you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
 In other words, by using Parseco OneAPI PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
@@ -12,27 +12,27 @@ In other words, by using Parseco OneAPI PHP library you can <a href="http://www.
 <h2>General assumptions which must be fulfilled for all the following examples</h2>
 <ul>
 <li>You must have an active Internet connection.</li>
-<li>You have satisified the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at <a href="http://www.parseco.com">Parseco website</a>. After sign-up, SMS message with the verification pin will be sent to your cell phone.</li>
+<li>You have satisfied the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at <a href="http://www.parseco.com">Parseco website</a>. After sign-up, SMS message with the verification PIN will be sent to your cell phone.</li>
 </ul>
-Input the four-digit pin from the recieved SMS message in the verification box and press verify.
-Congratulations on your succesful registration - you can start using Parseco OneAPI! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
+Input the four-digit PIN from the received SMS message in the verification box and press verify.
+Congratulations on your successful registration - you can start using Parseco OneAPI! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h2>Assumptions which must be fulfilled for the examples with notification push</h2>
 <p>In every example two different architectural approaches are shown.
-In the first variant the mobile-originated (see example 3 for term explanation) information is returned to the calling code.
-In the second variant the mobile-terminated information is still being sent by the calling code, but the mobile-originated information is returned to an URL predefined by the user.
-In other words, Parseco pushes the recieved mobile-originated notifications (be it HLR or delivery data, or messages) to your on-line machine.
-Naturally, the notfication generating code and the notification recieving code may be implemented in different languages but for the sake of this how-to document it will all be shown in PHP.</p>
+In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the calling code.
+In the second scenario the mobile-terminated information is still being sent by the calling code, but the mobile-originated information is returned to an URL predefined by the user.
+In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your on-line machine.
+Naturally, the notification generating code and the notification recieving code may be implemented in different languages but for the sake of this how-to document it will all be shown in PHP.</p>
 <ul>
 <li>You must have your own web server accessible from the Internet in order to provide the well-defined URL for the Parseco push notifications.</li>
 <li>You must register the URL mentioned above as notification URL at Parseco site <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a></li>
-<li>It would be considered polite and civilised on your behalf to implement some sort of <a href="http://en.wikipedia.org/wiki/Polling_(computer_science)">polling</a> mechanism in order not to waste our resources. Also, this conforms to the general <a href="http://en.wikipedia.org/wiki/Etiquette_(technology)">netiquette</a> considering the use of network resources.</li>
+<li>It would be considered polite on your behalf to implement some sort of <a href="http://en.wikipedia.org/wiki/Polling_(computer_science)">polling</a> mechanism in order not to waste our resources. Also, this conforms to the general <a href="http://en.wikipedia.org/wiki/Etiquette_(technology)">netiquette</a> considering the use of network resources. Your inbound messages will be available for a period of 48 h after being received by our gateways.</li>
 </ul>
 <p>For a given notification URL the <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a> generates a pair of subscription number and keyword. The just generated subscription will be shown in the list below:</p>
 <ul>
 <li>Id - The id of the subscription.</li>
 <li>Address - Your GSM subscription number to which inbound messages are sent. <strong>Prefix it with '+' prior to sending SMS message.</strong></li>
-<li>Criteria - A string which <strong>must</strong> be present at the start of the SMS message text, otherwise Parseco won't forward it to your code.</li>
-<li>Notify URL- The registered URL to recieve Parseco push notifications</li>
+<li>Criteria - String which <strong>must</strong> be present at the start of the SMS message text, otherwise Parseco won't forward it to your code.</li>
+<li>Notify URL- The registered URL to receive Parseco push notifications</li>
 <li>Action - Action for subscription.</li>
 </ul>
 <p>The "Notify URL" field is crucial. 
@@ -41,7 +41,7 @@ If it is not present then the architectural approach without notification push i
 If you make changes, a "Save" button will appear in the "Action" column. If you want to apply the changes, press it.</p>
 <h2>Notice</h2>
 <ul>
-<li><strong>After signup you won't be able to use any services for 2 to 5 minutes until the system propagates the changes.</strong></li>
+<li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
 <li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
 <li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets, you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded OneAPI library. There may be other strings to replace as noted in example 1.1. After you have done that, you can run them.</li>
 </ul>
@@ -53,17 +53,17 @@ You are basically logging in to Parseco, so an exception will be thrown if the u
 <li>address - GSM number of the destination cell phone</li>
 <li>message - the contents of the SMS message</li>
 </ul>
-<p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator">MNO</a>.
-It that sense, it is recommended (but not guaranteed) to use the <a href="http://en.wikipedia.org/wiki/English_alphabet">english</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric">alphanumeric</a> character subset.</p>
+<p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator">network operator</a>.
+It that sense, it is recommended (but not guaranteed) to use the <a href="http://en.wikipedia.org/wiki/English_alphabet">English</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric">alphanumeric</a> character subset.</p>
 <p>Now you are ready to send the message.
-When you execute the send method it will return a smsMessageSendResult/clientCorrelator object which is used to query the message delivery status.
+When you execute the send method it will return an object which is used to query the message delivery status.
 These are possible states of the message once you have sent it to <a href="http://www.infobip.com">Infobip</a> SMS gateway:  </p>
 <ul>
 <li>DeliveredToTerminal - the message has been delivered to the cell phone</li>
-<li>DeliveredToNetwork - the message has been delivered to the cell phone MNO</li>
-<li>MessageWaiting - message is pending delivery to the cell phone MNO</li>
+<li>DeliveredToNetwork - the message has been delivered to the cell phone network operator</li>
+<li>MessageWaiting - message is pending delivery to the cell phone network operator</li>
 <li>DeliveryImpossible - message will not be delivered</li>
-<li>DeliveryUncertain - delivery cannot be confirmed due to MNO settings. It still may be delivered but we will never know it.</li>
+<li>DeliveryUncertain - delivery cannot be confirmed due to network operator settings. It still may be delivered but we will never know it.</li>
 </ul>
 <pre><code>&lt;?php
 
@@ -113,7 +113,7 @@ $smsMessageSendResult = $smsClient-&gt;sendSMS($smsMessage);
 
 ?&gt;
 </code></pre>
-<p>Process it on the machine hosting the notify URL:</p>
+<p>Process it on the machine mapped to the notify URL:</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -127,7 +127,7 @@ echo 'callback data: ', $result-&gt;callbackData, '\n';
 
 ?&gt;
 </code></pre>
-<p>Note that there is nothing stopping you from running both code snippets on the same machine, but it is not neccessary.</p>
+<p>Note that there is nothing stopping you from running both code snippets on the same machine, but it is not necessary.</p>
 <h2>Example 2.1: Cell phone roaming status (HLR query)</h2>
 <p>When the cell phone is connected to a network other than his home operator network it is said to be <a href="http://en.wikipedia.org/wiki/Roaming">roaming</a>.
 This is just a part of the information about a cell phone that can be obtained via a <a href="http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29">HLR</a> query like in the example below.</p>
@@ -168,7 +168,7 @@ if(!$response-&gt;isSuccess()) {
 
 ?&gt;
 </code></pre>
-<p>Process it on the machine hosting the notify URL:</p>
+<p>Process it on the machine mapped to the notify URL:</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -185,13 +185,13 @@ echo 'extendedData: ', $response-&gt;extendedData,'\n';
 
 ?&gt;
 </code></pre>
-<p>Note that there is nothing stopping you from running both code snippets on the same machine, but it is not neccessary.</p>
-<h2>Example 3.1: Retrieve inbound messages (two way communication)</h2>
+<p>Note that there is nothing stopping you from running both code snippets on the same machine, but it is not necessary.</p>
+<h2>Example 3.1: Process inbound messages (two way communication)</h2>
 <p>Two way communication with cell phone is also possible via OneAPI.
 The messages your application sends to cell phones are outbound or mobile-terminated messages.
-It is a scenario like in the first example.
-The messages which your application recieves from cell phones are inbound or mobile-originated messages.
-In order to be able to recieve inbound messages programatically you must have a valid GSM subscription number.
+It is a scenario much like in the first example.
+The messages which your application receives from cell phones are inbound or mobile-originated messages.
+In order to be able to recieve inbound messages programmatically you must have a valid GSM subscription number.
 For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
 Our paid services include (info coming soon, mail to info@parseco.com):</p>
 <ul>
@@ -220,7 +220,7 @@ foreach($inboundMessages-&gt;inboundSMSMessage as $message) {
 
 ?&gt;
 </code></pre>
-<h2>Example 3.2: Retrieve inbound messages (two way communication) as notification push</h2>
+<h2>Example 3.2: Process inbound messages (two way communication) as notification push</h2>
 <p>In order for the below example to work make sure that you have a subscription with a notify URL set at your <a href="http://www.parseco.com/application/setup-wizard/">Parseco account</a>. 
 Of course, the notify URL must point at the below code.</p>
 <pre><code>&lt;?php
