@@ -1,10 +1,9 @@
-<html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h1 id="PARSECO_ONEAPI_PHP_CLIENT">Parseco OneAPI php client</h1>
+<html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h1 id="PARSECO_ONEAPI_PHP_CLIENT">Parseco OneAPI PHP client</h1>
 <h3 id="SYSTEM_OVERVIEW">System overview</h3>
 <p><a href="https://github.com/parseco/">Parseco</a> is OneAPI <a href="http://en.wikipedia.org/wiki/Implementation#Computer_Science">implementation</a> which exposes <a href="http://en.wikipedia.org/wiki/SMS_gateway">SMS gateway</a> and <a href="http://en.wikipedia.org/wiki/USSD_Gateway">USSD gateway</a> functionality.
 <a href="http://OneAPI.gsma.com/">OneAPI</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface">API</a> <a href="http://en.wikipedia.org/wiki/Specification_(technical_standard)">specification</a> issued by the <a href="http://en.wikipedia.org/wiki/GSMA">GSM Association</a> and it aims to expose many <a href="http://en.wikipedia.org/wiki/Mobile_network">mobile network</a> functionalities such as: <a href="http://oneapi.gsmworld.com/sms-restful-api/">SMS</a> (<a href="http://en.wikipedia.org/wiki/Short_Message_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/mms-restful-api/">MMS</a> (<a href="http://en.wikipedia.org/wiki/Multimedia_Messaging_Service">as a term</a>), <a href="http://oneapi.gsmworld.com/payment-restful-api/">payments</a> (<a href="http://en.wikipedia.org/wiki/Mobile_payment">as a term</a>), <a href="http://OneAPI.gsmworld.com/voice-call-control-restful-api/">voice call control</a>, <a href="http://oneapi.gsmworld.com/reference-location-restful-api/">LBS</a> (<a href="http://en.wikipedia.org/wiki/Location-based_service">as a term</a>), <a href="http://OneAPI.gsma.com/data-connection-profile/">data connection profile querying</a> and <a href="http://OneAPI.gsmworld.com/device-capability-restful-api/">device capabilities querying</a>.
 In order to use Parseco OneAPI and gain access to our gateways you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
-In other words, by using Parseco OneAPI php library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
-<br/>screenshot: system-landscape</p>
+In other words, by using Parseco OneAPI PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
 <h3 id="PREREQUISITES">Prerequisites</h3>
 <ul>
 <li>You have <a href="http://php.net/manual/en/install.php">installed a PHP interpreter</a>.</li>
@@ -15,7 +14,6 @@ In other words, by using Parseco OneAPI php library you can <a href="http://www.
 <li>You must have an active Internet connection.</li>
 <li>You have satisfied the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at <a href="http://www.parseco.com">Parseco website</a>. After sign-up, SMS message with the verification PIN will be sent to your cell phone.</li>
 </ul>
-<p>screenshot: account verifcation page screenshot<br/>
 Input the four-digit PIN from the received SMS message in the verification box and press verify.
 Congratulations on your successful registration - you can start using Parseco OneAPI! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h3 id="ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_THE_EXAMPLES_WITH_NOTIFICATION_PUSH">Assumptions which must be fulfilled for the examples with notification push</h3>
@@ -23,7 +21,7 @@ Congratulations on your successful registration - you can start using Parseco On
 In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the calling code.
 In the second scenario the mobile-terminated information is still being sent by the calling code, but the mobile-originated information is returned to an URL predefined by the user.
 In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your on-line machine.
-Naturally, the notification generating code and the notification receiving code may be implemented in different languages but for the sake of this how-to document it will all be shown in php.</p>
+Naturally, the notification generating code and the notification receiving code may be implemented in different languages but for the sake of this how-to document it will all be shown in PHP.</p>
 <ul>
 <li>You must have your own web server accessible from the Internet in order to provide the well-defined URL for the Parseco push notifications.</li>
 <li>You must register the URL mentioned above as notification URL at Parseco site <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a></li>
@@ -37,7 +35,6 @@ Naturally, the notification generating code and the notification receiving code 
 <li>Notify URL- The registered URL to receive Parseco push notifications</li>
 <li>Action - Action for subscription.</li>
 </ul>
-<p>screenshot subscriptions<br/></p>
 <p>The "Notify URL" field is crucial. 
 If it is present, then the architectural approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it. 
 If it is not present then the architectural approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the calling code.
@@ -46,7 +43,7 @@ If you make changes, a "Save" button will appear in the "Action" column. If you 
 <ul>
 <li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
 <li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
-<li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets, you can copy them to a new empty php file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded OneAPI library. There may be other strings to replace as noted in example 1.1. After you have done that, you can run them.</li>
+<li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets, you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded OneAPI library. There may be other strings to replace as noted in example 1.1. After you have done that, you can run them.</li>
 </ul>
 <h3 id="EXAMPLE_1_1_BASIC_MESSAGING_HELLO_WORLD">Example 1.1: Basic messaging (Hello world)</h3>
 <p>The first thing that needs to be done is to initialize the client with username and password in plaintext.
