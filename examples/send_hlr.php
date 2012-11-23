@@ -9,8 +9,14 @@ $client->login();
 
 # example:retrieve-roaming-status
 $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
+echo 'HLR result: \n';
+echo 'servingMccMnc: ', $response->servingMccMnc,'\n';
+echo 'address: ', $response->address,'\n';
+echo 'currentRoaming: ', $response->currentRoaming,'\n';
+echo 'resourceURL: ', $response->resourceURL,'\n';
+echo 'retrievalStatus: ', $response->retrievalStatus,'\n';
+echo 'callbackData: ', $response->callbackData,'\n';
+echo 'extendedData: ', $response->extendedData,'\n';
 # ----------------------------------------------------------------------------------------------------
-
-echo 'HLR result:', $response, "\n";
 
 //Logs::printLogs();
