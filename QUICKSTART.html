@@ -1,27 +1,27 @@
 <html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h3 id="SYSTEM_OVERVIEW">System overview</h3>
-<p><a href="https://github.com/parseco/">Parseco</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface">API</a> implementation inspired by <a href="http://oneapi.gsma.com/api-list/">OneApi</a> specification which is issued by the <a href="http://en.wikipedia.org/wiki/GSMA">GSMA</a>. 
-We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API itself more comfortable for the developer.</p>
+<p><a href="https://github.com/parseco/" target="_blank">Parseco</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">API</a> implementation inspired by <a href="http://oneapi.gsma.com/api-list/" target="_blank">OneApi</a> specification which is issued by the Global System for Mobile Communications Association. 
+We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API more comfortable for the developer.</p>
 <p>Parseco API exposes the following mobile network functionalities:</p>
 <ul>
-<li><strong>Short message service</strong> (abbreviated <strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> character set so that you can use virtually any alphabet used nowadays for composing the text. The only limitation for SMS messages is the length of 80 characters in case of the Unicode encoded message, or 160 characters if it is not Unicode encoded.</li>
-<li><strong>Unstructured supplementary services data</strong> (abbreviated <strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length, but unfortunatley Unicode encoding is not supported.</li>
-<li><strong>Home location register</strong> (abbreviated <strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.</li>
+<li><strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16" target="_blank">UTF-16</a> character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 80 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded.</li>
+<li><strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.</li>
+<li><strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.</li>
 </ul>
 <p>Other mobile network-related functionalities are due to be implemented.
-In order to use Parseco API and gain access to <a href="http://www.infobip.com">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
-In other words, by using Parseco php library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
+In order to use Parseco API and gain access to <a href="http://www.infobip.com" target="_blank">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
+In other words, by using Parseco PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
 <br/>screenshot: system-landscape</p>
 <h3 id="PREREQUISITES">Prerequisites</h3>
 <ul>
-<li>You have <a href="http://php.net/manual/en/install.php">installed a PHP interpreter</a>.</li>
-<li>You have downloaded the <a href="https://github.com/parseco/oneapi-php/tree/master/oneapi">Parseco OneAPI PHP library</a></li>
+<li>You have <a href="http://php.net/manual/en/install.php" target="_blank">installed a PHP interpreter</a>.</li>
+<li>You have downloaded the <a href="https://github.com/parseco/oneapi-php/tree/master/oneapi" target="_blank">Parseco OneAPI PHP library</a></li>
 </ul>
 <h3 id="GENERAL_ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_ALL_THE_FOLLOWING_EXAMPLES">General assumptions which must be fulfilled for all the following examples</h3>
 <ul>
 <li>You must have an active Internet connection.</li>
 <li>You have satisfied the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at <a href="http://www.parseco.com">Parseco website</a>. After sign-up, SMS message with the verification PIN will be sent to your cell phone.</li>
 </ul>
-<p>screenshot: account verifcation page screenshot<br/>
+<p>screenshot: account verification page screenshot<br/>
 Input the four-digit PIN from the received SMS message in the verification box and press verify.
 Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h3 id="ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_THE_EXAMPLES_WITH_NOTIFICATION_PUSH">Assumptions which must be fulfilled for the examples with notification push</h3>
@@ -51,7 +51,7 @@ If you make changes, a "Save" button will appear in the "Action" column. If you 
 <ul>
 <li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
 <li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
-<li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.</li>
+<li>All examples are <a href="http://sscce.org/" target="_blank">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.</li>
 </ul>
 <h3 id="EXAMPLE_1_1_BASIC_MESSAGING_HELLO_WORLD">Example 1.1: Basic messaging (Hello world)</h3>
 <p>The first thing that needs to be done is to initialize the client with username and password in plaintext.
@@ -61,8 +61,8 @@ You are basically logging in to Parseco, so an exception will be thrown if the u
 <li><strong>address</strong> - GSM number of the destination cell phone</li>
 <li><strong>message</strong> - the contents of the SMS message</li>
 </ul>
-<p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator">network operator</a>.
-Therefore, our recommendation (but not a guarantee) is to use the <a href="http://en.wikipedia.org/wiki/English_alphabet">English</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric">alphanumeric</a> character subset.</p>
+<p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator" target="_blank">network operator</a>.
+Therefore, our recommendation (but not a guarantee) is to use the <a href="http://en.wikipedia.org/wiki/English_alphabet" target="_blank">English</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric" target="_blank">alphanumeric</a> character subset.</p>
 <p>When you execute the send method it will return an object which is used to query the message delivery status.
 These are possible states of the message once you have sent it:  </p>
 <ul>
@@ -143,24 +143,27 @@ fclose($f);
 </code></pre>
 <p>Note that there is nothing stopping you from running both code snippets on the same host or within the same web application, but it is not necessary.</p>
 <h3 id="EXAMPLE_2_1_CELL_PHONE_ROAMING_STATUS_HLR_QUERY">Example 2.1: Cell phone roaming status (HLR query)</h3>
-<p>When the cell phone is connected to a network other than his home operator network it is said to be <a href="http://en.wikipedia.org/wiki/Roaming">roaming</a>.
-This is just a part of the information about a cell phone that can be obtained via a <a href="http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29">HLR</a> query like in the example below.</p>
+<p>When the cell phone is connected to a network other than his home operator network it is said to be <a href="http://en.wikipedia.org/wiki/Roaming" target="_blank">roaming</a>.
+This is just a part of the information about a cell phone that can be obtained via a <a href="http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29" target="_blank">HLR</a> query like in the example below.</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
-$client-&gt;login();
 
 $response = $client-&gt;retrieveRoamingStatus(DESTINATION_ADDRESS);
-echo 'HLR result: \n';
-echo 'servingMccMnc: ', $response-&gt;servingMccMnc,'\n';
-echo 'address: ', $response-&gt;address,'\n';
-echo 'currentRoaming: ', $response-&gt;currentRoaming,'\n';
-echo 'resourceURL: ', $response-&gt;resourceURL,'\n';
-echo 'retrievalStatus: ', $response-&gt;retrievalStatus,'\n';
-echo 'callbackData: ', $response-&gt;callbackData,'\n';
-echo 'extendedData: ', $response-&gt;extendedData,'\n';
+echo 'HLR result: \n&lt;br&gt;';
+echo 'servingMccMnc: ', $response-&gt;servingMccMnc,'\n&lt;br&gt;';
+echo 'address: ', $response-&gt;address,'\n&lt;br&gt;';
+echo 'currentRoaming: ', $response-&gt;currentRoaming,'\n&lt;br&gt;';
+echo 'resourceURL: ', $response-&gt;resourceURL,'\n&lt;br&gt;';
+echo 'retrievalStatus: ', $response-&gt;retrievalStatus,'\n&lt;br&gt;';
+echo 'callbackData: ', $response-&gt;callbackData,'\n&lt;br&gt;';
+echo 'extendedData: ', $response-&gt;extendedData,'\n&lt;br&gt;';
+echo 'IMSI: ', $response-&gt;extendedData-&gt;imsi,'\n&lt;br&gt;';
+echo 'destinationAddres: ', $response-&gt;extendedData-&gt;destinationAddress,'\n&lt;br&gt;';
+echo 'originalNetworkPrefix: ', $response-&gt;extendedData-&gt;originalNetworkPrefix,'\n&lt;br&gt;';
+echo 'portedNetworkPrefix: ', $response-&gt;extendedData-&gt;portedNetworkPrefix,'\n&lt;br&gt;';
 
 ?&gt;
 </code></pre>
@@ -171,7 +174,6 @@ echo 'extendedData: ', $response-&gt;extendedData,'\n';
 require_once(PATH_TO_LIBRARY);
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
-$client-&gt;login();
 
 $response = $client-&gt;retrieveRoamingStatus(DESTINATION_ADDRESS, NOTIFY_URL);
 // if there is no error the query has been succesfully executed
@@ -200,6 +202,10 @@ fwrite($f, 'resourceURL: ' . $result-&gt;terminalRoamingStatus-&gt;resourceURL .
 fwrite($f, 'retrievalStatus: ' . $result-&gt;terminalRoamingStatus-&gt;retrievalStatus . "\n") ;
 fwrite($f, 'terminalRoamingStatus callbackData: ' . $result-&gt;terminalRoamingStatus-&gt;callbackData . "\n") ;
 fwrite($f, 'extendedData: ' . $result-&gt;terminalRoamingStatus-&gt;extendedData . "\n") ;
+fwrite($f, 'IMSI: ', $response-&gt;extendedData-&gt;imsi,'\n');
+fwrite($f, 'destinationAddres: ', $response-&gt;extendedData-&gt;destinationAddress,'\n');
+fwrite($f, 'originalNetworkPrefix: ', $response-&gt;extendedData-&gt;originalNetworkPrefix,'\n');
+fwrite($f, 'portedNetworkPrefix: ', $response-&gt;extendedData-&gt;portedNetworkPrefix,'\n');
 fwrite($f, "\n-------------------------------------\n");
 fclose($f);
 

@@ -1,16 +1,16 @@
 ### System overview
-[Parseco](https://github.com/parseco/) is an [API](http://en.wikipedia.org/wiki/Application_programming_interface) implementation inspired by [OneApi](http://oneapi.gsma.com/api-list/) specification which is issued by the [GSMA](http://en.wikipedia.org/wiki/GSMA). 
-We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API itself more comfortable for the developer.
+[Parseco](https://github.com/parseco/) is an [API](http://en.wikipedia.org/wiki/Application_programming_interface) implementation inspired by [OneApi](http://oneapi.gsma.com/api-list/) specification which is issued by the Global System for Mobile Communications Association. 
+We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API more comfortable for the developer.
 
 Parseco API exposes the following mobile network functionalities:
 
- * <strong>Short message service</strong> (abbreviated <strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support [Unicode](http://en.wikipedia.org/wiki/Unicode) [UTF-16](http://en.wikipedia.org/wiki/UTF-16) character set so that you can use virtually any alphabet used nowadays for composing the text. The only limitation for SMS messages is the length of 80 characters in case of the Unicode encoded message, or 160 characters if it is not Unicode encoded.
- * <strong>Unstructured supplementary services data</strong> (abbreviated <strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length, but unfortunatley Unicode encoding is not supported.
- * <strong>Home location register</strong> (abbreviated <strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.
+ * <strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support [Unicode](http://en.wikipedia.org/wiki/Unicode) [UTF-16](http://en.wikipedia.org/wiki/UTF-16) character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 80 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded.
+ * <strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.
+ * <strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.
 
 Other mobile network-related functionalities are due to be implemented.
 In order to use Parseco API and gain access to [Infobip](http://www.infobip.com) mobile networks aggregator system you must [register](http://www.parseco.com/sign-up/) at the [Parseco website](http://www.parseco.com).
-In other words, by using Parseco php library you can [send SMS messages](http://www.parseco.com/#features-list) to **any** cell phone [around the globe](http://www.parseco.com/pricing-and-coverage/).
+In other words, by using Parseco PHP library you can [send SMS messages](http://www.parseco.com/#features-list) to **any** cell phone [around the globe](http://www.parseco.com/pricing-and-coverage/).
 <br/>screenshot: system-landscape
 
 ### Prerequisites
@@ -22,7 +22,7 @@ In other words, by using Parseco php library you can [send SMS messages](http://
  * You must have an active Internet connection.
  * You have satisfied the prerequisites and [signed up](http://www.parseco.com/sign-up/) at [Parseco website](http://www.parseco.com). After sign-up, SMS message with the verification PIN will be sent to your cell phone.
 
-screenshot: account verifcation page screenshot<br/>
+screenshot: account verification page screenshot<br/>
 Input the four-digit PIN from the received SMS message in the verification box and press verify.
 Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the [live demos](http://www.parseco.com/demos/) now.
 
@@ -165,17 +165,20 @@ This is just a part of the information about a cell phone that can be obtained v
     require_once(PATH_TO_LIBRARY);
 
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
-    $client->login();
 
     $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
-    echo 'HLR result: \n';
-    echo 'servingMccMnc: ', $response->servingMccMnc,'\n';
-    echo 'address: ', $response->address,'\n';
-    echo 'currentRoaming: ', $response->currentRoaming,'\n';
-    echo 'resourceURL: ', $response->resourceURL,'\n';
-    echo 'retrievalStatus: ', $response->retrievalStatus,'\n';
-    echo 'callbackData: ', $response->callbackData,'\n';
-    echo 'extendedData: ', $response->extendedData,'\n';
+    echo 'HLR result: \n<br>';
+    echo 'servingMccMnc: ', $response->servingMccMnc,'\n<br>';
+    echo 'address: ', $response->address,'\n<br>';
+    echo 'currentRoaming: ', $response->currentRoaming,'\n<br>';
+    echo 'resourceURL: ', $response->resourceURL,'\n<br>';
+    echo 'retrievalStatus: ', $response->retrievalStatus,'\n<br>';
+    echo 'callbackData: ', $response->callbackData,'\n<br>';
+    echo 'extendedData: ', $response->extendedData,'\n<br>';
+    echo 'IMSI: ', $response->extendedData->imsi,'\n<br>';
+    echo 'destinationAddres: ', $response->extendedData->destinationAddress,'\n<br>';
+    echo 'originalNetworkPrefix: ', $response->extendedData->originalNetworkPrefix,'\n<br>';
+    echo 'portedNetworkPrefix: ', $response->extendedData->portedNetworkPrefix,'\n<br>';
 
     ?>
 
@@ -188,7 +191,6 @@ Set the notify URL when sending message:
     require_once(PATH_TO_LIBRARY);
 
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
-    $client->login();
 
     $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS, NOTIFY_URL);
     // if there is no error the query has been succesfully executed
@@ -219,6 +221,10 @@ Parseco will send a HTTP POST request to this URL, and your web application must
     fwrite($f, 'retrievalStatus: ' . $result->terminalRoamingStatus->retrievalStatus . "\n") ;
     fwrite($f, 'terminalRoamingStatus callbackData: ' . $result->terminalRoamingStatus->callbackData . "\n") ;
     fwrite($f, 'extendedData: ' . $result->terminalRoamingStatus->extendedData . "\n") ;
+    fwrite($f, 'IMSI: ', $response->extendedData->imsi,'\n');
+    fwrite($f, 'destinationAddres: ', $response->extendedData->destinationAddress,'\n');
+    fwrite($f, 'originalNetworkPrefix: ', $response->extendedData->originalNetworkPrefix,'\n');
+    fwrite($f, 'portedNetworkPrefix: ', $response->extendedData->portedNetworkPrefix,'\n');
     fwrite($f, "\n-------------------------------------\n");
     fclose($f);
 
