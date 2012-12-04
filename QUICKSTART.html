@@ -1,7 +1,14 @@
 <html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h3 id="SYSTEM_OVERVIEW">System overview</h3>
-<p><a href="https://github.com/parseco/">Parseco</a> is an API inspired by GSMA's OneApi REST API.</p>
-<p>Parseco APIs which exposes <a href="http://en.wikipedia.org/wiki/SMS_gateway">SMS</a>, <a href="http://en.wikipedia.org/wiki/USSD_Gateway">USSD</a>, HLR, and other mobile network-related functionalities.</p>
-<p>In order to use Parseco API and gain access to our APIs you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
+<p><a href="https://github.com/parseco/">Parseco</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface">API</a> implementation inspired by <a href="http://oneapi.gsma.com/api-list/">OneApi</a> specification which is issued by the <a href="http://en.wikipedia.org/wiki/GSMA">GSMA</a>. 
+We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API itself more comfortable for the developer.</p>
+<p>Parseco API exposes the following mobile network functionalities:</p>
+<ul>
+<li><strong>Short message service</strong> (abbreviated <strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> character set so that you can use virtually any alphabet used nowadays for composing the text. The only limitation for SMS messages is the length of 80 characters in case of the Unicode encoded message, or 160 characters if it is not Unicode encoded.</li>
+<li><strong>Unstructured supplementary services data</strong> (abbreviated <strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length, but unfortunatley Unicode encoding is not supported.</li>
+<li><strong>Home location register</strong> (abbreviated <strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.</li>
+</ul>
+<p>Other mobile network-related functionalities are due to be implemented.
+In order to use Parseco API and gain access to <a href="http://www.infobip.com">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the <a href="http://www.parseco.com">Parseco website</a>.
 In other words, by using Parseco php library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
 <br/>screenshot: system-landscape</p>
 <h3 id="PREREQUISITES">Prerequisites</h3>
@@ -44,7 +51,7 @@ If you make changes, a "Save" button will appear in the "Action" column. If you 
 <ul>
 <li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
 <li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
-<li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets, you can copy them to a new empty php file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace as noted in example 1.1. After you have done that, you can run them.</li>
+<li>All examples are <a href="http://sscce.org/">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.</li>
 </ul>
 <h3 id="EXAMPLE_1_1_BASIC_MESSAGING_HELLO_WORLD">Example 1.1: Basic messaging (Hello world)</h3>
 <p>The first thing that needs to be done is to initialize the client with username and password in plaintext.
@@ -57,7 +64,7 @@ You are basically logging in to Parseco, so an exception will be thrown if the u
 <p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator">network operator</a>.
 Therefore, our recommendation (but not a guarantee) is to use the <a href="http://en.wikipedia.org/wiki/English_alphabet">English</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric">alphanumeric</a> character subset.</p>
 <p>When you execute the send method it will return an object which is used to query the message delivery status.
-These are possible states of the message once you have sent it to <a href="http://www.infobip.com">Infobip</a> SMS gateway:  </p>
+These are possible states of the message once you have sent it:  </p>
 <ul>
 <li><strong>DeliveredToTerminal</strong> - the message has been delivered to the cell phone</li>
 <li><strong>DeliveredToNetwork</strong> - the message has been delivered to the cell phone network operator</li>
