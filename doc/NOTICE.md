@@ -1,0 +1,1 @@
+ you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.
