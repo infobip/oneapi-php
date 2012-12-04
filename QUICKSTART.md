@@ -9,7 +9,7 @@ Parseco API exposes the following mobile network functionalities:
  * <strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.
 
 Other mobile network-related functionalities are due to be implemented.
-In order to use Parseco API and gain access to [Infobip](http://www.infobip.com) mobile networks aggregator system you must [register](http://www.parseco.com/sign-up/) at the [Parseco website](http://www.parseco.com).
+In order to use Parseco API and gain access to [Infobip](http://www.infobip.com) mobile networks aggregator system you must [register](http://www.parseco.com/sign-up/) at the Parseco website.
 In other words, by using Parseco PHP library you can [send SMS messages](http://www.parseco.com/#features-list) to **any** cell phone [around the globe](http://www.parseco.com/pricing-and-coverage/).
 <br/>screenshot: system-landscape
 
@@ -20,7 +20,7 @@ In other words, by using Parseco PHP library you can [send SMS messages](http://
 
 ### General assumptions which must be fulfilled for all the following examples
  * You must have an active Internet connection.
- * You have satisfied the prerequisites and [signed up](http://www.parseco.com/sign-up/) at [Parseco website](http://www.parseco.com). After sign-up, SMS message with the verification PIN will be sent to your cell phone.
+ * You have satisfied the prerequisites and [signed up](http://www.parseco.com/sign-up/) at Parseco website. After sign-up, SMS message with the verification PIN will be sent to your cell phone.
 
 screenshot: account verification page screenshot<br/>
 Input the four-digit PIN from the received SMS message in the verification box and press verify.
