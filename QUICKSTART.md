@@ -29,6 +29,7 @@ Congratulations on your successful registration - you can start using Parseco AP
 ### Assumptions which must be fulfilled for the examples with notification push
 In every example two different architectural approaches are shown.
 In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.
+
 In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
 In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your web application.
 
@@ -47,15 +48,15 @@ For a given notification URL the [setup wizard](http://www.parseco.com/applicati
 screenshot subscriptions<br/>
 
 The "Notify URL" field is crucial. 
-If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request. 
+If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request.
+
 If it is not present then the approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the (web) application that requested the operation.
 If you make changes, a "Save" button will appear in the "Action" column. If you want to apply the changes, press it.
-
 
 ### Notice
  * **After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.**
  * **Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, [depending upon your location](http://www.parseco.com/pricing-and-coverage/).**
- * All examples are [valid, runnable](http://sscce.org/) code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.
+ * All examples are [valid, runnable](http://sscce.org/) code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the client.php file from downloaded library. There may be other strings to replace, e.g. as in example 1.1. If your operating system supports it, don't forget to set appropriate file permissions. After you have done that, you can run them.
 
 
 ### Example 1.1: Basic messaging (Hello world)
@@ -71,7 +72,7 @@ Sender address may be any string composed of printable characters but will it be
 Therefore, our recommendation (but not a guarantee) is to use the [English](http://en.wikipedia.org/wiki/English_alphabet) [alphanumeric](http://en.wikipedia.org/wiki/Alphanumeric) character subset.
 
 When you execute the send method it will return an object which is used to query the message delivery status.
-These are possible states of the message once you have sent it:  
+These are possible states of the message once you have sent it: 
  
  * <strong>DeliveredToTerminal</strong> - the message has been delivered to the cell phone
  * <strong>DeliveredToNetwork</strong> - the message has been delivered to the cell phone network operator
@@ -238,6 +239,7 @@ Two way communication with cell phone is also possible via Parseco.
 The messages your application sends to cell phones are outbound or mobile-terminated messages.
 It is a scenario much like in the first example.
 The messages which your application receives from cell phones are inbound or mobile-originated messages.
+
 In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
 For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
 Our paid services include (info coming soon, mail to info@parseco.com):

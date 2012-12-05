@@ -26,8 +26,8 @@ Input the four-digit PIN from the received SMS message in the verification box a
 Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h3 id="ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_THE_EXAMPLES_WITH_NOTIFICATION_PUSH">Assumptions which must be fulfilled for the examples with notification push</h3>
 <p>In every example two different architectural approaches are shown.
-In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.
-In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
+In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.</p>
+<p>In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
 In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your web application.</p>
 <ul>
 <li>You must have your own web application in order to provide the URL for the Parseco push notifications.</li>
@@ -44,14 +44,14 @@ In other words, Parseco pushes the receiving inbound notifications (be it HLR or
 </ul>
 <p>screenshot subscriptions<br/></p>
 <p>The "Notify URL" field is crucial. 
-If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request. 
-If it is not present then the approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the (web) application that requested the operation.
+If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request.</p>
+<p>If it is not present then the approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the (web) application that requested the operation.
 If you make changes, a "Save" button will appear in the "Action" column. If you want to apply the changes, press it.</p>
 <h3 id="NOTICE">Notice</h3>
 <ul>
 <li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
 <li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
-<li>All examples are <a href="http://sscce.org/" target="_blank">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the downloaded library. There may be other strings to replace, e.g. as in example 1.1. After you have done that, you can run them.</li>
+<li>All examples are <a href="http://sscce.org/" target="_blank">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the client.php file from downloaded library. There may be other strings to replace, e.g. as in example 1.1. If your operating system supports it, don't forget to set appropriate file permissions. After you have done that, you can run them.</li>
 </ul>
 <h3 id="EXAMPLE_1_1_BASIC_MESSAGING_HELLO_WORLD">Example 1.1: Basic messaging (Hello world)</h3>
 <p>The first thing that needs to be done is to initialize the client with username and password in plaintext.
@@ -64,7 +64,7 @@ You are basically logging in to Parseco, so an exception will be thrown if the u
 <p>Sender address may be any string composed of printable characters but will it be delivered as such depends on the settings of the destination <a href="http://en.wikipedia.org/wiki/Mobile_network_operator" target="_blank">network operator</a>.
 Therefore, our recommendation (but not a guarantee) is to use the <a href="http://en.wikipedia.org/wiki/English_alphabet" target="_blank">English</a> <a href="http://en.wikipedia.org/wiki/Alphanumeric" target="_blank">alphanumeric</a> character subset.</p>
 <p>When you execute the send method it will return an object which is used to query the message delivery status.
-These are possible states of the message once you have sent it:  </p>
+These are possible states of the message once you have sent it: </p>
 <ul>
 <li><strong>DeliveredToTerminal</strong> - the message has been delivered to the cell phone</li>
 <li><strong>DeliveredToNetwork</strong> - the message has been delivered to the cell phone network operator</li>
@@ -216,8 +216,8 @@ fclose($f);
 <p>Two way communication with cell phone is also possible via Parseco.
 The messages your application sends to cell phones are outbound or mobile-terminated messages.
 It is a scenario much like in the first example.
-The messages which your application receives from cell phones are inbound or mobile-originated messages.
-In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
+The messages which your application receives from cell phones are inbound or mobile-originated messages.</p>
+<p>In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
 For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
 Our paid services include (info coming soon, mail to info@parseco.com):</p>
 <ul>
