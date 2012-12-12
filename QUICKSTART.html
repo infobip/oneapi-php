@@ -9,8 +9,7 @@ We felt the need to enrich the specification by adding a few fields in some requ
 </ul>
 <p>Other mobile network-related functionalities are due to be implemented.
 In order to use Parseco API and gain access to <a href="http://www.infobip.com" target="_blank">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the Parseco website.
-In other words, by using Parseco PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.
-<br/>screenshot: system-landscape</p>
+In other words, by using Parseco PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.</p>
 <h3 id="PREREQUISITES">Prerequisites</h3>
 <ul>
 <li>You have <a href="http://php.net/manual/en/install.php" target="_blank">installed a PHP interpreter</a>.</li>
@@ -21,8 +20,8 @@ In other words, by using Parseco PHP library you can <a href="http://www.parseco
 <li>You must have an active Internet connection.</li>
 <li>You have satisfied the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at Parseco website. After sign-up, SMS message with the verification PIN will be sent to your cell phone.</li>
 </ul>
-<p>screenshot: account verification page screenshot<br/>
-Input the four-digit PIN from the received SMS message in the verification box and press verify.
+<p><img id="quickstart-img-03" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_01.png" title="Account verification" width="660" height="290" /></p>
+<p>Input the four-digit PIN from the received SMS message in the verification box and press verify.
 Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h3 id="ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_THE_EXAMPLES_WITH_NOTIFICATION_PUSH">Assumptions which must be fulfilled for the examples with notification push</h3>
 <p>In every example two different architectural approaches are shown.
@@ -42,7 +41,7 @@ In other words, Parseco pushes the receiving inbound notifications (be it HLR or
 <li><strong>Notify URL</strong> - The registered URL to receive Parseco push notifications</li>
 <li><strong>Action</strong> - Action for subscription.</li>
 </ul>
-<p>screenshot subscriptions<br/></p>
+<p><img id="quickstart-img-03" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_01.png" title="Account verification" width="660" height="290" /></p>
 <p>The "Notify URL" field is crucial. 
 If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request.</p>
 <p>If it is not present then the approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the (web) application that requested the operation.
@@ -219,7 +218,7 @@ It is a scenario much like in the first example.
 The messages which your application receives from cell phones are inbound or mobile-originated messages.</p>
 <p>In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
 For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
-Our paid services include (info coming soon, mail to info@parseco.com):</p>
+Our paid services include (info coming soon, mail to <a href="mailto:info@parseco.com">info@parseco.com</a>):</p>
 <ul>
 <li>you may register a single subscription number </li>
 <li>you may register a single subscription number paired-up with a keyword of your choice</li>
