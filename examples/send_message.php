@@ -21,11 +21,14 @@ $smsClient->login();
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;
 $smsMessage->address = DESTINATION_ADDRESS;
-$smsMessage->message = 'Test message';
+$smsMessage->message = 'Hello world';
 # ----------------------------------------------------------------------------------------------------
 
 # example:send-message
 $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
+# ----------------------------------------------------------------------------------------------------
+//
+# example:send-message-client-correlator
 // The client correlator is a unique identifier of this api call:
 $clientCorrelator = $smsMessageSendResult->clientCorrelator;
 # ----------------------------------------------------------------------------------------------------
@@ -39,7 +42,6 @@ for($i = 0; $i < 4; $i++) {
     // You can use $clientCorrelator or $smsMessageSendResult as an method call argument here:
     $smsMessageStatus = $smsClient->queryDeliveryStatus($smsMessageSendResult);
     $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
-    # ----------------------------------------------------------------------------------------------------
 
     echo 'Success:', $smsMessageStatus->isSuccess(), "\n";
     echo 'Status:', $deliveryStatus, "\n";
@@ -48,7 +50,7 @@ for($i = 0; $i < 4; $i++) {
         echo 'Text:', $smsMessageStatus->exception->text, "\n";
         echo 'Variables:', $smsMessageStatus->exception->variables, "\n";
     }
-
+    # ----------------------------------------------------------------------------------------------------
     sleep(3);
 }
 

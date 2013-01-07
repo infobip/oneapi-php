@@ -16,10 +16,12 @@ $smsClient->login();
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;
 $smsMessage->address = DESTINATION_ADDRESS;
-$smsMessage->message = 'Test message';
+$smsMessage->message = 'Hello world';
 $smsMessage->notifyURL = NOTIFY_URL;
 # ----------------------------------------------------------------------------------------------------
 
 $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
 $clientCorrelator = $smsMessageSendResult->clientCorrelator;
 
+echo NOTIFY_URL;
+echo $clientCorrelator;

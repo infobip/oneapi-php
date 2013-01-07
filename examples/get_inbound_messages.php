@@ -10,6 +10,12 @@ $smsClient->login();
 $inboundMessages = $smsClient->retrieveInboundMessages();
 
 foreach($inboundMessages->inboundSMSMessage as $message) {
-    echo $message;
+    echo $message->dateTime;
+    echo $message->destinationAddress;
+    echo $message->messageId;
+    echo $message->message;
+    echo $message->resourceURL;
+    echo $message->senderAddress;
 }
 # ----------------------------------------------------------------------------------------------------
+
