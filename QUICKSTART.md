@@ -4,14 +4,13 @@ We felt the need to enrich the specification by adding a few fields in some requ
 
 Parseco API exposes the following mobile network functionalities:
 
- * <strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support [Unicode](http://en.wikipedia.org/wiki/Unicode) [UTF-16](http://en.wikipedia.org/wiki/UTF-16) character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 80 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded.
+ * <strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support [Unicode](http://en.wikipedia.org/wiki/Unicode) [UTF-16](http://en.wikipedia.org/wiki/UTF-16) character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 70 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded. If you want to send [longer messages](http://www.parseco.com/multipart-sms-messaging/) then the appropriate length is 67 per Unicode encoded message part and 153 characters per non Unicode encoded message part.
  * <strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.
  * <strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.
 
 Other mobile network-related functionalities are due to be implemented.
 In order to use Parseco API and gain access to [Infobip](http://www.infobip.com) mobile networks aggregator system you must [register](http://www.parseco.com/sign-up/) at the Parseco website.
 In other words, by using Parseco PHP library you can [send SMS messages](http://www.parseco.com/#features-list) to **any** cell phone [around the globe](http://www.parseco.com/pricing-and-coverage/).
-<br/>screenshot: system-landscape
 
 ### Prerequisites
 * You have [installed a PHP interpreter](http://php.net/manual/en/install.php).
@@ -22,7 +21,8 @@ In other words, by using Parseco PHP library you can [send SMS messages](http://
  * You must have an active Internet connection.
  * You have satisfied the prerequisites and [signed up](http://www.parseco.com/sign-up/) at Parseco website. After sign-up, SMS message with the verification PIN will be sent to your cell phone.
 
-screenshot: account verification page screenshot<br/>
+<img id="quickstart-img-03" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_03.png" title="Account verification" width="660" height="290" />
+
 Input the four-digit PIN from the received SMS message in the verification box and press verify.
 Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the [live demos](http://www.parseco.com/demos/) now.
 
@@ -45,7 +45,7 @@ For a given notification URL the [setup wizard](http://www.parseco.com/applicati
  * <strong>Notify URL</strong> - The registered URL to receive Parseco push notifications
  * <strong>Action</strong> - Action for subscription.
 
-screenshot subscriptions<br/>
+<img id="quickstart-img-02" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_02.png" title="List of subscriptions" width="660" height="320" />
 
 The "Notify URL" field is crucial. 
 If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request.
@@ -83,7 +83,7 @@ These are possible states of the message once you have sent it:
 Now you are ready to send the message.
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $smsClient = new SmsClient(USERNAME, PASSWORD);
@@ -117,7 +117,7 @@ Now you are ready to send the message.
 Set the notify URL when sending message:
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $smsClient = new SmsClient(USERNAME, PASSWORD);
@@ -133,10 +133,10 @@ Set the notify URL when sending message:
     ?>
 
 
-Parseco will send a HTTP POST request to this URL, and your web application must process it like his:
+Parseco will send a HTTP POST request to this URL, and your web application must process it like this:
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $result = SmsClient::unserializeDeliveryStatus();
@@ -162,7 +162,7 @@ When the cell phone is connected to a network other than his home operator netwo
 This is just a part of the information about a cell phone that can be obtained via a [HLR](http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29) query like in the example below.
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
@@ -188,7 +188,7 @@ This is just a part of the information about a cell phone that can be obtained v
 Set the notify URL when sending message:
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
@@ -206,7 +206,7 @@ Set the notify URL when sending message:
 Parseco will send a HTTP POST request to this URL, and your web application must process it like this:
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $result = DataConnectionProfileClient::unserializeRoamingStatus();
@@ -242,7 +242,7 @@ The messages which your application receives from cell phones are inbound or mob
 
 In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
 For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
-Our paid services include (info coming soon, mail to info@parseco.com):
+Our paid services include (info coming soon, mail to <a href="mailto:info@parseco.com">info@parseco.com</a>):
 
  * you may register a single subscription number 
  * you may register a single subscription number paired-up with a keyword of your choice
@@ -252,7 +252,7 @@ Our paid services include (info coming soon, mail to info@parseco.com):
 In order for the below example to work make sure that you have a subscription with no notify URL set at your [Parseco account](http://www.parseco.com/application/setup-wizard/).
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     $smsClient = new SmsClient(USERNAME, PASSWORD);
@@ -276,7 +276,7 @@ In order for the below example to work make sure that you have a subscription wi
 Of course, the notify URL must be mapped to your web application.
 
     <?php
-
+ 
     require_once(PATH_TO_LIBRARY);
 
     // returns a single message not array of messages
