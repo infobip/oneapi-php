@@ -8,7 +8,7 @@ $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 //$client->login();
 # example:retrieve-roaming-status
 $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
-echo 'HLR result: \n<br>';
+echo 'Number context result: \n<br>';
 echo 'servingMccMnc: ', $response->servingMccMnc,'\n<br>';
 echo 'address: ', $response->address,'\n<br>';
 echo 'currentRoaming: ', $response->currentRoaming,'\n<br>';

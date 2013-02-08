@@ -6,7 +6,7 @@ Parseco API exposes the following mobile network functionalities:
 
  * <strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support [Unicode](http://en.wikipedia.org/wiki/Unicode) [UTF-16](http://en.wikipedia.org/wiki/UTF-16) character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 70 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded. If you want to send [longer messages](http://www.parseco.com/multipart-sms-messaging/) then the appropriate length is 67 per Unicode encoded message part and 153 characters per non Unicode encoded message part.
  * <strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.
- * <strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.
+ * <strong>[Number context](http://www.infobip.com/services/number_context)</strong> Infobip's Number context service connects with the relevant mobile numbers home network and can identify whether the subscribers handset is roaming on another network, currently active or has been disabled.
 
 Other mobile network-related functionalities are due to be implemented.
 In order to use Parseco API and gain access to [Infobip](http://www.infobip.com) mobile networks aggregator system you must [register](http://www.parseco.com/sign-up/) at the Parseco website.
@@ -31,7 +31,7 @@ In every example two different architectural approaches are shown.
 In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.
 
 In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
-In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your web application.
+In other words, Parseco pushes the receiving inbound notifications (be it Number context or delivery data, or messages) to your web application.
 
  * You must have your own web application in order to provide the URL for the Parseco push notifications.
  * You must register the URL mentioned above as notification URL at Parseco site [setup wizard](http://www.parseco.com/application/setup-wizard/)
@@ -157,9 +157,9 @@ Parseco will send a HTTP POST request to this URL, and your web application must
 
 Note that there is nothing stopping you from running both code snippets on the same host or within the same web application, but it is not necessary.
 
-### Example 2.1: Cell phone roaming status (HLR query)
+### Example 2.1: Cell phone roaming status (Number context query)
 When the cell phone is connected to a network other than his home operator network it is said to be [roaming](http://en.wikipedia.org/wiki/Roaming).
-This is just a part of the information about a cell phone that can be obtained via a [HLR](http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29) query like in the example below.
+This is just a part of the information about a cell phone that can be obtained via a [Number context](http://www.infobip.com/messaging/end_users/number_context_packages) query like in the example below.
 
     <?php
  
@@ -168,7 +168,7 @@ This is just a part of the information about a cell phone that can be obtained v
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
     $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
-    echo 'HLR result: \n<br>';
+    echo 'Number context result: \n<br>';
     echo 'servingMccMnc: ', $response->servingMccMnc,'\n<br>';
     echo 'address: ', $response->address,'\n<br>';
     echo 'currentRoaming: ', $response->currentRoaming,'\n<br>';
@@ -184,7 +184,7 @@ This is just a part of the information about a cell phone that can be obtained v
     ?>
 
 
-### Example 2.2: Cell phone roaming status (HLR query) as notification push
+### Example 2.2: Cell phone roaming status (Number context query) as notification push
 Set the notify URL when sending message:
 
     <?php

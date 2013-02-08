@@ -5,7 +5,7 @@ We felt the need to enrich the specification by adding a few fields in some requ
 <ul>
 <li><strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16" target="_blank">UTF-16</a> character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 70 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded. If you want to send <a href="http://www.parseco.com/multipart-sms-messaging/">longer messages</a> then the appropriate length is 67 per Unicode encoded message part and 153 characters per non Unicode encoded message part.</li>
 <li><strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.</li>
-<li><strong>Home location register</strong> (<strong>HLR</strong>) is a central database which stores details about every mobile phone subscriber for that network. A HLR record holds valuable data such as: is the phone turned on or off, is it connected to home network or not, is it ported (meaning that it has the network prefix of a network that is not actually belonging to) etc.</li>
+<li><strong><a href="http://www.infobip.com/services/number_context" target="_blank">Number context</a></strong> Infobip's Number context service connects with the relevant mobile numbers home network and can identify whether the subscribers handset is roaming on another network, currently active or has been disabled.</li>
 </ul>
 <p>Other mobile network-related functionalities are due to be implemented.
 In order to use Parseco API and gain access to <a href="http://www.infobip.com" target="_blank">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the Parseco website.
@@ -27,7 +27,7 @@ Congratulations on your successful registration - you can start using Parseco AP
 <p>In every example two different architectural approaches are shown.
 In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.</p>
 <p>In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
-In other words, Parseco pushes the receiving inbound notifications (be it HLR or delivery data, or messages) to your web application.</p>
+In other words, Parseco pushes the receiving inbound notifications (be it Number context or delivery data, or messages) to your web application.</p>
 <ul>
 <li>You must have your own web application in order to provide the URL for the Parseco push notifications.</li>
 <li>You must register the URL mentioned above as notification URL at Parseco site <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a></li>
@@ -141,9 +141,9 @@ fclose($f);
 ?&gt;
 </code></pre>
 <p>Note that there is nothing stopping you from running both code snippets on the same host or within the same web application, but it is not necessary.</p>
-<h3 id="EXAMPLE_2_1_CELL_PHONE_ROAMING_STATUS_HLR_QUERY">Example 2.1: Cell phone roaming status (HLR query)</h3>
+<h3 id="EXAMPLE_2_1_CELL_PHONE_ROAMING_STATUS_NUMBER_CONTEXT_QUERY">Example 2.1: Cell phone roaming status (Number context query)</h3>
 <p>When the cell phone is connected to a network other than his home operator network it is said to be <a href="http://en.wikipedia.org/wiki/Roaming" target="_blank">roaming</a>.
-This is just a part of the information about a cell phone that can be obtained via a <a href="http://en.wikipedia.org/wiki/Network_switching_subsystem#Home_location_register_.28HLR.29" target="_blank">HLR</a> query like in the example below.</p>
+This is just a part of the information about a cell phone that can be obtained via a <a href="http://www.infobip.com/messaging/end_users/number_context_packages" target="_blank">Number context</a> query like in the example below.</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -151,7 +151,7 @@ require_once(PATH_TO_LIBRARY);
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
 $response = $client-&gt;retrieveRoamingStatus(DESTINATION_ADDRESS);
-echo 'HLR result: \n&lt;br&gt;';
+echo 'Number context result: \n&lt;br&gt;';
 echo 'servingMccMnc: ', $response-&gt;servingMccMnc,'\n&lt;br&gt;';
 echo 'address: ', $response-&gt;address,'\n&lt;br&gt;';
 echo 'currentRoaming: ', $response-&gt;currentRoaming,'\n&lt;br&gt;';
@@ -166,7 +166,7 @@ echo 'portedNetworkPrefix: ', $response-&gt;extendedData-&gt;portedNetworkPrefix
 
 ?&gt;
 </code></pre>
-<h3 id="EXAMPLE_2_2_CELL_PHONE_ROAMING_STATUS_HLR_QUERY_AS_NOTIFICATION_PUSH">Example 2.2: Cell phone roaming status (HLR query) as notification push</h3>
+<h3 id="EXAMPLE_2_2_CELL_PHONE_ROAMING_STATUS_NUMBER_CONTEXT_QUERY_AS_NOTIFICATION_PUSH">Example 2.2: Cell phone roaming status (Number context query) as notification push</h3>
 <p>Set the notify URL when sending message:</p>
 <pre><code>&lt;?php
 
