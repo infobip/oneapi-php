@@ -12,3 +12,5 @@ config.php
 oneapi-sample-app/push_log/*
 apidoc/*
 target/*
+README.html
+QUICKSTART.md

@@ -69,7 +69,7 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     fclose($f);
 
 
-Number context example
+Number Context example
 -----------------------
 
 Initialize and login the data connection client:
@@ -77,7 +77,7 @@ Initialize and login the data connection client:
     $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 
 
-Retrieve the roaming status (Number context):
+Retrieve the roaming status (Number Context):
 
     $response = $client->retrieveRoamingStatus(DESTINATION_ADDRESS);
     echo 'Number context result: \n<br>';
@@ -94,7 +94,7 @@ Retrieve the roaming status (Number context):
     echo 'portedNetworkPrefix: ', $response->extendedData->portedNetworkPrefix,'\n<br>';
 
 
-Number context with notification push example
+Number Context with notification push example
 -----------------------
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:
