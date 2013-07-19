@@ -1,5 +1,5 @@
 ### System overview
-[Parseco](https://github.com/parseco/) is an [API](http://en.wikipedia.org/wiki/Application_programming_interface) implementation inspired by [OneApi](http://oneapi.gsma.com/api-list/) specification which is issued by the Global System for Mobile Communications Association. 
+[Parseco](https://github.com/infobip/) is an [API](http://en.wikipedia.org/wiki/Application_programming_interface) implementation inspired by [OneApi](http://oneapi.gsma.com/api-list/) specification which is issued by the Global System for Mobile Communications Association. 
 We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API more comfortable for the developer.
 
 Parseco API exposes the following mobile network functionalities:
@@ -15,7 +15,7 @@ In other words, by using Parseco PHP library you can [send SMS messages](http://
 
 ### Prerequisites
 * You have [installed a PHP interpreter](http://php.net/manual/en/install.php).
-* You have downloaded the [Parseco OneAPI PHP library](https://github.com/parseco/oneapi-php/tree/master/oneapi)
+* You have downloaded the [Parseco OneAPI PHP library](https://github.com/infobip/oneapi-php/tree/master/oneapi)
 
 
 ### General assumptions which must be fulfilled for all the following examples
