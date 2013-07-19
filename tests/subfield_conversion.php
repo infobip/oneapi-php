@@ -2,7 +2,7 @@
 
 require_once 'oneapi/client.php';
 
-$json = '{"deliveryReceiptSubscription":{"callbackReference":{"callbackData":null,"notifyURL":"http://192.168.10.111/save_requests"},"resourceURL":"http://api.parseco.com/1/smsmessaging/outbound/subscriptions/q1id6ksfc8"}}';
+$json = '{"deliveryReceiptSubscription":{"callbackReference":{"callbackData":null,"notifyURL":"http://192.168.10.111/save_requests"},"resourceURL":"http://oneapi.infobip.com/1/smsmessaging/outbound/subscriptions/q1id6ksfc8"}}';
 
 class TestClass extends AbstractObject {
 
@@ -22,4 +22,4 @@ Models::register(
 $object = Conversions::createFromJSON('TestClass', $json, false);
 
 assert($object);
-assert($object->subscriptionId == 'http://api.parseco.com/1/smsmessaging/outbound/subscriptions/q1id6ksfc8');
+assert($object->subscriptionId == 'http://oneapi.infobip.com/1/smsmessaging/outbound/subscriptions/q1id6ksfc8');

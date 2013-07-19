@@ -23,7 +23,7 @@ if(!function_exists('curl_init')) {
 }
 
 if(!defined('ONEAPI_BASE_URL'))
-    define('ONEAPI_BASE_URL', 'https://api.parseco.com');
+    define('ONEAPI_BASE_URL', 'https://oneapi.infobip.com');
 
 /**
  * Utility handler class to store username/password.
