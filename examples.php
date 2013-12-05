@@ -12,7 +12,7 @@ define('NOTIFY_URL', '');
 define('MO_NOTIFY_URL', '');
 
 // Uncomment the example you want to test:
-require_once 'examples/send_message_with_custom_charset.php';
+//require_once 'examples/send_message_with_custom_charset.php';
 //require_once 'examples/send_message.php';
 //require_once 'examples/subscribe_send_message_and_wait_delivery_push.php';
 //require_once 'examples/subscribe_and_unsubscribe_to_mo_events.php';
