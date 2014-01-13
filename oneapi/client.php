@@ -62,7 +62,7 @@ class OneApiConfigurator {
 
 class AbstractOneApiClient {
 
-    const VERSION = '0.01';
+    const VERSION = '0.0.2';
 
     public $oneApiAuthentication = null;
 

@@ -195,7 +195,7 @@ class SubscriptionIdFieldConversionRule extends ObjectConversionRule {
         // Value is an url, the last part is the subscription id:
         $parts = explode('/', $value);
         if($value && sizeof($parts) > 0)
-            $value = $parts[sizeof($parts) - 1];
+            $value = $parts[sizeof($parts) - 2];
 
         $fieldName = $this->objectFieldName;
         $object->$fieldName = $value;
