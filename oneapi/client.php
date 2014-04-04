@@ -411,12 +411,12 @@ class SmsClient extends AbstractOneApiClient {
     public function retrieveOutboundMessages($fromTime=null, $toTime=null){
         $params = array();
         if(! $fromTime){
-            $fromTime = DateTime::createFromFormat('Y-m-d\TG:i:s.???O', '1970-01-01T00:00:00.000+0000');
+            $fromTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', '1970-01-01T00:00:00.000+0000');
         }
 
-        $params['from'] = $fromTime->format('Y-m-d\TG:i:s.000O');
+        $params['from'] = $fromTime->format('Y-m-d\TH:i:s.000O');
         if($toTime){
-            $params['to'] = $toTime->format('Y-m-d\TG:i:s.000O');
+            $params['to'] = $toTime->format('Y-m-d\TH:i:s.000O');
         }
 
         $restUrl = $this->getRestUrl('/1/messaging/outbound/logs/');

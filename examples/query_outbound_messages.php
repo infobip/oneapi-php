@@ -4,7 +4,7 @@ require_once 'oneapi/client.php';
 
 date_default_timezone_set("UTC");
 
-$fromTime = DateTime::createFromFormat('Y-m-d\TG:i:s.???O', '1970-01-01T00:00:00.000+0000');
+$fromTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', '1970-01-01T00:00:00.000+0000');
 $toTime = new DateTime();
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
@@ -27,7 +27,7 @@ foreach ($messages->logs as $message) {
 
 if ($messages->isMoreAvailable()) {
     $oldestMessage = $messages->logs[sizeof($messages->logs) - 1];
-    $toTime = DateTime::createFromFormat('Y-m-d\TG:i:s.???O', $oldestMessage->sendDateTime);
+    $toTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', $oldestMessage->sendDateTime);
 
     //fetching the next "page"
     $messages = $smsClient->retrieveOutboundMessages($fromTime, $toTime);
