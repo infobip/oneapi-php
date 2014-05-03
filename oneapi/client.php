@@ -85,7 +85,7 @@ class AbstractOneApiClient {
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
 
-        # If true -- an exception will be thrown on error, otherwise, you have 
+        # If true -- an exception will be thrown on error, otherwise, you have
         # to check the is_success and exception methods on resulting objects.
         $this->throwException = true;
     }
@@ -95,7 +95,7 @@ class AbstractOneApiClient {
         if ($this->baseUrl[strlen($this->baseUrl) - 1] != '/')
             $this->baseUrl .= '/';
     }
-    
+
     public function login() {
         $restPath = '/1/customerProfile/login';
 
@@ -145,8 +145,13 @@ class AbstractOneApiClient {
         return array($isSuccess, json_decode($result, true));
     }
 
-    protected function executePOST($restPath, $params = null) {
-        list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params);
+    protected function executePOST($restPath, $params = null, $contentType = null, $socinvAppSecret = null) {
+        if ($contentType) {
+          list($isSuccess, $result) =
+              $this->executeRequest('POST', $restPath, $params, null, $contentType, $socinvAppSecret);
+        } else {
+          list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params);
+        }
 
         return array($isSuccess, json_decode($result, true));
     }
@@ -186,8 +191,8 @@ class AbstractOneApiClient {
     }
 
     private function executeRequest(
-            $httpMethod, $url, $queryParams = null, $requestHeaders = null, 
-            $contentType = "application/x-www-form-urlencoded")
+            $httpMethod, $url, $queryParams = null, $requestHeaders = null,
+            $contentType = "application/x-www-form-urlencoded", $specialAuth = null)
     {
         if ($queryParams == null)
             $queryParams = Array();
@@ -228,18 +233,27 @@ class AbstractOneApiClient {
             CURLOPT_HTTPHEADER => $sendHeaders,
         );
 
-        if($this->oneApiAuthentication && $this->oneApiAuthentication->ibssoToken) {
-            // Token based authentication (one request per login request):
-            $opts[CURLOPT_HTTPHEADER][] = 'Authorization: IBSSO ' . $this->oneApiAuthentication->ibssoToken;
+        if ($specialAuth) {
+            $opts[CURLOPT_HTTPHEADER][] = 'Authorization: App ' . $specialAuth;
         } else {
-            // Basic authorization:
-            $opts[CURLOPT_USERPWD] = $this->username . ':' . $this->password;
+            if ($this->oneApiAuthentication && $this->oneApiAuthentication->ibssoToken) {
+                // Token based authentication (one request per login request):
+                $opts[CURLOPT_HTTPHEADER][] = 'Authorization: IBSSO ' . $this->oneApiAuthentication->ibssoToken;
+            } else {
+                // Basic authorization:
+                $opts[CURLOPT_USERPWD] = $this->username . ':' . $this->password;
+            }
         }
 
         Logs::debug('Executing ', $httpMethod, ' to ', $url);
 
         if (sizeof($queryParams) > 0 && ($httpMethod == 'POST' || $httpMethod == 'PUT')) {
-            $httpBody = $this->buildQuery($queryParams);
+            $httpBody = null;
+            if (strpos($contentType, 'x-www-form-urlencoded')) {
+              $httpBody = $this->buildQuery($queryParams);
+            } else if (strpos($contentType, 'json')) {
+              $httpBody = json_encode($queryParams);
+            }
 
             Logs::debug('Http body:', $httpBody);
             $opts[CURLOPT_POSTFIELDS] = $httpBody;
@@ -262,7 +276,7 @@ class AbstractOneApiClient {
         Logs::debug('Response code ', $code);
         Logs::debug('isSuccess:', $isSuccess);
         Logs::debug('Result:', $result);
-
+        
         return array($isSuccess, $result);
     }
 
@@ -305,7 +319,7 @@ class AbstractOneApiClient {
         return($rez);
     }
 
-    protected function createFromJSON($className, $json, $isError) {        
+    protected function createFromJSON($className, $json, $isError) {
         $result = Conversions::createFromJSON($className, $json, $isError);
 
         if($this->throwException && !$result->isSuccess()) {
@@ -326,7 +340,7 @@ class SmsClient extends AbstractOneApiClient {
 
     // ----------------------------------------------------------------------------------------------------
     // Static methods used for http push events from the server:
-    // ----------------------------------------------------------------------------------------------------    
+    // ----------------------------------------------------------------------------------------------------
 
     public static function unserializeDeliveryStatus($json=null) {
         if($json === null)
@@ -347,7 +361,7 @@ class SmsClient extends AbstractOneApiClient {
 
     // ----------------------------------------------------------------------------------------------------
     // Rest methods:
-    // ----------------------------------------------------------------------------------------------------    
+    // ----------------------------------------------------------------------------------------------------
 
     public function sendSMS($message) {
         $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
@@ -379,8 +393,8 @@ class SmsClient extends AbstractOneApiClient {
     }
 
     /**
-     * Check for delivery status of a message. If no 
-     * $clientCorrelatorOrResourceReference is given -- get the list of all pending 
+     * Check for delivery status of a message. If no
+     * $clientCorrelatorOrResourceReference is given -- get the list of all pending
      * delivery statuses.
      */
     public function queryDeliveryStatus($clientCorrelatorOrResourceReference = null) {
@@ -458,7 +472,7 @@ class SmsClient extends AbstractOneApiClient {
     }
 
 	/**
-	 * Start subscribing to delivery status notifications over OneAPI for all your sent SMS  	                          
+	 * Start subscribing to delivery status notifications over OneAPI for all your sent SMS
 	 */
 	public function subscribeToDeliveryStatusNotifications($subscribeToDeliveryNotificationsRequest) {
         $restUrl = $this->getRestUrl('/1/smsmessaging/outbound/'.$subscribeToDeliveryNotificationsRequest->senderAddress.'/subscriptions');
@@ -478,7 +492,7 @@ class SmsClient extends AbstractOneApiClient {
     }
 
 	/**
-	 * Stop subscribing to delivery status notifications for all your sent SMS  
+	 * Stop subscribing to delivery status notifications for all your sent SMS
 	 * @param subscriptionId (mandatory) contains the subscriptionId of a previously created SMS delivery report subscription
 	 */
 	public function cancelDeliveryNotificationsSubscription($subscriptionId) {
@@ -544,7 +558,7 @@ class UssdClient extends AbstractOneApiClient {
 }
 
 class DataConnectionProfileClient extends AbstractOneApiClient {
-	
+
     public function __construct($username = null, $password = null, $baseUrl = null) {
         parent::__construct($username, $password, $baseUrl);
     }
@@ -617,7 +631,7 @@ class CountryClient extends AbstractOneApiClient {
     }
 
     /**
-     * Get list of all countries or one with given country id 
+     * Get list of all countries or one with given country id
      */
     // TODO(TK)
     public function getCountries($id = null) {
@@ -641,7 +655,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
         $restPath = $this->getRestUrl('/1/customerProfile/balance');
 
         list($isSuccess, $content) = $this->executeGET($restPath);
-        
+
         return $this->createFromJSON('AccountBalance', $content, !$isSuccess);
     }
 
@@ -650,7 +664,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST($this->getRestUrl($restPath));
         $this->oneApiAuthentication = null;
-        
+
         return $isSuccess;
     }
 
@@ -671,8 +685,8 @@ class CustomerProfileClient extends AbstractOneApiClient {
         }
         return $this->oneApiAuthentication;
     }
-   
-    
+
+
     // TODO(TK)
     public function signup($customerProfile, $password, $captchaId, $captchaAnswer) {
         $restPath = '/1/customerProfile/signup';
@@ -685,14 +699,14 @@ class CustomerProfileClient extends AbstractOneApiClient {
             'gsm' => $customerProfile->gsm,
             'countryCode' => $customerProfile->countryCode,
             'timezoneId' => $customerProfile->timezoneId,
-            // 
+            //
             'password' => $password,
             'captchaId' => $captchaId,
             'captchaAnswer' => $captchaAnswer
         );
 
         list($isSuccess, $content) = $this->executePOST(
-                $this->getRestUrl($restPath), 
+                $this->getRestUrl($restPath),
                 $params
         );
 
@@ -711,7 +725,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
 
         return Utils::getArrayValue($content,'usernameCheck',false) == true;
     }
-    
+
     /**
      * Get customer profile for the current user or user with given user id.
      */
@@ -762,7 +776,7 @@ class TimeZoneClient extends AbstractOneApiClient {
     }
 
     /**
-     * Get list of all timezones or one with given timezone id 
+     * Get list of all timezones or one with given timezone id
      */
     // TODO(TK)
     public function getTimezones($id = null) {
@@ -792,5 +806,49 @@ class EncodingClient extends AbstractOneApiClient {
 
         return new Encodings($content, $isSuccess);
     }
-    
+
+}
+
+class SocialInviteClient extends AbstractOneApiClient {
+
+    public function __construct($username = null, $password = null, $baseUrl = null) {
+        parent::__construct($username, $password, $baseUrl);
+    }
+
+    private function getOrCreateSenderId($sender) {
+        if ($sender)
+            return $sender;
+
+        return 'InfoSMS';
+    }
+
+    /**
+     * Send social invitation
+     */
+    public function sendInvite($socialInviteRequest, $socialInviteAppSecret) {
+        $restUrl = $this->getRestUrl('/1/social-invite/invitation');
+
+        $sender = $this->getOrCreateSenderId($socialInviteRequest->senderAddress);
+
+        if(is_string($socialInviteRequest->recipients)) {
+            $temp = explode(',', $socialInviteRequest->recipients);
+            unset($socialInviteRequest->recipients);
+            for ($i = 0; $i < count($temp); $i++) {
+                $socialInviteRequest->recipients->destinations[$i] = new stdClass();
+                $socialInviteRequest->recipients->destinations[$i]->address = $temp[$i];
+            }
+        }
+
+        $params = array(
+           'messageKey' => $socialInviteRequest->messageKey,
+           'sender' => $sender,
+           'recipients' => $socialInviteRequest->recipients
+        );
+
+        list($isSuccess, $content) = $this->executePOST(
+               $restUrl, $params, 'application/json', $socialInviteAppSecret
+        );
+
+        return $this->createFromJSON('SocialInviteResponse', $content, !$isSuccess);
+    }
 }

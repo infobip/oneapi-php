@@ -13,20 +13,26 @@ class SMSRequest extends AbstractObject {
 
 	public $address;
 
+  public $languageCode;
+
+  public $useLockingShift;
+
+  public $useSingleShift;
+
     /** Used later for querying about the message status. */
 	public $clientCorrelator;
 
-    /** 
-     * If not empty -- this is the url where the delivery notification will be pushed. 
+    /**
+     * If not empty -- this is the url where the delivery notification will be pushed.
      *
-     * If empty -- the delivery notification may be queried using the 
+     * If empty -- the delivery notification may be queried using the
      * clientCorrelator string.
      */
 	public $notifyURL;
 
-    /** Artibtrary string that will be pushed if notifyURL is set. */
+    /** Arbitrary string that will be pushed if notifyURL is set. */
 	public $callbackData;
-    
+
     // TODO
     // public $dataCoding;
 

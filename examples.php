@@ -5,11 +5,13 @@ define('USERNAME', sizeof($argv) >= 3 ? $argv[1] : 'FILL_USERNAME_HERE!!!!!');
 define('PASSWORD', sizeof($argv) >= 3 ? $argv[2] : 'FILL_PASSWORD_HERE!!!!!');
 
 // Fill your data:
-define('SENDER_ADDRESS', '385981912843');
-define('DESTINATION_ADDRESS', '385981912843');
+define('SENDER_ADDRESS', '381603383963');
+define('DESTINATION_ADDRESS', '381603383963,381692781656');
 define('MO_NUMBER', '');
 define('NOTIFY_URL', '');
 define('MO_NOTIFY_URL', '');
+define('SOCIAL_INVITES_MESSAGE_KEY', '');
+define('SOCIAL_INVITES_APP_SECRET', '');
 
 // Uncomment the example you want to test:
 //require_once 'examples/send_message_with_custom_charset.php';
@@ -20,6 +22,7 @@ define('MO_NOTIFY_URL', '');
 //require_once 'examples/subscribe_trigger_mo_and_retrieve_mo_message.php';
 //require_once 'examples/send_hlr_and_wait_for_push.php';
 //require_once 'examples/send_hlr.php';
+//require_once 'examples/send_invite.php';
 //require_once 'examples/get_customer_profile.php';
 //require_once 'examples/check_client_valid.php';
 //require_once 'examples/check_account_balance.php';
