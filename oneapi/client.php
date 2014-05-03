@@ -420,6 +420,27 @@ class SmsClient extends AbstractOneApiClient {
     }
 
     /**
+     * Get the list of sent SMS messages.
+     */
+    public function retrieveOutboundMessages($fromTime=null, $toTime=null){
+        $params = array();
+        if(! $fromTime){
+            $fromTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', '1970-01-01T00:00:00.000+0000');
+        }
+
+        $params['from'] = $fromTime->format('Y-m-d\TH:i:s.000O');
+        if($toTime){
+            $params['to'] = $toTime->format('Y-m-d\TH:i:s.000O');
+        }
+
+        $restUrl = $this->getRestUrl('/1/messaging/outbound/logs/');
+        list($isSuccess, $content) = $this->executeGET($restUrl, $params);
+
+        return $this->createFromJSON('OutboxMessages', $content, !$isSuccess);
+        //return new OutboxMessages($content, $isSuccess);
+    }
+
+    /**
      * Get the list of mobile originated subscriptions for the current user.
      */
     public function retrieveInboundMessagesSubscriptions() {
