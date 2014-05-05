@@ -33,16 +33,17 @@ $bulkId = $siResult->sendSmsResponse->bulkId;
 
 $deliveryStatus = null;
 
-if ($smsMessageSendResult != null) {
+if ($siResult != null) {
   for ($i = 0; $i < 4; $i++) {
       # example:query-for-delivery-status
       // You can use $bulkId as an method call argument here:
       $smsMessageStatus = $smsClient->queryDeliveryStatus($bulkId);
+      echo "Getting status (try #", $i, "): \n<br />\n";
 
       for ($j = 0; $j < count($smsMessageStatus->deliveryInfo); $j++) {
         $deliveryStatus = $smsMessageStatus->deliveryInfo[$j]->deliveryStatus;
 
-        echo 'Message[' . $j . '] => {\n';
+        echo 'Message[' . $j . '] => {', "\n";
         echo 'Success:', $smsMessageStatus->isSuccess() ? 'true' : 'false', "\n";
         echo 'Status:', $deliveryStatus, "\n";
         if (! $smsMessageStatus->isSuccess()) {
@@ -52,6 +53,8 @@ if ($smsMessageSendResult != null) {
         }
         echo "\n} \n<br />\n";
       }
+
+      echo "<br />";
       # ----------------------------------------------------------------------------------------------------
       sleep(3);
   }
