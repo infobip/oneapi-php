@@ -146,7 +146,7 @@ class AbstractOneApiClient {
     }
 
     protected function executePOST($restPath, $params = null, $contentType = null, $socinvAppSecret = null) {
-        if ($contentType) {
+        if ($contentType != null && $socinvAppSecret != null) {
           list($isSuccess, $result) =
               $this->executeRequest('POST', $restPath, $params, null, $contentType, $socinvAppSecret);
         } else {
@@ -276,7 +276,7 @@ class AbstractOneApiClient {
         Logs::debug('Response code ', $code);
         Logs::debug('isSuccess:', $isSuccess);
         Logs::debug('Result:', $result);
-        
+
         return array($isSuccess, $result);
     }
 

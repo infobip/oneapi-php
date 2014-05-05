@@ -29,7 +29,7 @@ Later you can query for the delivery status of the message:
     // You can use $clientCorrelator or $smsMessageSendResult as an method call argument here:
     $smsMessageStatus = $smsClient->queryDeliveryStatus($smsMessageSendResult);
     $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
-    
+
     echo 'Success:', $smsMessageStatus->isSuccess(), "\n";
     echo 'Status:', $deliveryStatus, "\n";
     if( ! $smsMessageStatus->isSuccess()) {
@@ -56,7 +56,7 @@ Same as with the standard messaging example, but when preparing your message:
 When the delivery notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
     $result = SmsClient::unserializeDeliveryStatus();
-    
+
     // Process $result here, e.g. just save it to a file:
     $f = fopen(FILE_NAME, 'w');
     fwrite($f, "\n-------------------------------------\n");
@@ -110,7 +110,7 @@ Similar to the previous example, but this time you must set the notification url
 When the roaming status notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
     $result = DataConnectionProfileClient::unserializeRoamingStatus();
-    
+
     // Process $result here, e.g. just save it to a file:
     $f = fopen(FILE_NAME, 'w');
     fwrite($f, "\n-------------------------------------\n");
@@ -123,7 +123,7 @@ When the roaming status notification is pushed to your server as a HTTP POST req
     fwrite($f, 'terminalRoamingStatus callbackData: ' . $result->terminalRoamingStatus->callbackData . "\n") ;
     fwrite($f, 'extendedData: ' . $result->terminalRoamingStatus->extendedData . "\n") ;
     fwrite($f, 'IMSI: ', $response->extendedData->imsi,'\n');
-    fwrite($f, 'destinationAddres: ', $response->extendedData->destinationAddress,'\n');
+    fwrite($f, 'destinationAddress: ', $response->extendedData->destinationAddress,'\n');
     fwrite($f, 'originalNetworkPrefix: ', $response->extendedData->originalNetworkPrefix,'\n');
     fwrite($f, 'portedNetworkPrefix: ', $response->extendedData->portedNetworkPrefix,'\n');
     fwrite($f, "\n-------------------------------------\n");
@@ -136,7 +136,7 @@ Retrieve inbound messages example
 With the existing sms client (see the basic messaging example to see how to start it):
 
     $inboundMessages = $smsClient->retrieveInboundMessages();
-    
+
     foreach($inboundMessages->inboundSMSMessage as $message) {
         echo $message->dateTime;
         echo $message->destinationAddress;
@@ -150,12 +150,12 @@ With the existing sms client (see the basic messaging example to see how to star
 Inbound message push example
 -----------------------
 
-The subscription to recive inbound messages can be set up on our site.
+The subscription to receive inbound messages can be set up on our site.
 When the inbound message notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
     // returns a single message not array of messages
     $inboundMessages = SmsClient::unserializeInboundMessages();
-    
+
     // Process $inboundMessages here, e.g. just save it to a file:
     $f = fopen(FILE_NAME, 'w');
     fwrite($f, "\n-------------------------------------\n");
@@ -166,6 +166,39 @@ When the inbound message notification is pushed to your server as a HTTP POST re
     fwrite($f, 'resourceURL: '  . $inboundMessages->resourceURL . "\n");
     fwrite($f, 'senderAddress: '  . $inboundMessages->senderAddress . "\n");
 
+Social invites sms example
+--------------------------
+
+If you have Social Invites application registered and configured ([tutorial](http://developer.infobip.com/getting-started/tutorials/social-invite)), you can send invitations.
+
+First initialize the social invites client using your username and password:
+
+    $socinv = new SocialInviteClient(USERNAME, PASSWORD);
+
+Prepare the social invitation:
+
+    $siReq = new SocialInviteRequest();
+    $siReq->senderAddress = SENDER_ADDRESS;
+    $siReq->recipients = DESTINATION_ADDRESS;
+    $siReq->messageKey = SOCIAL_INVITES_MESSAGE_KEY;
+
+Send the message:
+
+    $siResult = $socinv->sendInvite($siReq, SOCIAL_INVITES_APP_SECRET);
+
+Later you can query for the delivery status of the social invite message:
+
+    // You can use $siResult->sendSmsResponse->bulkId as an argument here:
+    $smsMessageStatus = $smsClient->queryDeliveryStatus($siResult->sendSmsResponse->bulkId);
+    $deliveryStatus = $smsMessageStatus->deliveryInfo[0]->deliveryStatus;
+
+    echo 'Success:', $smsMessageStatus->isSuccess(), "\n";
+    echo 'Status:', $deliveryStatus, "\n";
+    if( ! $smsMessageStatus->isSuccess()) {
+        echo 'Message id:', $smsMessageStatus->exception->messageId, "\n";
+        echo 'Text:', $smsMessageStatus->exception->text, "\n";
+        echo 'Variables:', $smsMessageStatus->exception->variables, "\n";
+    }
 
 License
 -------
