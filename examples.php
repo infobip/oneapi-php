@@ -27,3 +27,4 @@ define('SOCIAL_INVITES_APP_SECRET', '');
 //require_once 'examples/check_client_valid.php';
 //require_once 'examples/check_account_balance.php';
 //require_once 'examples/get_inbound_messages.php';
+//require_once 'examples/query_outbound_messages.php';
