@@ -2,12 +2,12 @@
 
 
 /**
- * Send message and check for delivery status untill it is delivered.
+ * Send message and check for delivery status until it is delivered.
  *
  * Use ../examples.php to test this file
  */
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 # example:initialize-sms-client
 OneApiConfigurator::setCredentials(USERNAME, PASSWORD);
@@ -23,7 +23,7 @@ $smsClient->login();
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;
 $smsMessage->address = DESTINATION_ADDRESS;
-$smsMessage->message = 'Hellö world';
+$smsMessage->message = 'Hellï¿½ world';
 # ----------------------------------------------------------------------------------------------------
 
 # example:send-message
@@ -57,4 +57,4 @@ for($i = 0; $i < 4; $i++) {
 }
 
 OneApiConfigurator::setCharset(null);
-//Logs::printLogs();
+Logs::printLogs();

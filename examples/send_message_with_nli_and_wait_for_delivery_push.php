@@ -1,8 +1,7 @@
 <?php
 
-
 /**
- * Send message and check for delivery status until it is delivered.
+ * Send message with special characters and check for delivery status until it is delivered.
  *
  * Use ../examples.php to test this file
  */
@@ -21,7 +20,12 @@ $smsClient->login();
 $smsMessage = new SMSRequest();
 $smsMessage->senderAddress = SENDER_ADDRESS;
 $smsMessage->address = DESTINATION_ADDRESS;
-$smsMessage->message = 'Hello world';
+$smsMessage->message = MESSAGE_TEXT;
+$language = new Language();
+$language->languageCode = LANGUAGE_CODE;
+$language->useLockingShift = USE_LOCKING_SHIFT;
+$language->useSingleShift = USE_SINGLE_SHIFT;
+$smsMessage->language = $language;
 # ----------------------------------------------------------------------------------------------------
 
 # example:send-message
@@ -32,6 +36,8 @@ $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
 // The client correlator is a unique identifier of this api call:
 $clientCorrelator = $smsMessageSendResult->clientCorrelator;
 # ----------------------------------------------------------------------------------------------------
+
+echo "\n", 'Response:', $smsMessageSendResult, "\n";
 
 $deliveryStatus = null;
 
@@ -52,4 +58,4 @@ for($i = 0; $i < 4; $i++) {
     sleep(3);
 }
 
-Logs::printLogs();
+//Logs::printLogs();

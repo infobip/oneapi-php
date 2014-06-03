@@ -5,13 +5,18 @@ define('USERNAME', sizeof($argv) >= 3 ? $argv[1] : 'FILL_USERNAME_HERE!!!!!');
 define('PASSWORD', sizeof($argv) >= 3 ? $argv[2] : 'FILL_PASSWORD_HERE!!!!!');
 
 // Fill your data:
-define('SENDER_ADDRESS', '381603383963');
-define('DESTINATION_ADDRESS', '381603383963,381692781656');
+define('SENDER_ADDRESS', '');
+define('DESTINATION_ADDRESS', '');
 define('MO_NUMBER', '');
 define('NOTIFY_URL', '');
 define('MO_NOTIFY_URL', '');
 define('SOCIAL_INVITES_MESSAGE_KEY', '');
 define('SOCIAL_INVITES_APP_SECRET', '');
+define('MESSAGE_TEXT', '');
+define('LANGUAGE_CODE', '');
+define('USE_LOCKING_SHIFT', true);
+define('USE_SINGLE_SHIFT', false);
+
 
 // Uncomment the example you want to test:
 //require_once 'examples/send_message_with_custom_charset.php';
@@ -28,3 +33,4 @@ define('SOCIAL_INVITES_APP_SECRET', '');
 //require_once 'examples/check_account_balance.php';
 //require_once 'examples/get_inbound_messages.php';
 //require_once 'examples/query_outbound_messages.php';
+//require_once 'examples/send_message_with_nli_and_wait_for_delivery_push.php';

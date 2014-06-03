@@ -3,24 +3,21 @@
 /**
  * SMS request object.
  */
-class SMSRequest extends AbstractObject {
+class SMSRequest extends AbstractObject
+{
 
-	public $senderAddress;
+    public $senderAddress;
 
-	public $senderName;
+    public $senderName;
 
-	public $message;
+    public $message;
 
-	public $address;
+    public $address;
 
-  public $languageCode;
-
-  public $useLockingShift;
-
-  public $useSingleShift;
+    public $language;
 
     /** Used later for querying about the message status. */
-	public $clientCorrelator;
+    public $clientCorrelator;
 
     /**
      * If not empty -- this is the url where the delivery notification will be pushed.
@@ -28,15 +25,16 @@ class SMSRequest extends AbstractObject {
      * If empty -- the delivery notification may be queried using the
      * clientCorrelator string.
      */
-	public $notifyURL;
+    public $notifyURL;
 
     /** Arbitrary string that will be pushed if notifyURL is set. */
-	public $callbackData;
+    public $callbackData;
 
     // TODO
     // public $dataCoding;
 
-    public function __construct($array=null, $success=true) {
+    public function __construct($array = null, $success = true)
+    {
         parent::__construct($array, $success);
     }
 

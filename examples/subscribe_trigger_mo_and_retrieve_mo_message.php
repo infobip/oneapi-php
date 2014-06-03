@@ -1,6 +1,6 @@
 <?php
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
 
@@ -52,4 +52,4 @@ $receivedInboundMessages = $smsClient->retrieveInboundMessages(100);
 
 echo 'Found ', sizeof($receivedInboundMessages->inboundSMSMessage), ' messages', "\n";
 
-//Logs::printLogs();
+Logs::printLogs();

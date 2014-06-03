@@ -135,9 +135,14 @@ class ObjectConversionRule {
         $function($object, $json);
     }
 
-    public function convertToJson($object, $json) {
+    public function convertToJson($object, $json)
+    {
         $function = $this->toJSON;
-        $function($object, $value);
+        if (is_callable($function)) {
+            $function($object, $json);
+        } else {
+            // TODO throw an exception
+        }
     }
 
 }

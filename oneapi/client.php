@@ -149,8 +149,10 @@ class AbstractOneApiClient {
         if ($contentType != null && $socinvAppSecret != null) {
           list($isSuccess, $result) =
               $this->executeRequest('POST', $restPath, $params, null, $contentType, $socinvAppSecret);
+        } else if($contentType != null){
+          list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params, null, $contentType);
         } else {
-          list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params);
+            list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params);
         }
 
         return array($isSuccess, json_decode($result, true));
@@ -230,7 +232,7 @@ class AbstractOneApiClient {
             CURLOPT_USERAGENT => 'OneApi-php-' . self::VERSION,
             CURLOPT_CUSTOMREQUEST => $httpMethod,
             CURLOPT_URL => $url,
-            CURLOPT_HTTPHEADER => $sendHeaders,
+            CURLOPT_HTTPHEADER => $sendHeaders
         );
 
         if ($specialAuth) {
@@ -249,6 +251,7 @@ class AbstractOneApiClient {
 
         if (sizeof($queryParams) > 0 && ($httpMethod == 'POST' || $httpMethod == 'PUT')) {
             $httpBody = null;
+
             if (strpos($contentType, 'x-www-form-urlencoded')) {
               $httpBody = $this->buildQuery($queryParams);
             } else if (strpos($contentType, 'json')) {
@@ -364,7 +367,7 @@ class SmsClient extends AbstractOneApiClient {
     // ----------------------------------------------------------------------------------------------------
 
     public function sendSMS($message) {
-        $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests';
+        $restPath = '/1/smsmessaging/outbound/{senderAddress}/requests'; //TODO check version
 
         $clientCorrelator = $this->getOrCreateClientCorrelator($message->clientCorrelator);
 
@@ -377,16 +380,21 @@ class SmsClient extends AbstractOneApiClient {
             'address' => $message->address,
             'message' => $message->message,
             'clientCorrelator' => $clientCorrelator,
-            'senderName' => 'tel:' . $message->senderAddress,
+            'senderName' => 'tel:' . $message->senderAddress
         );
 
         if ($message->notifyURL)
             $params['notifyURL'] = $message->notifyURL;
         if ($message->callbackData)
             $params['callbackData'] = $message->callbackData;
+        if($message->language){
+            $params['language'] = $message->language;
+        }
+
+        $contentType = "application/json";
 
         list($isSuccess, $content) = $this->executePOST(
-                $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params
+                $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params, $contentType
         );
 
         return $this->createFromJSON('ResourceReference', $content, !$isSuccess);
@@ -504,10 +512,12 @@ class SmsClient extends AbstractOneApiClient {
             'notifyURL' => $subscribeToDeliveryNotificationsRequest->notifyURL,
             'criteria' => $subscribeToDeliveryNotificationsRequest->criteria,
             'callbackData' => $subscribeToDeliveryNotificationsRequest->callbackData,
-            'clientCorrelator' => $clientCorrelator,
+            'clientCorrelator' => $clientCorrelator
         );
 
-        list($isSuccess, $content) = $this->executePOST($restUrl, $params);
+        $contentType = "application/json";
+
+        list($isSuccess, $content) = $this->executePOST($restUrl, $params, $contentType);
 
         return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
     }

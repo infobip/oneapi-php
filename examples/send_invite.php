@@ -2,11 +2,11 @@
 
 
 /**
- * Send message and check for delivery status untill it is delivered.
+ * Send message and check for delivery status until it is delivered.
  *
  * Use ../examples.php to test this file
  */
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 # example:initialize-sms-client
 $socinv = new SocialInviteClient(USERNAME, PASSWORD);

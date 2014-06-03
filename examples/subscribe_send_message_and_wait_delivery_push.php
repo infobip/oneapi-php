@@ -1,6 +1,6 @@
 <?php
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
 $smsClient->login();
@@ -42,4 +42,4 @@ foreach($subscriptions->deliveryReceiptSubscriptions as $subscription) {
     echo 'Cancelled subscription to ', $subscription->subscriptionId, "\n";
 }
 
-//Logs::printLogs();
+Logs::printLogs();

@@ -6,7 +6,7 @@ class OutboxMessages extends AbstractObject
     public $logs;
     public $from;
     public $to;
-    public $hasMoreLogs;
+  //  public $hasMoreLogs;
 
     public function __construct($array = null, $success = true)
     {
@@ -15,7 +15,8 @@ class OutboxMessages extends AbstractObject
 
     public function isMoreAvailable()
     {
-        return $hasMoreLogs;
+    //    return $hasMoreLogs;
+        return sizeof($this->logs) >= 100000;
     }
 
 }
