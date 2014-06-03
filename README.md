@@ -18,11 +18,9 @@ Prepare the message:
     $smsMessage->address = DESTINATION_ADDRESS;
     $smsMessage->message = 'Hello world';
 
-
 Send the message:
 
     $smsMessageSendResult = $smsClient->sendSMS($smsMessage);
-
 
 Later you can query for the delivery status of the message:
 
@@ -52,7 +50,6 @@ Same as with the standard messaging example, but when preparing your message:
     $smsMessage->message = 'Hello world';
     $smsMessage->notifyURL = NOTIFY_URL;
 
-
 When the delivery notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
     $result = SmsClient::unserializeDeliveryStatus();
@@ -68,6 +65,30 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     fwrite($f, "\n-------------------------------------\n");
     fclose($f);
 
+Sending message with special characters example
+-----------------------
+
+If you want to send message with special characters, this is how you prepare your message:
+
+	$smsMessage = new SMSRequest();
+    $smsMessage->senderAddress = SENDER_ADDRESS;
+    $smsMessage->address = DESTINATION_ADDRESS;
+    $smsMessage->message = MESSAGE_TEXT;
+  
+	$language = new Language();
+
+	//specific language code
+	$language->languageCode = LANGUAGE_CODE;
+
+	//use locking shift table for specific language ('false' or 'true') 
+	$language->useLockingShift = USE_LOCKING_SHIFT;
+
+	//use single shift table for specific language ('false' or 'true')
+	$language->useSingleShift = USE_SINGLE_SHIFT;
+
+	$smsMessage->language = $language;
+
+Currently supported languages (with their language codes) are: `Spanish - "SP"`, `Portuguese - "PT"`, `Turkish - "TR"`.
 
 Number Context example
 -----------------------
