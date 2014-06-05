@@ -1,6 +1,6 @@
 <?php
 
-require_once '../oneapi/client.php';
+require_once 'oneapi/client.php';
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 $client->login();

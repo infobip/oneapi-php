@@ -1,6 +1,6 @@
 <?php
 
-include '../oneapi/client.php';
+include 'oneapi/client.php';
 
 $customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
 $customerProfileClient->login();

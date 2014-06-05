@@ -1,6 +1,6 @@
 <?php
 
-require_once '../oneapi/client.php';
+require_once 'oneapi/client.php';
 
 define(FILE_NAME, '../hlr-'.mktime(true));
 

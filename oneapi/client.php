@@ -316,8 +316,8 @@ class AbstractOneApiClient {
                 $valn = 'null';
             }
 
-            $rez = str_replace("'{" . $nam . "}'", "'" . $vals . "'", $rez);
-            $rez = str_replace("{" . $nam . "}", $valn, $rez);
+            $rez = str_replace("'{" . $nam . "}'", "'" . urlencode($vals) . "'", $rez);
+            $rez = str_replace("{" . $nam . "}", urlencode($valn), $rez);
         }
         return($rez);
     }
@@ -391,7 +391,7 @@ class SmsClient extends AbstractOneApiClient {
             $params['language'] = $message->language;
         }
 
-        $contentType = "application/json";
+        $contentType = 'application/json';
 
         list($isSuccess, $content) = $this->executePOST(
                 $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params, $contentType
@@ -406,7 +406,7 @@ class SmsClient extends AbstractOneApiClient {
      * delivery statuses.
      */
     public function queryDeliveryStatus($clientCorrelatorOrResourceReference = null) {
-        $restPath = '/1/smsmessaging/outbound/' . 'TODO' . '/requests/{clientCorrelator}/deliveryInfos';
+        $restPath = '/1/smsmessaging/outbound/requests/{clientCorrelator}/deliveryInfos';
 
         if (is_object($clientCorrelatorOrResourceReference)) {
             $clientCorrelator = $clientCorrelatorOrResourceReference->clientCorrelator;
@@ -515,9 +515,7 @@ class SmsClient extends AbstractOneApiClient {
             'clientCorrelator' => $clientCorrelator
         );
 
-        $contentType = "application/json";
-
-        list($isSuccess, $content) = $this->executePOST($restUrl, $params, $contentType);
+        list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
         return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
     }
