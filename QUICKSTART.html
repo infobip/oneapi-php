@@ -1,61 +1,45 @@
 <html><head><title>OneApi doc</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h3 id="SYSTEM_OVERVIEW">System overview</h3>
-<p><a href="https://github.com/infobip/" target="_blank">Parseco</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">API</a> implementation inspired by <a href="http://oneapi.gsma.com/api-list/" target="_blank">OneApi</a> specification which is issued by the Global System for Mobile Communications Association. 
+<p><a href="https://developer.infobip.com/api" target="_blank">Infobip OneAPI</a> is an <a href="http://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">API</a> implementation inspired by <a href="http://www.gsma.com/oneapi/" target="_blank">OneApi</a> specification which is issued by the Global System for Mobile Communications Association.
 We felt the need to enrich the specification by adding a few fields in some requests and responses to make the API more comfortable for the developer.</p>
-<p>Parseco API exposes the following mobile network functionalities:</p>
+<p>Infobip OneAPI exposes the following mobile network functionalities:</p>
 <ul>
-<li><strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16" target="_blank">UTF-16</a> character set so that you can use virtually any alphabet for composing your text. The only limitation for SMS messages is the message length which is 70 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded. If you want to send <a href="http://www.parseco.com/multipart-sms-messaging/">longer messages</a> then the appropriate length is 67 per Unicode encoded message part and 153 characters per non Unicode encoded message part.</li>
+<li><strong>Short message service</strong> (<strong>SMS</strong>) is the most widespread mobile network data application. The term stands for the service as well as the text message itself. We fully support <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> <a href="http://en.wikipedia.org/wiki/UTF-16" target="_blank">UTF-16</a> character set so that you can use virtually any alphabet for composing your text. <!-- The only limitation for SMS messages is the message length which is 70 characters in case of a Unicode encoded message, or 160 characters in case the message is not Unicode encoded. If you want to send <a href="http://www.parseco.com/multipart-sms-messaging/">longer messages</a> then the appropriate length is 67 per Unicode encoded message part and 153 characters per non Unicode encoded message part. --></li>
 <li><strong>Unstructured supplementary services data</strong> (<strong>USSD</strong>) is mostly used for prepaid callback service, mobile-money services and menu-based information services. It is a connection-based data protocol which makes it more responsive than the message-based SMS. Connection-based means that a connection (session) is established and kept alive for the entire time during the communication. That is why it is sometimes used for WAP browsing. The length of the USSD message is up to 182 alphanumeric characters in length. Unfortunately, Unicode encoding is not supported.</li>
 <li><strong><a href="http://www.infobip.com/services/number_context" target="_blank">Number Context</a></strong> Infobip's Number Context service communicates with a relevant mobile number's home network and can identify whether the subscribers handset is roaming on another network, currently active or has been disabled.
 <br><sub><strong>* HLR service has been renamed to Number Context service</strong></sub></li>
 </ul>
 <p>Other mobile network-related functionalities are due to be implemented.
-In order to use Parseco API and gain access to <a href="http://www.infobip.com" target="_blank">Infobip</a> mobile networks aggregator system you must <a href="http://www.parseco.com/sign-up/">register</a> at the Parseco website.
-In other words, by using Parseco PHP library you can <a href="http://www.parseco.com/#features-list">send SMS messages</a> to <strong>any</strong> cell phone <a href="http://www.parseco.com/pricing-and-coverage/">around the globe</a>.</p>
+In order to use Infobip OneAPI and gain access to <a href="https://www.infobip.com" target="_blank">Infobip</a> mobile networks aggregator system you must <a href="https://www.infobip.com/sign_up/">register</a> at the Infobip website.
+In other words, by using Infobip OneAPI PHP library you can <a href="https://infobip.com/messaging/">send SMS messages</a> to <strong>any</strong> cell phone <a href="https://www.infobip.com/about/platform/">around the globe</a>.</p>
 <h3 id="PREREQUISITES">Prerequisites</h3>
 <ul>
 <li>You have <a href="http://php.net/manual/en/install.php" target="_blank">installed a PHP interpreter</a>.</li>
-<li>You have downloaded the <a href="https://github.com/infobip/oneapi-php/tree/master/oneapi" target="_blank">Parseco OneAPI PHP library</a></li>
+<li>You have downloaded the <a href="https://github.com/infobip/oneapi-php/tree/master/oneapi" target="_blank">Infobip OneAPI PHP library</a></li>
 </ul>
 <h3 id="GENERAL_ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_ALL_THE_FOLLOWING_EXAMPLES">General assumptions which must be fulfilled for all the following examples</h3>
 <ul>
 <li>You must have an active Internet connection.</li>
-<li>You have satisfied the prerequisites and <a href="http://www.parseco.com/sign-up/">signed up</a> at Parseco website. After sign-up, SMS message with the verification PIN will be sent to your cell phone.</li>
+<li>You have satisfied the prerequisites and <a href="https://www.infobip.com/sign-up/">signed up</a> at Infobip website. After sign-up, SMS message with the verification PIN will be sent to your cell phone. Input the four-digit PIN from the received SMS message in the verification box and press verify.</li>
 </ul>
-<p><img id="quickstart-img-03" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_03.png" title="Account verification" width="660" height="290" /></p>
-<p>Input the four-digit PIN from the received SMS message in the verification box and press verify.
-Congratulations on your successful registration - you can start using Parseco API! If you want, you can try out the <a href="http://www.parseco.com/demos/">live demos</a> now.</p>
 <h3 id="ASSUMPTIONS_WHICH_MUST_BE_FULFILLED_FOR_THE_EXAMPLES_WITH_NOTIFICATION_PUSH">Assumptions which must be fulfilled for the examples with notification push</h3>
 <p>In every example two different architectural approaches are shown.
 In the first scenario the mobile-originated (see example 3 for term explanation) information is returned to the (web) application that requested the operation.</p>
-<p>In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request. 
-In other words, Parseco pushes the receiving inbound notifications (be it Number Context or delivery data, or messages) to your web application.</p>
+<p>In the second scenario the mobile-terminated information is still being sent by your (web) application, but the mobile-originated information is returned to an URL predefined by you via HTTP POST request.
+In other words, Infobip pushes the receiving inbound notifications (be it Number Context or delivery data, or messages) to your web application.</p>
 <ul>
-<li>You must have your own web application in order to provide the URL for the Parseco push notifications.</li>
-<li>You must register the URL mentioned above as notification URL at Parseco site <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a></li>
+<li>You must have your own web application in order to provide the URL for the Infobip push notifications.</li>
+<li>You must register the URL mentioned above as notification URL<a href="http://developer.infobip.com/api#!/ReceiveSMS/POST_1_smsmessaging_inbound_subscriptions">using API</a>.</li>
 <li>Your inbound messages will be available for a period of 48 h after being received by our gateways.</li>
 </ul>
-<p>For a given notification URL the <a href="http://www.parseco.com/application/setup-wizard/">setup wizard</a> generates a pair of subscription number and keyword. The just generated subscription will be shown in the list below:</p>
-<ul>
-<li><strong>Id</strong> - The id of the subscription.</li>
-<li><strong>Address</strong> - Your GSM subscription number to which inbound messages are sent. <strong>Prefix it with '+' prior to sending SMS message.</strong></li>
-<li><strong>Criteria</strong> - String which <strong>must</strong> be present at the start of the SMS message text, otherwise Parseco won't forward it to your code.</li>
-<li><strong>Notify URL</strong> - The registered URL to receive Parseco push notifications</li>
-<li><strong>Action</strong> - Action for subscription.</li>
-</ul>
-<p><img id="quickstart-img-02" src="http://parseco.com/wp-content/themes/parseco/images/content/quickstart_02.png" title="List of subscriptions" width="660" height="320" /></p>
-<p>The "Notify URL" field is crucial. 
-If it is present, then the approach with notification push is chosen, meaning that all your mobile-originated information will be sent to it via HTTP POST request.</p>
-<p>If it is not present then the approach without notification push is chosen, meaning that all your mobile-originated information will be returned to the (web) application that requested the operation.
-If you make changes, a "Save" button will appear in the "Action" column. If you want to apply the changes, press it.</p>
 <h3 id="NOTICE">Notice</h3>
 <ul>
-<li><strong>After signup you won't be able to use any of our services for 2 to 5 minutes until the system propagates the changes.</strong></li>
-<li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Parseco account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages, <a href="http://www.parseco.com/pricing-and-coverage/">depending upon your location</a>.</strong></li>
-<li>All examples are <a href="http://sscce.org/" target="_blank">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the PATH_TO_LIBRARY with a string containing the path to the client.php file from downloaded library. There may be other strings to replace, e.g. as in example 1.1. If your operating system supports it, don't forget to set appropriate file permissions. After you have done that, you can run them.</li>
+<li><strong>After signup you won't be able to use any of our services for few minutes (up to five minutes) until the system propagates the changes.</strong></li>
+<li><strong>Until you make your first payment the only GSM number to which you can send messages is the one tied to your Infobip account. It is meant for demo purposes only, so you have a 5 &euro; budget for testing, which roughly translates to 500 or less SMS messages depending upon your location.</strong></li>
+<li>All examples are <a href="http://sscce.org/" target="_blank">valid, runnable</a> code snippets,  you can copy them to a new empty PHP file, and replace the <i>PATH_TO_LIBRARY</i> with a string containing the path to the client.php file from downloaded library. There may be other strings to replace, e.g. as in example 1.1. If your operating system supports it, don't forget to set appropriate file permissions. After you have done that, you can run them.</li>
 </ul>
 <h3 id="EXAMPLE_1_1_BASIC_MESSAGING_HELLO_WORLD">Example 1.1: Basic messaging (Hello world)</h3>
 <p>The first thing that needs to be done is to initialize the client with username and password in plaintext.
-You are basically logging in to Parseco, so an exception will be thrown if the username and/or password are incorrect. The next step is to prepare the message:</p>
+You are basically logging in to Infobip, so an exception will be thrown if the username and/or password are incorrect. The next step is to prepare the message:</p>
 <ul>
 <li><strong>sender address</strong> - value which will appear in the FROM field on the destination cell phone</li>
 <li><strong>address</strong> - GSM number of the destination cell phone</li>
@@ -121,7 +105,7 @@ $smsMessageSendResult = $smsClient-&gt;sendSMS($smsMessage);
 
 ?&gt;
 </code></pre>
-<p>Parseco will send a HTTP POST request to this URL, and your web application must process it like this:</p>
+<p>Infobip will send a HTTP POST request to this URL, and your web application must process it like this:</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -184,7 +168,7 @@ if(!$response-&gt;isSuccess()) {
 
 ?&gt;
 </code></pre>
-<p>Parseco will send a HTTP POST request to this URL, and your web application must process it like this:</p>
+<p>Infobip will send a HTTP POST request to this URL, and your web application must process it like this:</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -213,20 +197,20 @@ fclose($f);
 </code></pre>
 <p>Note that there is nothing stopping you from running both code snippets on the same host or within the same web application, but it is not necessary.</p>
 <h3 id="EXAMPLE_3_1_PROCESS_INBOUND_MESSAGES_TWO_WAY_COMMUNICATION">Example 3.1: Process inbound messages (two way communication)</h3>
-<p>Two way communication with cell phone is also possible via Parseco.
+<p>Two way communication with cell phone is also possible via Infobip.
 The messages your application sends to cell phones are outbound or mobile-terminated messages.
 It is a scenario much like in the first example.
 The messages which your application receives from cell phones are inbound or mobile-originated messages.</p>
 <p>In order to be able to receive inbound messages programmatically you must have a valid GSM subscription number.
-For demo purposes, a valid 30-day trial GSM subscription number is tied to your Parseco account.
-Our paid services include (info coming soon, mail to <a href="mailto:info@parseco.com">info@parseco.com</a>):</p>
+For demo purposes, a valid 30-day trial GSM subscription number is tied to your Infobip account.
+Our paid services include (info coming soon, mail to <a href="mailto:info@infobip.com">info@infobip.com</a>):</p>
 <ul>
 <li>you may register a single subscription number </li>
 <li>you may register a single subscription number paired-up with a keyword of your choice</li>
 <li>you may register a single subscription number paired-up with multiple keywords oy our choice</li>
 <li>you may register for all or some of the above as many times as you like </li>
 </ul>
-<p>In order for the below example to work make sure that you have a subscription with no notify URL set at your <a href="http://www.parseco.com/application/setup-wizard/">Parseco account</a>.</p>
+<p>In order for the below example to work make sure that you have a subscription with no notify URL set at your <a href="https://www.infobip.com/">Infobip</a> account.</p>
 <pre><code>&lt;?php
 
 require_once(PATH_TO_LIBRARY);
@@ -247,7 +231,7 @@ foreach($inboundMessages-&gt;inboundSMSMessage as $message) {
 ?&gt;
 </code></pre>
 <h3 id="EXAMPLE_3_2_PROCESS_INBOUND_MESSAGES_TWO_WAY_COMMUNICATION_AS_NOTIFICATION_PUSH">Example 3.2: Process inbound messages (two way communication) as notification push</h3>
-<p>In order for the below example to work make sure that you have a subscription with a notify URL set at your <a href="http://www.parseco.com/application/setup-wizard/">Parseco account</a>. 
+<p>In order for the below example to work make sure that you have a subscription with a notify URL set at your Infobip account.
 Of course, the notify URL must be mapped to your web application.</p>
 <pre><code>&lt;?php
 
