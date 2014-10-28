@@ -3,7 +3,7 @@
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
 function __oneapi_autoloader($class) {
-    $paths = array('oneapi/models', 'oneapi/core', 'oneapi/utils');
+    $paths = array('oneapi/models', 'oneapi/models/iam', 'oneapi/models/two-factor-authentication', 'oneapi/core', 'oneapi/utils');
     foreach($paths as $path) {
         $fileName = __ONEAPI_LIBRARY_PATH__ . $path . '/' . $class . '.class.php';
         if(is_file($fileName))
@@ -62,7 +62,7 @@ class OneApiConfigurator {
 
 class AbstractOneApiClient {
 
-    const VERSION = '0.0.2';
+    const VERSION = '0.0.3';
 
     public $oneApiAuthentication = null;
 
@@ -139,16 +139,23 @@ class AbstractOneApiClient {
         return Utils::randomAlphanumericString();
     }
 
-    protected function executeGET($restPath, $params = null) {
-        list($isSuccess, $result) = $this->executeRequest('GET', $restPath, $params);
+    protected function executeGET($restPath, $params = null, $contentType = null, $apiKey = null) {
+        if ($contentType != null && $apiKey != null) {
+          list($isSuccess, $result) =
+              $this->executeRequest('GET', $restPath, $params, null, $contentType, $apiKey);
+        } else if ($contentType != null) {
+            list($isSuccess, $result) = $this->executeRequest('GET', $restPath, $params, null, $contentType);
+        } else {
+          list($isSuccess, $result) = $this->executeRequest('GET', $restPath, $params);
+        }
 
         return array($isSuccess, json_decode($result, true));
     }
 
-    protected function executePOST($restPath, $params = null, $contentType = null, $socinvAppSecret = null) {
-        if ($contentType != null && $socinvAppSecret != null) {
+    protected function executePOST($restPath, $params = null, $contentType = null, $apiKey = null) {
+        if ($contentType != null && $apiKey != null) {
           list($isSuccess, $result) =
-              $this->executeRequest('POST', $restPath, $params, null, $contentType, $socinvAppSecret);
+              $this->executeRequest('POST', $restPath, $params, null, $contentType, $apiKey);
         } else if($contentType != null){
           list($isSuccess, $result) = $this->executeRequest('POST', $restPath, $params, null, $contentType);
         } else {
@@ -325,8 +332,13 @@ class AbstractOneApiClient {
     protected function createFromJSON($className, $json, $isError) {
         $result = Conversions::createFromJSON($className, $json, $isError);
 
-        if($this->throwException && !$result->isSuccess()) {
+        if ($this->throwException && !$result->isSuccess()) {
             $message = $result->exception->messageId . ': ' . $result->exception->text . ' [' . implode(',', $result->exception->variables) . ']';
+            throw new Exception($message);
+        }
+
+        if ('IamException' == $className) {
+            $message = json_encode($result->requestError);
             throw new Exception($message);
         }
 
@@ -880,4 +892,99 @@ class SocialInviteClient extends AbstractOneApiClient {
 
         return $this->createFromJSON('SocialInviteResponse', $content, !$isSuccess);
     }
+}
+
+class TwoFactorAuthenticationClient extends AbstractOneApiClient {
+
+    public function __construct($username = null, $password = null, $baseUrl = "https://oneapi-test.infobip.com/") {
+        parent::__construct($username, $password, $baseUrl);
+    }
+
+    /**
+     * Generate Api Key
+     */
+    public function generateApiKey() {
+      $restUrl = $this->getRestUrl('/2fa/1/api-key');
+
+      list($isSuccess, $content) = $this->executePOST(
+              $restUrl, null, 'application/json'
+      );
+
+      return $content;
+    }
+
+    /**
+     * Initiate Two Factor Authentication
+     */
+    public function authentication($authenticationRequest, $apiKey) {
+      $restUrl = $this->getRestUrl('/2fa/1/authentication');
+
+      $params = array(
+        'applicationId' => $authenticationRequest->applicationId,
+        'messageId' => $authenticationRequest->messageId,
+        'senderId' => $authenticationRequest->senderId,
+        'phoneNumber' => $authenticationRequest->phoneNumber,
+      );
+
+      list($isSuccess, $content) = $this->executePOST(
+              $restUrl, $params, 'application/json', $apiKey
+      );
+
+      return $this->createFromJSON($isSuccess ? 'TfaResponse' : 'IamException', $content, false);// !$isSuccess);
+    }
+
+    /**
+     * Verify phone number
+     */
+    public function verification($verificationRequest, $apiKey) {
+      $restUrl = $this->getRestUrl('/2fa/1/verification');
+
+      $params = array(
+        'applicationId' => $verificationRequest->applicationId,
+        'pin' => $verificationRequest->pin,
+        'phoneNumber' => $verificationRequest->phoneNumber,
+      );
+
+      list($isSuccess, $content) = $this->executePOST(
+              $restUrl, $params, 'application/json', $apiKey
+      );
+      
+      return $this->createFromJSON($isSuccess ? 'TfaVerifyPinResponse' : 'IamException', $content, false);// !$isSuccess);
+    }
+
+    /**
+     * Check if phone number is verified
+     */
+    public function isVerified($isVerifiedRequest, $apiKey) {
+      $restUrl = $this->getRestUrl(
+          '/2fa/1/applications/{appId}/phone-number/{phoneNumber}', Array(
+              'appId' => $isVerifiedRequest->applicationId,
+              'phoneNumber' => $isVerifiedRequest->phoneNumber
+          )
+      );
+
+      list($isSuccess, $content) = $this->executeGET(
+              $restUrl, null, 'application/json', $apiKey
+      );
+
+      return $this->createFromJSON($isSuccess ? 'TfaIsVerifiedResponse' : 'IamException', $content, false);// !$isSuccess);
+    }
+
+    /**
+     * Check delivery status of sms
+     */
+    public function deliveryStatus($smsId, $apiKey) {
+      $restUrl = $this->getRestUrl(
+        '/2fa/1/sms/{smsId}', Array(
+            'smsId' => $smsId
+        )
+      );
+
+      list($isSuccess, $content) = $this->executeGET(
+              $restUrl, null, 'application/json', $apiKey
+      );
+
+      return $this->createFromJSON($isSuccess ? 'TfaDeliveryInfo' : 'IamException', $content, false);// !$isSuccess);
+    }
+
 }

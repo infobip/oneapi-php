@@ -8,7 +8,7 @@ class Conversions {
         if(!$className) {
             throw new Exception('Invalid className:'.$className);
         }
-        $model = new $className(); 
+        $model = new $className();
         self::fillFromJSON($model, $json, $isError);
         return $model;
     }
@@ -20,7 +20,7 @@ class Conversions {
         } else {
             if (get_magic_quotes_gpc()) {
                 $json = stripslashes($json);
-            }            
+            }
             $array = json_decode($json, true);
         }
 
@@ -39,7 +39,7 @@ class Conversions {
 
         // Keep original JSON values (for simple string values):
         foreach($array as $key => $value) {
-            if(property_exists($className, $key) && (is_string($value) || is_numeric($value))) {
+            if(property_exists($className, $key) && (is_string($value) || is_numeric($value) || is_bool($value))) {
                 $model->$key = $value;
             }
         }
@@ -52,7 +52,7 @@ class Conversions {
                     if(property_exists($className, $key) && $conversionRule->field == $key) {
                         $model->$key = $conversionRule->convertFromJSON($value);
                     }
-                } 
+                }
             }
         }
         foreach($conversionRules as $conversionRule) {

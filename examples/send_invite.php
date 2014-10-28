@@ -24,7 +24,7 @@ $siReq->messageKey = SOCIAL_INVITES_MESSAGE_KEY;
 # ----------------------------------------------------------------------------------------------------
 
 # example:send-invite
-$siResult = $socinv->sendInvite($siReq, SOCIAL_INVITES_APP_SECRET);
+$siResult = $socinv->sendInvite($siReq, API_KEY);
 # ----------------------------------------------------------------------------------------------------
 
 // The bulk id is a unique identifier of this api call:
