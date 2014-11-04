@@ -17,6 +17,10 @@ define('LANGUAGE_CODE', '');
 define('USE_LOCKING_SHIFT', true);
 define('USE_SINGLE_SHIFT', false);
 
+define('TFA_APPLICATION_ID', '');
+define('TFA_MESSAGE_ID', '');
+
+
 
 // Uncomment the example you want to test:
 //require_once 'examples/send_message_with_custom_charset.php';

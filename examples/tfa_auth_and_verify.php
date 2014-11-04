@@ -15,8 +15,8 @@ $tfaClient = new TwoFactorAuthenticationClient(); // No need for USERNAME or PAS
 
 # example:prepare-tfa-authentication-request
 $tfaRequest = new TfaRequest();
-$tfaRequest->applicationId = "B7DC8A5FCACAE95D754219400EEA38F2";
-$tfaRequest->messageId = "9030551F327704A0F262995A1A4B4596";
+$tfaRequest->applicationId = TFA_APPLICATION_ID;
+$tfaRequest->messageId = TFA_MESSAGE_ID;
 $tfaRequest->phoneNumber = DESTINATION_ADDRESS;
 $tfaRequest->senderId = SENDER_ADDRESS;
 # ----------------------------------------------------------------------------------------------------
