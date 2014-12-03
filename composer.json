@@ -1,0 +1,17 @@
+{
+    "name": "infobip/oneapi",
+    "version": "1.0.0-dev",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Miroslav Milivojevic",
+            "email": "Miroslav.Milivojevic@infobip.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+	"autoload": {
+	        "files": ["oneapi/client.php"]
+	}
+}
+	
