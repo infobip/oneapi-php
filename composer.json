@@ -12,6 +12,6 @@
     "minimum-stability": "dev",
     "require": {},
     "autoload": {
-        "classmap": ["oneapi/", "oneapi/models", "oneapi/Utils", "oneapi/models/iam", "oneapi/models/two-factor-authentication"]
+        "classmap": ["oneapi/", "oneapi/models", "oneapi/utils", "oneapi/models/iam", "oneapi/models/two-factor-authentication"]
     }
 }
