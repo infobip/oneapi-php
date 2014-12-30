@@ -9,6 +9,12 @@
 namespace infobip;
 
 
+use infobip\models\DeliveryReportSubscription;
+use infobip\models\GenericObject;
+use infobip\models\MoSubscriptions;
+use infobip\utils\OneApiDateTime;
+use infobip\utils\Utils;
+
 class SmsClient extends AbstractOneApiClient {
 
     public function __construct($username = null, $password = null, $baseUrl = null) {
