@@ -9,6 +9,10 @@
 namespace infobip;
 
 
+use Exception;
+use infobip\utils\Logs;
+use infobip\utils\Utils;
+
 if(!defined('ONEAPI_BASE_URL'))
     define('ONEAPI_BASE_URL', 'https://oneapi.infobip.com');
 
