@@ -1,5 +1,8 @@
-<?php namespace infobip\models;
+<?php
 
+namespace infobip\models;
+
+// require_once('SISendMessageResult');
 use infobip\Models;
 use infobip\ObjectArrayConversionRule;
 

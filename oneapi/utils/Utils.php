@@ -1,4 +1,6 @@
-<?php namespace infobip\utils;
+<?php
+
+namespace infobip\utils;
 
 use Exception;
 
@@ -45,7 +47,7 @@ class Utils {
             $ptr = &$ptr[$attr];
         }
         
-        // end
+        // kraj
         return($ptr === NULL || (is_string($ptr) && strlen($ptr) < 1) ? $defval : $ptr);
     }
 
@@ -71,7 +73,7 @@ class Utils {
             $ptr = &$ptr[$attr];
         }
         
-        // end
+        // kraj
         $ptr = $val;
         return true;
     }        

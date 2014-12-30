@@ -2,6 +2,8 @@
 
 #require_once 'yapd/dbg.php';
 
+use infobip\DataConnectionProfileClient;
+
 require_once 'app.php';
 
 $address = getFormParam('address');

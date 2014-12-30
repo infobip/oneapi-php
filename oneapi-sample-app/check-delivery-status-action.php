@@ -2,6 +2,8 @@
 
 #require_once 'yapd/dbg.php';
 
+use infobip\SmsClient;
+
 require_once 'app.php';
 
 $clientCorrelator = getFormParam('clientCorrelator');

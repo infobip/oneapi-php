@@ -1,10 +1,13 @@
-<?php namespace infobip\utils;
+<?php
 /**
  * Created by PhpStorm.
  * User: amarjanovic
  * Date: 24.12.2014
  * Time: 11:21
  */
+
+namespace infobip\utils;
+
 
 use Exception;
 

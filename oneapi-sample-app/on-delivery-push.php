@@ -1,5 +1,7 @@
 <?php
 
+use infobip\SmsClient;
+
 require_once 'app.php';
 
 $result = SmsClient::unserializeDeliveryStatus();

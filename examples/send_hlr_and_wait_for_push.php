@@ -1,6 +1,9 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\DataConnectionProfileClient;
+use infobip\utils\Logs;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 $client->login();

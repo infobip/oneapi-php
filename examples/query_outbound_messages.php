@@ -1,6 +1,9 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\SmsClient;
+use infobip\utils\OneApiDateTime;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 date_default_timezone_set("UTC");
 

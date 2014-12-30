@@ -1,5 +1,11 @@
 <?php
 
+namespace infobip;
+use infobip\utils\Utils;
+use infobip\utils\Logs;
+use Exception;
+require_once __DIR__ . '/../vendor/autoload.php';
+
 /** JSON <-> model conversion utilities */
 class Conversions {
 
@@ -28,7 +34,7 @@ class Conversions {
             $array = array();
 
         if($isError) {
-            $exception = self::createFromJSON('SmsException', $json, false);
+            $exception = self::createFromJSON('infobip\models\SmsException', $json, false);
             $model->exception = $exception;
             return $model;
         }
@@ -144,6 +150,8 @@ class ObjectConversionRule {
             // TODO throw an exception
         }
     }
+
+
 
 }
 

@@ -1,6 +1,8 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\DataConnectionProfileClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 define(FILE_NAME, '../hlr-'.mktime(true));
 

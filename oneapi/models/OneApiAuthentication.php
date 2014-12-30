@@ -1,5 +1,6 @@
-<?php namespace infobip\models;
+<?php
 
+namespace infobip\models;
 use infobip\ObjectConversionRule;
 use infobip\Models;
 use infobip\utils\Utils;

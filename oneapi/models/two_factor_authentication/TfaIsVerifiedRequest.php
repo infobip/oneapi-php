@@ -1,4 +1,6 @@
-<?php namespace infobip\models\two_factor_authentication;
+<?php
+
+namespace infobip\models\two_factor_authentication;
 
 use infobip\Models;
 use infobip\models\AbstractObject;

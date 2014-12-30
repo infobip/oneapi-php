@@ -1,19 +1,22 @@
 <?php
 
+namespace infobip;
+
+
+use Exception;
+use infobip\models\Captcha;
+use infobip\models\Countries;
+use infobip\models\Encodings;
+use infobip\models\GenericObject;
+use infobip\models\MoSubscriptions;
+use infobip\models\Timezones;
+use infobip\utils\Logs;
+use infobip\utils\Utils;
+use stdClass;
+
+require_once (__DIR__.'/../vendor/autoload.php');
+
 define('__ONEAPI_LIBRARY_PATH__', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
-
-function __oneapi_autoloader($class) {
-    $paths = array('oneapi/models', 'oneapi/models/iam', 'oneapi/models/two-factor-authentication', 'oneapi/core', 'oneapi/utils');
-    foreach($paths as $path) {
-        $fileName = __ONEAPI_LIBRARY_PATH__ . $path . '/' . $class . '.class.php';
-        if(is_file($fileName))
-            require_once $fileName;
-    }
-}
-
-spl_autoload_register('__oneapi_autoloader');
-
-//require_once 'yapd/dbg.php';
 
 require_once __ONEAPI_LIBRARY_PATH__ . 'oneapi/object.php';
 
@@ -110,7 +113,7 @@ class AbstractOneApiClient {
     }
 
     protected function fillOneApiAuthentication($content, $isSuccess) {
-        $this->oneApiAuthentication = Conversions::createFromJSON('OneApiAuthentication', $content, !$isSuccess);
+        $this->oneApiAuthentication = Conversions::createFromJSON('\infobip\models\OneApiAuthentication', $content, !$isSuccess);
         $this->oneApiAuthentication->username = $this->username;
         $this->oneApiAuthentication->password = $this->password;
         $this->oneApiAuthentication->authenticated = @strlen($this->oneApiAuthentication->ibssoToken) > 0;
@@ -337,7 +340,7 @@ class AbstractOneApiClient {
             throw new Exception($message);
         }
 
-        if ('IamException' == $className) {
+        if ('infobip\models\iam\IamException' == $className) {
             $message = json_encode($result->requestError);
             throw new Exception($message);
         }
@@ -361,7 +364,7 @@ class SmsClient extends AbstractOneApiClient {
         if($json === null)
             $json = file_get_contents("php://input");
 
-        return Conversions::createFromJSON('DeliveryInfoNotification', $json);
+        return Conversions::createFromJSON('infobip\models\DeliveryInfoNotification', $json);
     }
 
     public static function unserializeInboundMessages($json=null) {
@@ -371,7 +374,7 @@ class SmsClient extends AbstractOneApiClient {
         $json = json_decode($json, true);
         $json = Utils::getArrayValue($json, 'inboundSMSMessage.0');
 
-        return Conversions::createFromJSON('InboundSmsMessage', $json);
+        return Conversions::createFromJSON('infobip\models\InboundSmsMessage', $json);
     }
 
     // ----------------------------------------------------------------------------------------------------
@@ -409,7 +412,7 @@ class SmsClient extends AbstractOneApiClient {
                 $this->getRestUrl($restPath, Array('senderAddress' => $message->senderAddress)), $params, $contentType
         );
 
-        return $this->createFromJSON('ResourceReference', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\ResourceReference', $content, !$isSuccess);
     }
 
     /**
@@ -436,7 +439,7 @@ class SmsClient extends AbstractOneApiClient {
                 $this->getRestUrl($restPath, $params)
         );
 
-        return $this->createFromJSON('DeliveryInfoList', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\DeliveryInfoList', $content, !$isSuccess);
     }
 
     /**
@@ -456,7 +459,7 @@ class SmsClient extends AbstractOneApiClient {
         $restUrl = $this->getRestUrl('/1/messaging/outbound/logs/');
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
-        return $this->createFromJSON('OutboxMessages', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\OutboxMessages', $content, !$isSuccess);
         //return new OutboxMessages($content, $isSuccess);
     }
 
@@ -509,7 +512,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
-        return $this->createFromJSON('InboundSmsMessages', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\InboundSmsMessages', $content, !$isSuccess);
     }
 
 	/**
@@ -529,7 +532,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST($restUrl, $params);
 
-        return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\DeliveryReportSubscription', $content, !$isSuccess);
     }
 
 	/**
@@ -541,7 +544,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeDELETE($restUrl);
 
-        return $this->createFromJSON('GenericObject', null, !$isSuccess);
+        return $this->createFromJSON('infobip\models\GenericObject', null, !$isSuccess);
     }
 
 	/**
@@ -553,7 +556,7 @@ class SmsClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
-        return $this->createFromJSON('DeliveryReportSubscription', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\DeliveryReportSubscription', $content, !$isSuccess);
     }
 
 }
@@ -575,10 +578,11 @@ class UssdClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST(
                 $this->getRestUrl('/1/ussd/outbound'),
-                $params
+                $params,
+                'application/json'
         );
 
-        return $this->createFromJSON('InboundSmsMessage', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\InboundSmsMessage', $content, !$isSuccess);
     }
 
     public function stopSession($address, $message) {
@@ -590,7 +594,8 @@ class UssdClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executePOST(
                 $this->getRestUrl('/1/ussd/outbound'),
-                $params
+                $params,
+                'application/json'
         );
 
         return $isSuccess;
@@ -608,7 +613,7 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
         if($json === null)
             $json = file_get_contents("php://input");
 
-        return Conversions::createFromJSON('TerminalRoamingStatusNotification', $json);
+        return Conversions::createFromJSON('infobip\models\TerminalRoamingStatusNotification', $json);
     }
 
 	/**
@@ -635,9 +640,9 @@ class DataConnectionProfileClient extends AbstractOneApiClient {
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
         if($notifyURL)
-            return $this->createFromJSON('GenericObject', null, !$isSuccess);
+            return $this->createFromJSON('infobip\models\GenericObject', null, !$isSuccess);
         else
-            return $this->createFromJSON('TerminalRoamingStatus', $content['roaming'], !$isSuccess);
+            return $this->createFromJSON('infobip\models\TerminalRoamingStatus', $content['roaming'], !$isSuccess);
     }
 
 }
@@ -697,7 +702,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
 
         list($isSuccess, $content) = $this->executeGET($restPath);
 
-        return $this->createFromJSON('AccountBalance', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\AccountBalance', $content, !$isSuccess);
     }
 
     public function logout() {
@@ -776,7 +781,7 @@ class CustomerProfileClient extends AbstractOneApiClient {
         );
         list($isSuccess, $content) = $this->executeGET($restUrl);
 
-        return $this->createFromJSON('CustomerProfile', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\CustomerProfile', $content, !$isSuccess);
     }
 
     /**
@@ -890,7 +895,7 @@ class SocialInviteClient extends AbstractOneApiClient {
                $restUrl, $params, 'application/json', $socialInviteAppSecret
         );
 
-        return $this->createFromJSON('SocialInviteResponse', $content, !$isSuccess);
+        return $this->createFromJSON('infobip\models\SocialInviteResponse', $content, !$isSuccess);
     }
 }
 
@@ -930,7 +935,7 @@ class TwoFactorAuthenticationClient extends AbstractOneApiClient {
               $restUrl, $params, 'application/json', $apiKey
       );
 
-      return $this->createFromJSON($isSuccess ? 'TfaResponse' : 'IamException', $content, false);// !$isSuccess);
+      return $this->createFromJSON($isSuccess ? 'infobip\models\two_factor_authentication\TfaResponse' : 'infobip\models\iam\IamException', $content, false);// !$isSuccess);
     }
 
     /**
@@ -949,7 +954,7 @@ class TwoFactorAuthenticationClient extends AbstractOneApiClient {
               $restUrl, $params, 'application/json', $apiKey
       );
       
-      return $this->createFromJSON($isSuccess ? 'TfaVerifyPinResponse' : 'IamException', $content, false);// !$isSuccess);
+      return $this->createFromJSON($isSuccess ? 'infobip\models\two_factor_authentication\TfaVerifyPinResponse' : 'infobip\models\iam\IamException', $content, false);// !$isSuccess);
     }
 
     /**
@@ -967,7 +972,7 @@ class TwoFactorAuthenticationClient extends AbstractOneApiClient {
               $restUrl, null, 'application/json', $apiKey
       );
 
-      return $this->createFromJSON($isSuccess ? 'TfaIsVerifiedResponse' : 'IamException', $content, false);// !$isSuccess);
+      return $this->createFromJSON($isSuccess ? 'infobip\models\two_factor_authentication\TfaIsVerifiedResponse' : 'infobip\models\iam\IamException', $content, false);// !$isSuccess);
     }
 
     /**
@@ -984,7 +989,7 @@ class TwoFactorAuthenticationClient extends AbstractOneApiClient {
               $restUrl, null, 'application/json', $apiKey
       );
 
-      return $this->createFromJSON($isSuccess ? 'TfaDeliveryInfo' : 'IamException', $content, false);// !$isSuccess);
+      return $this->createFromJSON($isSuccess ? 'infobip\models\two_factor_authentication\TfaDeliveryInfo' : 'infobip\models\iam\IamException', $content, false);// !$isSuccess);
     }
 
 }

@@ -6,7 +6,11 @@
  *
  * Use ../examples.php to test this file
  */
-require_once 'oneapi/client.php';
+use infobip\models\SocialInviteRequest;
+use infobip\SmsClient;
+use infobip\SocialInviteClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 # example:initialize-sms-client
 $socinv = new SocialInviteClient(USERNAME, PASSWORD);

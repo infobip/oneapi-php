@@ -1,5 +1,10 @@
 <?php
 
+use infobip\Conversions;
+use infobip\Models;
+use infobip\models\AbstractObject;
+use infobip\ObjectArrayConversionRule;
+
 require_once 'oneapi/client.php';
 
 class Person extends AbstractObject {

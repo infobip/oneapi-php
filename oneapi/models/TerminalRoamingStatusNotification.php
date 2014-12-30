@@ -1,4 +1,6 @@
-<?php namespace infobip\models;
+<?
+
+namespace infobip\models;
 
 use infobip\Models;
 use infobip\SubFieldConversionRule;

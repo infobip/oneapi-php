@@ -5,7 +5,9 @@
  * request. This is the script to process this request.
  */
 
-require_once 'oneapi/client.php';
+use infobip\SmsClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 define(FILE_NAME, '../delivery-'.mktime(true));
 

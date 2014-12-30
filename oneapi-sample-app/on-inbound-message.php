@@ -1,5 +1,8 @@
 <?php
 
+use infobip\models\SMSRequest;
+use infobip\SmsClient;
+
 require_once 'app.php';
 
 

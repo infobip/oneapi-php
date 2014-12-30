@@ -1,6 +1,8 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\CustomerProfileClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 $customerProfileClient = new CustomerProfileClient(USERNAME, PASSWORD);
 $customerProfileClient->login();

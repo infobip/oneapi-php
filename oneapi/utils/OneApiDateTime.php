@@ -1,4 +1,6 @@
-<?php namespace infobip\utils;
+<?php
+
+namespace infobip\utils;
 
 use DateTime;
 use DateTimeZone;

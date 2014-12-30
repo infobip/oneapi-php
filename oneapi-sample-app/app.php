@@ -3,6 +3,8 @@
 #require_once 'yapd/dbg.php';
 
 // Include configuration constants:
+use infobip\utils\Logs;
+
 require_once 'config.php';
 
 // Checking preconditions:

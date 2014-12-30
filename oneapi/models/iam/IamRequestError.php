@@ -1,4 +1,6 @@
-<?php namespace infobip\models\iam;
+<?php
+
+namespace infobip\models\iam;
 
 use infobip\Models;
 use infobip\models\AbstractObject;

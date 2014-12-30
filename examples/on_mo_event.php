@@ -1,6 +1,8 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\SmsClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 define(FILE_NAME, '../message-'.mktime(true));
 

@@ -1,5 +1,7 @@
 <?php
 
+use infobip\DataConnectionProfileClient;
+
 require_once 'app.php';
 
 $result = DataConnectionProfileClient::unserializeRoamingStatus();

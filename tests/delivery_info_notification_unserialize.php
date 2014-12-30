@@ -1,6 +1,8 @@
 <?
 
-require_once 'oneapi/client.php';
+use infobip\SmsClient;
+
+require_once '../oneapi/client.php';
 
 $json = '{"deliveryInfoNotification":{"deliveryInfo":{"address":"tel:38598123456","deliveryStatus":"DeliveredToTerminal"},"callbackData":"1234"}}';
 

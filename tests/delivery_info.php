@@ -1,6 +1,8 @@
 <?php
 
-require_once 'oneapi/client.php';
+use infobip\Conversions;
+
+require_once '../oneapi/client.php';
 
 $json = '{"deliveryInfoList":{"deliveryInfo":[{"address":"38598123456","deliveryStatus":"DeliveredToTerminal"}],"resourceURL":"http://oneapi.infobip.com/1/smsmessaging/outbound/TODO/requests/ih5k7mm6dy/deliveryInfos"}}';
 

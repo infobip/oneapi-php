@@ -1,4 +1,6 @@
-<?php namespace infobip\models;
+<?php
+
+namespace infobip\models;
 
 // TODO: Remove this object and use only TerminalRoamingStatus !
 use infobip\Models;

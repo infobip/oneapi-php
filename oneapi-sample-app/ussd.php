@@ -1,5 +1,7 @@
 <?php
 
+use infobip\UssdClient;
+
 require_once 'app.php';
 
 if(array_key_exists('gsm', $_REQUEST)) {

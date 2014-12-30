@@ -1,4 +1,6 @@
-<?php namespace infobip\models;
+<?php
+
+namespace infobip\models;
 
 use infobip\Conversions;
 use infobip\Models;

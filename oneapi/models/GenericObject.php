@@ -1,5 +1,6 @@
-<?php namespace infobip\models;
+<?php
 
+namespace infobip\models;
 use infobip\Models;
 
 /** Generic object to be used for API methods that return without body. */

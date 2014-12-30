@@ -6,7 +6,11 @@
  * Use ../examples.php to test this file
  */
 
-require_once 'oneapi/client.php';
+use infobip\models\Language;
+use infobip\models\SMSRequest;
+use infobip\SmsClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 # example:initialize-sms-client
 $smsClient = new SmsClient(USERNAME, PASSWORD);

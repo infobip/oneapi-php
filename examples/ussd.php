@@ -1,6 +1,8 @@
-<?
+<?php
 
-include 'oneapi/client.php';
+use infobip\UssdClient;
+
+require_once __DIR__ . '\..\oneapi\client.php';
 
 $ussdClient = new UssdClient(USERNAME, PASSWORD);
 
