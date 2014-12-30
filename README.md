@@ -1,19 +1,28 @@
-OneApi PHP client
-============================
+#OneApi PHP client
 
-Basic messaging example
------------------------
+
+##Installation
+
+Add this to your `composer.json` file.
+
+    {
+        "require": {
+                "infobip/oneapi": "dev-master"
+        }
+    }
+
+##Basic messaging example
 
 First initialize the messaging client using your username and password:
 
-    $smsClient = new SmsClient(USERNAME, PASSWORD);
+    $smsClient = new \infobip\SmsClient(USERNAME, PASSWORD);
 
 
-An exception will be thrown if your username and/or password are incorrect.
+An exception will be thrown if your *username* and/or `password` are incorrect.
 
 Prepare the message:
 
-    $smsMessage = new SMSRequest();
+    $smsMessage = new \infobip\models\SMSRequest();
     $smsMessage->senderAddress = SENDER_ADDRESS;
     $smsMessage->address = DESTINATION_ADDRESS;
     $smsMessage->message = 'Hello world';
@@ -39,12 +48,11 @@ Later you can query for the delivery status of the message:
 
 Possible statuses are: **DeliveredToTerminal**, **DeliveryUncertain**, **DeliveryImpossible**, **MessageWaiting** and **DeliveredToNetwork**.
 
-Messaging with notification push example
------------------------
+##Messaging with notification push example
 
 Same as with the standard messaging example, but when preparing your message:
 
-    $smsMessage = new SMSRequest();
+    $smsMessage = new \infobip\models\SMSRequest();
     $smsMessage->senderAddress = SENDER_ADDRESS;
     $smsMessage->address = DESTINATION_ADDRESS;
     $smsMessage->message = 'Hello world';
@@ -52,7 +60,7 @@ Same as with the standard messaging example, but when preparing your message:
 
 When the delivery notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
-    $result = SmsClient::unserializeDeliveryStatus();
+    $result = \infobip\SmsClient::unserializeDeliveryStatus();
 
     // Process $result here, e.g. just save it to a file:
     $f = fopen(FILE_NAME, 'w');
@@ -65,17 +73,16 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     fwrite($f, "\n-------------------------------------\n");
     fclose($f);
 
-Sending message with special characters example
------------------------
+##Sending message with special characters example
 
 If you want to send message with special characters, this is how you prepare your message:
 
-	$smsMessage = new SMSRequest();
+	$smsMessage = new \infobip\models\SMSRequest();
     $smsMessage->senderAddress = SENDER_ADDRESS;
     $smsMessage->address = DESTINATION_ADDRESS;
     $smsMessage->message = MESSAGE_TEXT;
   
-	$language = new Language();
+	$language = new \infobip\models\Language();
 
 	//specific language code
 	$language->languageCode = LANGUAGE_CODE;
@@ -90,12 +97,11 @@ If you want to send message with special characters, this is how you prepare you
 
 Currently supported languages (with their language codes) are: `Spanish - "SP"`, `Portuguese - "PT"`, `Turkish - "TR"`.
 
-Number Context example
------------------------
+##Number Context example
 
 Initialize and login the data connection client:
 
-    $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
+    $client = new \infobip\DataConnectionProfileClient(USERNAME, PASSWORD);
 
 
 Retrieve the roaming status (Number Context):
@@ -115,8 +121,7 @@ Retrieve the roaming status (Number Context):
     echo 'portedNetworkPrefix: ', $response->extendedData->portedNetworkPrefix,'\n<br>';
 
 
-Number Context with notification push example
------------------------
+##Number Context with notification push example
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:
 
@@ -124,7 +129,7 @@ Similar to the previous example, but this time you must set the notification url
     // if there is no error the query has been succesfully executed
     if(!$response->isSuccess()) {
         echo 'Error:', $response->exception, "\n";
-        Logs::printLogs();
+        infobip\utils\Logs::printLogs();
     }
 
 
@@ -151,8 +156,7 @@ When the roaming status notification is pushed to your server as a HTTP POST req
     fclose($f);
 
 
-Retrieve inbound messages example
------------------------
+##Retrieve inbound messages example
 
 With the existing sms client (see the basic messaging example to see how to start it):
 
@@ -168,14 +172,13 @@ With the existing sms client (see the basic messaging example to see how to star
     }
 
 
-Inbound message push example
------------------------
+##Inbound message push example
 
 The subscription to receive inbound messages can be set up on our site.
 When the inbound message notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
 
     // returns a single message not array of messages
-    $inboundMessages = SmsClient::unserializeInboundMessages();
+    $inboundMessages = \infobip\SmsClient::unserializeInboundMessages();
 
     // Process $inboundMessages here, e.g. just save it to a file:
     $f = fopen(FILE_NAME, 'w');
@@ -187,18 +190,17 @@ When the inbound message notification is pushed to your server as a HTTP POST re
     fwrite($f, 'resourceURL: '  . $inboundMessages->resourceURL . "\n");
     fwrite($f, 'senderAddress: '  . $inboundMessages->senderAddress . "\n");
 
-Social invites sms example
---------------------------
+##Social invites sms example
 
 If you have Social Invites application registered and configured ([tutorial](http://developer.infobip.com/getting-started/tutorials/social-invite)), you can send invitations.
 
 First initialize the social invites client using your username and password:
 
-    $socinv = new SocialInviteClient(USERNAME, PASSWORD);
+    $socinv = new \infobip\SocialInviteClient(USERNAME, PASSWORD);
 
 Prepare the social invitation:
 
-    $siReq = new SocialInviteRequest();
+    $siReq = new \infobip\models\SocialInviteRequest();
     $siReq->senderAddress = SENDER_ADDRESS;
     $siReq->recipients = DESTINATION_ADDRESS;
     $siReq->messageKey = SOCIAL_INVITES_MESSAGE_KEY;
@@ -221,7 +223,6 @@ Later you can query for the delivery status of the social invite message:
         echo 'Variables:', $smsMessageStatus->exception->variables, "\n";
     }
 
-License
--------
+##License
 
 This library is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
