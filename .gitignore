@@ -90,3 +90,5 @@ Temporary Items
 .apdisk
 
 /vendor/
+/examples/vendor/
+/examples/composer.lock
