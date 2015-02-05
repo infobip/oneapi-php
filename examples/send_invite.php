@@ -10,7 +10,8 @@ use infobip\models\SocialInviteRequest;
 use infobip\SmsClient;
 use infobip\SocialInviteClient;
 
-require_once __DIR__ . '\..\oneapi\client.php';
+//require_once __DIR__ . '\..\oneapi\client.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
 # example:initialize-sms-client
 $socinv = new SocialInviteClient(USERNAME, PASSWORD);

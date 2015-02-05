@@ -10,7 +10,8 @@ use infobip\models\MoSubscription;
 use infobip\SmsClient;
 use infobip\utils\Logs;
 
-require_once __DIR__ . '\..\oneapi\client.php';
+//require_once __DIR__ . '\..\oneapi\client.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
 $smsClient->login();

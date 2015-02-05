@@ -2,7 +2,8 @@
 
 use infobip\DataConnectionProfileClient;
 
-require_once __DIR__ . '\..\oneapi\client.php';
+//require_once __DIR__ . '\..\oneapi\client.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
 define(FILE_NAME, '../hlr-'.mktime(true));
 

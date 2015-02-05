@@ -3,7 +3,8 @@
 use infobip\DataConnectionProfileClient;
 use infobip\utils\Logs;
 
-require_once __DIR__ . '\..\oneapi\client.php';
+//require_once __DIR__ . '\..\oneapi\client.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
 $client->login();

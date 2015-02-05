@@ -2,7 +2,8 @@
 
 use infobip\UssdClient;
 
-require_once __DIR__ . '\..\oneapi\client.php';
+//require_once __DIR__ . '\..\oneapi\client.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
 $ussdClient = new UssdClient(USERNAME, PASSWORD);
 
