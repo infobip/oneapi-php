@@ -1,6 +1,8 @@
 #OneApi PHP client
 
 
+*Note: For non composer version switch to `0.0.3-alpha` [branch](https://github.com/infobip/oneapi-php/tree/0.0.3-alpha)*
+
 ##Installation
 
 Add this to your `composer.json` file.
@@ -13,8 +15,10 @@ Add this to your `composer.json` file.
 
 ##Basic messaging example
 
-First initialize the messaging client using your username and password:
-
+First include `autoload.php`  and initialize the messaging client using your username and password:
+    
+    require_once '<PATH-TO-VENDOR-FOLDER>\autoload.php';
+    
     $smsClient = new \infobip\SmsClient(USERNAME, PASSWORD);
 
 
@@ -77,23 +81,23 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
 
 If you want to send message with special characters, this is how you prepare your message:
 
-	$smsMessage = new \infobip\models\SMSRequest();
+    $smsMessage = new \infobip\models\SMSRequest();
     $smsMessage->senderAddress = SENDER_ADDRESS;
     $smsMessage->address = DESTINATION_ADDRESS;
     $smsMessage->message = MESSAGE_TEXT;
   
-	$language = new \infobip\models\Language();
+    $language = new \infobip\models\Language();
 
-	//specific language code
-	$language->languageCode = LANGUAGE_CODE;
+    //specific language code
+    $language->languageCode = LANGUAGE_CODE;
 
-	//use locking shift table for specific language ('false' or 'true') 
-	$language->useLockingShift = USE_LOCKING_SHIFT;
+    //use locking shift table for specific language ('false' or 'true') 
+    $language->useLockingShift = USE_LOCKING_SHIFT;
 
-	//use single shift table for specific language ('false' or 'true')
-	$language->useSingleShift = USE_SINGLE_SHIFT;
+    //use single shift table for specific language ('false' or 'true')
+    $language->useSingleShift = USE_SINGLE_SHIFT;
 
-	$smsMessage->language = $language;
+    $smsMessage->language = $language;
 
 Currently supported languages (with their language codes) are: `Spanish - "SP"`, `Portuguese - "PT"`, `Turkish - "TR"`.
 

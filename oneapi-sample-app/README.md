@@ -11,7 +11,7 @@ Copy **config.php\_\_TEMPLATE\_\_** to **config.php** and fill the constants:
  * USERNAME
  * PASSWORD
 
-Run `$ composer install` to fetch dependances.
+Run `$ composer install` to fetch dependences.
 
 Create a writable **push_log** directory in the same directory with config.php.
 
