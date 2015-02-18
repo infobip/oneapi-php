@@ -1,7 +1,7 @@
 <?php
 
 # Change this if your oneapi-php client is installed somewhere else:
-define('ONEAPI_LIBRARY_PATH', '..');
+define('ONEAPI_LIBRARY_PATH', '..'); // Depricated
 
 # Your username/password:
 define('USERNAME', '');

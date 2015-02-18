@@ -92,4 +92,22 @@ Temporary Items
 /vendor/
 /examples/vendor/
 /examples/composer.lock
+
 issues/
+
+# SampleApp
+oneapi-sample-app/vendor/
+oneapi-sample-app/composer.lock
+oneapi-sample-app/config.php
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,11 +1,9 @@
 <?php
 
-#require_once 'yapd/dbg.php';
 use infobip\models\SMSRequest;
 use infobip\SmsClient;
 
 require_once 'app.php';
-require_once __DIR__ . '/../vendor/autoload.php';
 
 if(!getFormParam('from') || !getFormParam('to') || !getFormParam('message')) {
     redirectWithFormError('send-message-form.php', 'From, to and message are mandatory');

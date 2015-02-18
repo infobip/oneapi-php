@@ -1,0 +1,5 @@
+{
+    "require": {
+            "infobip/oneapi": "dev-master"
+    }
+}

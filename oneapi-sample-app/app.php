@@ -1,10 +1,8 @@
 <?php
 
-#require_once 'yapd/dbg.php';
-
 // Include configuration constants:
 use infobip\utils\Logs;
-
+require_once 'vendor/autoload.php';
 require_once 'config.php';
 
 // Checking preconditions:
@@ -22,7 +20,7 @@ if(!defined('PASSWORD') || !PASSWORD) {
 }
 
 // Include OneApi library:
-require_once ONEAPI_LIBRARY_PATH . '/oneapi/client.php';
+// require_once ONEAPI_LIBRARY_PATH . '/oneapi/client.php';
 
 // Common constants:
 define('PUSH_LOG_DIRECTORY', 'push_log');
