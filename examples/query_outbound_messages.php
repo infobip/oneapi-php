@@ -6,9 +6,10 @@ date_default_timezone_set("UTC");
 
 $fromTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', '1970-01-01T00:00:00.000+0000');
 $toTime = new DateTime();
+$messageId = sizeof($argv) >= 4 ? $argv[3] : null;
 
 $smsClient = new SmsClient(USERNAME, PASSWORD);
-$messages = $smsClient->retrieveOutboundMessages($fromTime, $toTime);
+$messages = $smsClient->retrieveOutboundMessages($fromTime, $toTime, $messageId);
 
 foreach ($messages->logs as $message) {
     echo $message->sendDateTime;

@@ -442,7 +442,7 @@ class SmsClient extends AbstractOneApiClient {
     /**
      * Get the list of sent SMS messages.
      */
-    public function retrieveOutboundMessages($fromTime=null, $toTime=null){
+    public function retrieveOutboundMessages($fromTime=null, $toTime=null, $messageId=null){
         $params = array();
         if(! $fromTime){
             $fromTime = OneApiDateTime::createFromFormat('Y-m-dTH:i:s....O', '1970-01-01T00:00:00.000+0000');
@@ -453,7 +453,9 @@ class SmsClient extends AbstractOneApiClient {
             $params['to'] = $toTime->format('Y-m-d\TH:i:s.000O');
         }
 
-        $restUrl = $this->getRestUrl('/1/messaging/outbound/logs/');
+	      $params['messageId'] = $messageId;
+
+        $restUrl = $this->getRestUrl('/2/messaging/outbound/logs/');
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
 
         return $this->createFromJSON('OutboxMessages', $content, !$isSuccess);
@@ -948,7 +950,7 @@ class TwoFactorAuthenticationClient extends AbstractOneApiClient {
       list($isSuccess, $content) = $this->executePOST(
               $restUrl, $params, 'application/json', $apiKey
       );
-      
+
       return $this->createFromJSON($isSuccess ? 'TfaVerifyPinResponse' : 'IamException', $content, false);// !$isSuccess);
     }
 
