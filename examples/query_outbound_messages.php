@@ -1,6 +1,6 @@
 <?php
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 date_default_timezone_set("UTC");
 

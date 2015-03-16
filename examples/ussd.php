@@ -1,6 +1,6 @@
 <?
 
-include 'oneapi/client.php';
+include '../oneapi/client.php';
 
 $ussdClient = new UssdClient(USERNAME, PASSWORD);
 

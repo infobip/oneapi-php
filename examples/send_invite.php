@@ -6,7 +6,7 @@
  *
  * Use ../examples.php to test this file
  */
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 # example:initialize-sms-client
 $socinv = new SocialInviteClient(USERNAME, PASSWORD);

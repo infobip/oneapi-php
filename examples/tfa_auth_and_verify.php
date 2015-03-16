@@ -7,7 +7,7 @@
  * Use ../examples.php to test this file
  */
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 # example:initialize-tfa-client
 $tfaClient = new TwoFactorAuthenticationClient(); // No need for USERNAME or PASSWORD.

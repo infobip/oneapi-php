@@ -1,6 +1,6 @@
 <?php
 
-require_once 'oneapi/client.php';
+require_once '../oneapi/client.php';
 
 # example:data-connection-client
 $client = new DataConnectionProfileClient(USERNAME, PASSWORD);
