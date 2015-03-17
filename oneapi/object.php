@@ -15,6 +15,7 @@ class Conversions {
 
     /** Fill existing model instance from JSON. */
     public static function fillFromJSON($model, $json, $isError=false) {
+
         if(is_array($json)) {
             $array = $json;
         } else {
@@ -43,7 +44,6 @@ class Conversions {
                 $model->$key = $value;
             }
         }
-
         // Convert the ones that have custom conversion rules:
         foreach($conversionRules as $conversionRule) {
             foreach($array as $key => $value) {

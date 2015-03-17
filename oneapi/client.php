@@ -457,7 +457,6 @@ class SmsClient extends AbstractOneApiClient {
 
         $restUrl = $this->getRestUrl('/2/messaging/outbound/logs/');
         list($isSuccess, $content) = $this->executeGET($restUrl, $params);
-
         return $this->createFromJSON('OutboxMessages', $content, !$isSuccess);
         //return new OutboxMessages($content, $isSuccess);
     }
