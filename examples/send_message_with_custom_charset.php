@@ -12,8 +12,7 @@ use infobip\OneApiConfigurator;
 use infobip\SmsClient;
 use infobip\utils\Logs;
 
-//require_once __DIR__ . '\..\oneapi\client.php';
-require_once __DIR__ . '\vendor\autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 # example:initialize-sms-client
 OneApiConfigurator::setCredentials(USERNAME, PASSWORD);

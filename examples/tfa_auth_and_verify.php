@@ -11,8 +11,7 @@ use infobip\models\two_factor_authentication\TfaRequest;
 use infobip\models\two_factor_authentication\TfaVerifyPinRequest;
 use infobip\TwoFactorAuthenticationClient;
 
-//require_once __DIR__ . '\..\oneapi\client.php';
-require_once __DIR__ . '\vendor\autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 # example:initialize-tfa-client
 $tfaClient = new TwoFactorAuthenticationClient(); // No need for USERNAME or PASSWORD.
