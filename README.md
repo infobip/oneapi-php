@@ -1,7 +1,7 @@
 #OneApi PHP client
 
 
-*Note: For non composer version switch to `0.0.3-alpha` [branch](https://github.com/infobip/oneapi-php/tree/0.0.3-alpha)*
+*Note: For non composer version switch to this [repository](https://github.com/infobip/oneapi-php-non-composer)*
 
 ##Installation
 
