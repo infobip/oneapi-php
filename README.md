@@ -1,5 +1,12 @@
-#OneApi PHP client
+## ⚠️ Deprecated
 
+**This repository is deprecated and no longer actively maintained, it will be archived in the near future.**
+
+If you're looking for an active alternative, we recommend using [infobip-api-php-client](https://github.com/infobip/infobip-api-php-client) instead.
+
+You’re still welcome to browse or fork the code, but issues and pull requests will not be monitored.
+
+#OneApi PHP client
 
 *Note: For non composer version switch to this [repository](https://github.com/infobip/oneapi-php-non-composer)*
 
